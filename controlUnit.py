@@ -7,18 +7,22 @@ be able to communicate with the Gazebo simulator
 
 from LineTracking import ParticleFilter
 
+from Localization import GraphMap
+
 class ControlUnit(object):
 
-	def __init__(self, cam, car, sem, gps, bno, parameters={}):
+	def __init__(self, cam, car, sem, gps, bno, map_path, parameters={}):
 		self.cam=cam
 		self.car=car
 		self.sem=sem
 		self.gps=gps
 		self.bno=bno
+		self.map_path = map_path
 
 	def start():
 		#Read input from all modules
 		line_tracking(True)
+		get_location()
 		#Do some control action
 
 	def line_tracking(verbose=False):
@@ -33,3 +37,19 @@ class ControlUnit(object):
 							N_points=2,
 							Images_print=verbose,
 							get_image_function=self.cam.getImage)
+
+	
+	def get_location():
+		Graph = GraphMap(self.map_path)
+
+		gps_data = self.gps.getGpsData()
+
+		#x = gps_data["coords"][0].real
+		x = 1
+		#y = gps_data["coords"][0].imag
+		y = 2
+		num = 5
+		options = Graph.get_location_points(x, y, num)
+
+    	print(options)
+
