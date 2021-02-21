@@ -12,9 +12,9 @@ from scipy.spatial import distance as dist
 
 class Utils(object):
 
-    def draw_particles(self, image, particles, name, approximations=None, offset=[], offsetApproximation=[]):
-        line_thickness=1
+    def draw_particles(self, image, particles, name, approximations=None, offset=[], offsetApproximation=[], start_coo=[]):
 
+        line_thickness=1
         for i, p in enumerate(particles):
 
             if(len(offset)>0 and offset[i]!=0 and len(p.spline)>0):
@@ -24,9 +24,10 @@ class Utils(object):
 
         if(approximations!=None):
             for i, approximation in enumerate(approximations):
-
                 if(len(offsetApproximation)>0 and offsetApproximation[i]!=0):
-                    approximation.generateSpline(offsetApproximation[i])
+                    approximation.generateSpline(offset_x=offsetApproximation[i])
+                if(len(start_coo)>0):
+                    approximation.generateSpline(offset_x=start_coo[i][0], offset_y=start_coo[i][1])
 
                 cv.polylines(image, np.int32([approximation.spline]), False, (0,254,0), thickness=line_thickness+1)
 

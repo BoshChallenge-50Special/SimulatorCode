@@ -21,7 +21,7 @@ class Particle(object):
     def toString(self):
         return "Particle: "+ str(self.points) + " Weight: "+ str(self.w)
 
-    def generateSpline(self, offset=0, Interpolation_Points=0):
+    def generateSpline(self, offset_x=0, offset_y=0, Interpolation_Points=0):
 
         spline, x, y   = [], [], []
         if(Interpolation_Points==0):
@@ -32,7 +32,7 @@ class Particle(object):
 
         for i in range(self.N_points):
 
-            x_temp, y_temp = self.points[i][0] + offset, self.points[i][1]
+            x_temp, y_temp = self.points[i][0] + offset_x, self.points[i][1]+ offset_y
 
             x.append(x_temp)
             y.append(y_temp)

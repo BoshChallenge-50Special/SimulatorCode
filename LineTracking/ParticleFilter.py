@@ -197,7 +197,7 @@ class ParticleFilter(object):
         self.particles=new_particles
         self.doApproximation()
         # print(str(self.approximation.w_original) +"    <"+ str(0.2*self.Interpolation_points*(9*255)))
-        if(self.approximation.w_original < 0.2*self.Interpolation_points*(9*255)): # Line weight < 20% of max weights - 255 max value for the pixel
+        if(self.approximation.w_original < 0.1*self.Interpolation_points*(9*255)): # Line weight < 20% of max weights - 255 max value for the pixel
             self.failing_count+=1
             self.approximation_to_show =False
             if(self.failing_count >= self.threshold_reset):
@@ -330,7 +330,7 @@ def filter_usage(N_Particles, Interpolation_points, order=2, N_points=3, dataset
 
     return approximationPF1, approximationPF2, N_STEP
 
-def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None, order=1, N_points=2, Images_print=True, blur=7, threshold_reset=4, pts=[], data_queue=None):
+def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None, order=1, N_points=2, Images_print=True, blur=7, threshold_reset=7, pts=[], data_queue=None):
     # Function used for creating and running the particle filter
 
     utils = Utils()
@@ -345,7 +345,7 @@ def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None
     crop_points, approximationPF1, approximationPF2 = [], [], []
 
     #if(dataset_number==1):
-    crop_points = [0, 120, 640, 480]
+    crop_points = [0, 300, 640, 465]
     #else:
     #    crop_points = [0, 200, 640, 480]
 
@@ -369,8 +369,8 @@ def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None
     ip = ImageProcessing(pts, "", crop_points=crop_points, kernel_size=blur, get_image=get_image_function)
     pdf, pdf1, pdf2, image, image1, image2 = ip.get_lines_pdf()
 
-    pf1 = ParticleFilter(N_Particles, order, N_points, Interpolation_points, 640, 480, type_approximation=type_approximation, threshold_reset=threshold_reset)
-    pf2 = ParticleFilter(N_Particles, order, N_points, Interpolation_points, 640, image2.shape[1], type_approximation=type_approximation, threshold_reset=threshold_reset)
+    pf1 = ParticleFilter(N_Particles, order, N_points, Interpolation_points, image1.shape[0], image1.shape[1], type_approximation=type_approximation, threshold_reset=threshold_reset)
+    pf2 = ParticleFilter(N_Particles, order, N_points, Interpolation_points, image2.shape[0], image2.shape[1], type_approximation=type_approximation, threshold_reset=threshold_reset)
 
     pf1.initialization()
     pf2.initialization()
