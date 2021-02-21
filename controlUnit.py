@@ -38,7 +38,14 @@ class ControlUnit(object):
 							Images_print=verbose,
 							get_image_function=self.cam.getImage)
 
-	
+
+	# Algoritmo sulla linea obiettivo -> media all'inizio e poi aumentiamo la complessità con il path planning
+	# Creare la linea attuale h/2 e trasformazione in IPM view.
+
+	# Scrivere il codice per il PID sulla linea obiettivo (input = linea obiettivo + linea attuale)	|
+	#																								| ---> Funzione controllo che ha in input il risultato del machine learning e il line tracking
+	# Controllo stop e riduzione velocità della macchina											|
+
 	def get_location():
 		Graph = GraphMap(self.map_path)
 
