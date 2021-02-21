@@ -330,8 +330,7 @@ def filter_usage(N_Particles, Interpolation_points, order=2, N_points=3, dataset
 
     return approximationPF1, approximationPF2, N_STEP
 
-def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None, order=1, N_points=2, Images_print=True, blur=7, threshold_reset=4, pts=[]):
-
+def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None, order=1, N_points=2, Images_print=True, blur=7, threshold_reset=4, pts=[], data_queue=None):
     # Function used for creating and running the particle filter
 
     utils = Utils()
@@ -389,9 +388,10 @@ def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None
         pf1.resampling()
         pf2.resampling()
 
+        data_queue.put([pf1.approximation, pf2.approximation])
 
-        approximationPF1.append(pf1.approximation)
-        approximationPF2.append(pf2.approximation)
+        #approximationPF1.append(pf1.approximation)
+        #approximationPF2.append(pf2.approximation)
 
         best_particles, offset_Approximation = [], []
 
@@ -421,7 +421,7 @@ def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None
                 cv.imwrite('../outputs/particles_output/img_' + str(step) + '.png', res_2)
                 cv.imwrite('../outputs/result_output/img' + str(step) + '.png', res_1)
 
-    return approximationPF1, approximationPF2, N_STEP
+    #return approximationPF1, approximationPF2, N_STEP
 
 
 def accuracy_computation(approximationPF1, approximationPF2, dataset_number=1, raw=False, pts=[]):
