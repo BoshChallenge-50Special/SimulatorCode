@@ -63,44 +63,31 @@ class ControlUnit(object):
 			I = 0.002
 			D = 0.002
 			pid = PID.PID(P, I, D)
+			img=self.cam.getImage()
+			steer=0
+			targetT = (img.shape[1]/2)#/img.shape[1]
 			while(True):
 				#THREAD 3. Read the data received from the thread from your pipeline
 				#THREAD 4. In your module use  to load data in the queue: data_queue.put(...stuff...)
 				img=self.cam.getImage()
+
 				lines=pipeline_lines.get()
-				central_line=[(lines[0].spline[i][0]+img.shape[1]/2+lines[1].spline[i][0])/2 for i in range(0, len(lines[0].spline))]
-				error_lane = central_line[3] - img.shape[1]/2
-				steer=0
-				#print(lines[0].spline)
-
-				targetT = (img.shape[1]/2)#/img.shape[1]
-
-
-
-				pid.SetPoint = targetT
-				pid.setSampleTime(0.1)
-
-				pid.update(central_line[17])#/img.shape[1])
-				targetPwm = pid.output
-				#targetPwm = max(min( int(targetPwm), 100 ),0)
-
+				steer=self.get_steer(pid, lines, targetT)
+				print(steer)
 				time.sleep(0.1)
+				self.car.drive(0.17, steer)
 
-				self.car.drive(0.17, -targetPwm)
 
-				offsetApproximation=[]#[0,int(img.shape[1]/2 )]
-
-				res_1 = utils.draw_particles(img, [], "Result", lines, start_coo=[[0, 300], [320, 300]])#, offset=[], offsetApproximation=offset_Approximation)
-
-				#self.car.drive(0, targetPwm)
+				#offsetApproximation=[]#[0,int(img.shape[1]/2 )]
+				#res_1 = utils.draw_particles(img, [], "Result", lines, start_coo=[[0, 300], [320, 300]])#, offset=[], offsetApproximation=offset_Approximation))
+				#error_lane = central_line[3] - img.shape[1]/2
 				#print("targetPwm : "+str(targetPwm)+ " error : "+str(error_lane))
 				steer_dir=""
-				if(-targetPwm > 0):
+				if(-steer > 0):
 					steer_dir="right"
 				else:
 					steer_dir="left"
-				print("COMMAND : VELOCITY = 0.17 | STEER = "+steer_dir+ " --> " +str(targetPwm))
-				#print(lines[0].toString()+"   "+lines[1].toString())  #CHECK DATA
+				print("COMMAND : VELOCITY = 0.17 | STEER = "+steer_dir+ " --> " +str(steer))
 			#Read input from all modules
 			#line_tracking(True)
 			#get_location()
@@ -121,14 +108,9 @@ class ControlUnit(object):
 							get_image_function=self.cam.getImage,
 							data_queue=data_queue)
 
-
-
-	# Algoritmo sulla linea obiettivo -> media all'inizio e poi aumentiamo la complessità con il path planning
-	# Creare la linea attuale h/2 e trasformazione in IPM view.
-
-	# Scrivere il codice per il PID sulla linea obiettivo (input = linea obiettivo + linea attuale)	|
+	# Algoritmo sulla linea obiettivo -> media all'inizio e poi aumentiamo la complessit con il path planning
 	#																								| ---> Funzione controllo che ha in input il risultato del machine learning e il line tracking
-	# Controllo stop e riduzione velocità della macchina											|
+	# Controllo stop e riduzione velocit della macchina											|
 
 	def get_location():
 		Graph = GraphMap(self.map_path)
@@ -143,3 +125,17 @@ class ControlUnit(object):
 		options = Graph.get_location_points(x, y, num)
 
 		print(options)
+
+	def give_me_Elisa(self):
+		print("elisa")
+		return "ELISA"
+
+	def get_steer(self, pid, lines, targetT):
+		central_line=[(lines[0].spline[i][0]+targetT+lines[1].spline[i][0])/2 for i in range(0, len(lines[0].spline))]
+
+		pid.SetPoint = targetT
+		pid.setSampleTime(0.1)
+		pid.update(central_line[17])#/img.shape[1])
+		targetPwm = pid.output
+
+		return targetPwm
