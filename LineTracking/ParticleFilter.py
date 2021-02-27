@@ -388,21 +388,23 @@ def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None
         pf1.resampling()
         pf2.resampling()
 
-        data_queue.put([pf1.approximation, pf2.approximation])
-
         #approximationPF1.append(pf1.approximation)
         #approximationPF2.append(pf2.approximation)
 
-        best_particles, offset_Approximation = [], []
+        best_particles, offset_Approximation, lines = [], [], [None, None]
 
 
         if(pf1.approximation_to_show):
             best_particles.append(pf1.approximation)
             offset_Approximation.append(0)
+            lines[0]=pf1.approximation
 
         if(pf2.approximation_to_show):
             best_particles.append(pf2.approximation)
             offset_Approximation.append(int(image.shape[1]/2 ))
+            lines[1]=pf2.approximation
+
+        data_queue.put(lines)
 
         if(Images_print):
             image_color  = cv.cvtColor(pdf, cv.COLOR_GRAY2RGB)  # Image with color

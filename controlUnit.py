@@ -7,6 +7,7 @@ be able to communicate with the Gazebo simulator
 import concurrent.futures
 import Queue
 import threading
+import traceback
 
 from LineTracking import ParticleFilter
 
@@ -66,32 +67,40 @@ class ControlUnit(object):
 			img=self.cam.getImage()
 			steer=0
 			targetT = (img.shape[1]/2)#/img.shape[1]
-			while(True):
-				#THREAD 3. Read the data received from the thread from your pipeline
-				#THREAD 4. In your module use  to load data in the queue: data_queue.put(...stuff...)
-				img=self.cam.getImage()
+			try:
+				while(True):
+					#THREAD 3. Read the data received from the thread from your pipeline
+					#THREAD 4. In your module use  to load data in the queue: data_queue.put(...stuff...)
+					img=self.cam.getImage()
 
-				lines=pipeline_lines.get()
-				steer=self.get_steer(pid, lines, targetT)
-				print(steer)
-				time.sleep(0.1)
-				self.car.drive(0.17, steer)
+					lines=pipeline_lines.get()
+
+					distance_from_base = 0.2 #it's a percentage
+
+					actual_trajectory=self.get_current_trajectory_point(lines, distance_from_base, central_point=targetT)
+					steer=self.get_steer(pid, actual_trajectory, targetT)
+					print(steer)
+					time.sleep(0.1)
+					self.car.drive(0.17, -steer)
 
 
-				#offsetApproximation=[]#[0,int(img.shape[1]/2 )]
-				#res_1 = utils.draw_particles(img, [], "Result", lines, start_coo=[[0, 300], [320, 300]])#, offset=[], offsetApproximation=offset_Approximation))
-				#error_lane = central_line[3] - img.shape[1]/2
-				#print("targetPwm : "+str(targetPwm)+ " error : "+str(error_lane))
-				steer_dir=""
-				if(-steer > 0):
-					steer_dir="right"
-				else:
-					steer_dir="left"
-				print("COMMAND : VELOCITY = 0.17 | STEER = "+steer_dir+ " --> " +str(steer))
+					offsetApproximation=[]#[0,int(img.shape[1]/2 )]
+					res_1 = utils.draw_particles(img, [], "Result", lines, start_coo=[[0, 300], [320, 300]])#, offset=[], offsetApproximation=offset_Approximation))
+					#error_lane = central_line[3] - img.shape[1]/2
+					#print("targetPwm : "+str(targetPwm)+ " error : "+str(error_lane))
+					steer_dir=""
+					if(-steer > 0):
+						steer_dir="right"
+					else:
+						steer_dir="left"
+					print("COMMAND : VELOCITY = 0.17 | STEER = "+steer_dir+ " --> " +str(steer))
 			#Read input from all modules
 			#line_tracking(True)
 			#get_location()
 			#Do some control action
+			except Exception as e:
+				print(e)
+				print(traceback.print_exc())
 
 	def line_tracking(self, data_queue, event, verbose=False):
 		N_particles           = 60  #100 # Particles used in the filter
@@ -126,16 +135,22 @@ class ControlUnit(object):
 
 		print(options)
 
-	def give_me_Elisa(self):
-		print("elisa")
-		return "ELISA"
+	def get_current_trajectory_point(self, lines, distance_from_base, central_point=320):
+		if(lines[0] != None and lines[1] != None):
+			central_line=[(lines[0].spline[i][0]+central_point+lines[1].spline[i][0])/2 for i in range(0, len(lines[0].spline))]
+			index = int(distance_from_base * len(central_line))
+			return central_line[index]
+		else:
+			return central_point
 
-	def get_steer(self, pid, lines, targetT):
-		central_line=[(lines[0].spline[i][0]+targetT+lines[1].spline[i][0])/2 for i in range(0, len(lines[0].spline))]
+
+
+
+	def get_steer(self, pid, point_objective, targetT):
 
 		pid.SetPoint = targetT
 		pid.setSampleTime(0.1)
-		pid.update(central_line[17])#/img.shape[1])
+		pid.update(point_objective)#central_line[17])#/img.shape[1])
 		targetPwm = pid.output
 
 		return targetPwm
