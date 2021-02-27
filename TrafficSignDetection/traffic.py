@@ -262,28 +262,28 @@ class SignDetector(Thread):
         imgHSV = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
         imgHSV = cv2.GaussianBlur(imgHSV, (5, 5), 0)
         # Range for lower RED
-        lower_red = np.array([0, 60, 50])
-        upper_red = np.array([10, 255, 255])
-        mask1 = cv2.inRange(imgHSV, lower_red, upper_red)
+        mask1 = cv2.inRange(imgHSV, (0,50, 50), (10,255,255))
         # Range for upper range
-        lower_red = np.array([160, 60, 50])
-        upper_red = np.array([180, 255, 255])
-        mask2 = cv2.inRange(imgHSV, lower_red, upper_red)
-        # Red mask
+        mask2 = cv2.inRange(imgHSV, (160,60,50), (180,255,255))
         red_det = mask1 + mask2
         # Yellow mask
         yellow_det = cv2.inRange(imgHSV, (15, 90, 20), (35, 255, 255))
         # Blue mask
         blue_det = cv2.inRange(imgHSV, (95, 90, 20), (140, 250, 250))
-
+        # green mask
+        green_det = cv2.inRange( imgHSV, (70,50,50), (85,255,255))
         #finalMask = red_det + yellow_det + blue_det
-        
+            
+        # Bitwise-AND mask and original image
+        res = cv2.bitwise_and(imgHSV,imgHSV, mask= (yellow_det))
+        cv2.imshow('res',res)
         #==============================================================================
         #==============================================================================
 
         keypoints_red = self.detector.detect(red_det)
         keypoints_yellow = self.detector.detect(yellow_det)
         keypoints_blue = self.detector.detect(blue_det)
+        keypoints_green = self.detector.detect(green_det)
 
         red_image = cv2.drawKeypoints(red_det, keypoints_red, np.array([]), (0, 0, 255),
                                      cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
@@ -291,16 +291,18 @@ class SignDetector(Thread):
                                      cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
         blue_image = cv2.drawKeypoints(blue_det, keypoints_blue, np.array([]), (255, 0, 0),
                                      cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-        finalImage = red_image + yellow_image + blue_image
+        green_image = cv2.drawKeypoints(green_det, keypoints_green, np.array([]), (0, 128, 0),
+                                     cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+
+        finalImage = red_image + yellow_image + blue_image + green_image
         cv2.imshow("watch1", finalImage)
-        keypoints_all = keypoints_red + keypoints_yellow + keypoints_blue
+        keypoints_all = keypoints_red + keypoints_yellow + keypoints_blue + keypoints_green
 
 
 
         cv2.imshow("finalImage", finalImage)
 
         return (keypoints_all)
-    # ===================================================================================
     # ===================================================================================
 
 
@@ -456,6 +458,8 @@ class SignDetector(Thread):
         model = training()
 
         vidcap = cv2.VideoCapture('/home/ebllaei/Downloads/video.mp4')
+        #vidcap = cv2.VideoCapture('/home/ebllaei/traffic_signs.mp4')
+        #vidcap = cv2.VideoCapture('/home/ebllaei/traffic/shape/Traffic-Sign-Detection/MVI_1049.avi')
         success,watch = vidcap.read()
         while success:
             '''
@@ -466,6 +470,14 @@ class SignDetector(Thread):
             # A dirty drick, unsure if still necessary, but I will leave it here.
             victim = watch[0:(int)(watch.shape[0]/2), (int)(watch.shape[1]/2):watch.shape[1]]
             victim = cv2.copyMakeBorder(victim, 0, 0, 0, 32, cv2.BORDER_REPLICATE)
+            
+            img = np.int16(watch)
+            contrast = 10
+            brightness = 50
+            img = img * (contrast/127+1) - contrast + brightness
+            img = np.clip(img, 0, 255)
+            watch = np.uint8(img)
+            
             # Get the centers.
             centers = self.detectColorAndCenters(watch)
             # Detect and classify the signs.
