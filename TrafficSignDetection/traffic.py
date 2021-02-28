@@ -44,10 +44,10 @@ def load_traffic_dataset():
     dataset = []
     labels = []
     for sign_type in range(CLASS_NUMBER):
-        sign_list = listdir("/home/ebllaei/traffic/shape/Traffic-Sign-Detection/dataset/{}".format(sign_type))
+        sign_list = listdir("/home/ebllaei/dataset_bosch/{}".format(sign_type))
         for sign_file in sign_list:
             if '.png' in sign_file:
-                path = "/home/ebllaei/traffic/shape/Traffic-Sign-Detection/dataset/{}/{}".format(sign_type,sign_file)
+                path = "/home/ebllaei/dataset_bosch/{}/{}".format(sign_type,sign_file)
                 print(path)
                 img = cv2.imread(path,0)
                 img = cv2.resize(img, (SIZE, SIZE))
@@ -461,23 +461,23 @@ class SignDetector(Thread):
 
         #vidcap = cv2.VideoCapture('/home/ebllaei/Downloads/video.mp4')
         #vidcap = cv2.VideoCapture('/home/ebllaei/traffic_signs.mp4')
-        #vidcap = cv2.VideoCapture('/home/ebllaei/traffic/shape/Traffic-Sign-Detection/MVI_1049.avi')
-        #success,watch = vidcap.read()
+        vidcap = cv2.VideoCapture('/home/ebllaei/traffic/shape/Traffic-Sign-Detection/MVI_1049.avi')
+        success,watch = vidcap.read()
         
-        #while success:
+        while success:
 
 
-        folder = '/home/ebllaei/Downloads/dataset'
+        #folder = '/home/ebllaei/Downloads/dataset'
 
-        for filename in sorted(os.listdir(folder)):
+        #for filename in sorted(os.listdir(folder)):
             '''
             victim - the image I actually do the processing on
             watch - this is where I draw the rectangles and whatnot so it can be tested in practice
             centers - the centers of the regions of interest
             '''
-            print(filename)
+            #print(filename)
             # A dirty drick, unsure if still necessary, but I will leave it here.
-            watch = cv2.imread(os.path.join(folder,filename))
+            #watch = cv2.imread(os.path.join(folder,filename))
             #watch = cv2.imread('/home/ebllaei/Downloads/dataset/img_426.png')
             victim = watch[0:(int)(watch.shape[0]/2), (int)(watch.shape[1]/2):watch.shape[1]]
             victim = cv2.copyMakeBorder(victim, 0, 0, 0, 32, cv2.BORDER_REPLICATE)
@@ -495,9 +495,9 @@ class SignDetector(Thread):
             self.detectSign(victim, watch, centers,model)
             cv2.imshow("watch", watch)
             #self.outP.send(0)
-            print(0)
-            time.sleep(0.1)
-            #success,watch = vidcap.read()
+            #print(0)
+            #time.sleep(1)
+            success,watch = vidcap.read()
             if cv2.waitKey(1) == 27:
                 break
             
