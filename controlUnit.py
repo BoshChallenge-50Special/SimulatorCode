@@ -11,6 +11,7 @@ import traceback
 
 from LineTracking import ParticleFilter
 from TrafficSignDetection import traffic
+from LineTracking.horizontal_line import HorizontalLine
 
 from Localization import GraphMap
 from LineTracking.utils import Utils
@@ -60,6 +61,7 @@ class ControlUnit(object):
 			#			self.line_tracking is a method that configure the module and start it
 			executor.submit(self.line_tracking, pipeline_lines, event, True)
 			executor.submit(self.sign_detection, pipeline_signs, event, True)
+			executor.submit(self.horizontal_detection, pipeline_signs, event, True)
 			#time.sleep(0.1)
 			#logging.info("Main: about to set event")
 			#event.set()
@@ -87,7 +89,7 @@ class ControlUnit(object):
 					if(actual_trajectory==None):
 						actual_trajectory=targetT
 					steer=self.get_steer(pid, actual_trajectory, targetT)
-					self.car.drive(0.3, -steer)
+					self.car.drive(0.1, -steer)
 					time.sleep(0.1)
 
 					offsetApproximation=[]#[0,int(img.shape[1]/2 )]
@@ -184,3 +186,13 @@ class ControlUnit(object):
 		targetPwm = pid.output
 
 		return targetPwm
+
+	def horizontal_detection(self, data_queue, event, verbose=True):
+		try :
+			horizonLine = HorizontalLine()
+			while(True):
+				img = self.cam.getImage()
+				horizonLine.check_horizontal(img, data_queue)
+		except Exception as e:
+			print(e)
+			print(traceback.print_exc())
