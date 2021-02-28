@@ -10,6 +10,7 @@ import threading
 import traceback
 
 from LineTracking import ParticleFilter
+from TrafficSignDetection import traffic
 
 from Localization import GraphMap
 from LineTracking.utils import Utils
@@ -48,6 +49,7 @@ class ControlUnit(object):
 	def start(self):
 		#THREAD: 1. Add a pipeline for your module
 		pipeline_lines = Queue.Queue(maxsize=10)
+		pipeline_signs = Queue.Queue(maxsize=10)
 		event = threading.Event()
 
 		with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
@@ -57,6 +59,7 @@ class ControlUnit(object):
 			#			depending on the parameter of your Function
 			#			self.line_tracking is a method that configure the module and start it
 			executor.submit(self.line_tracking, pipeline_lines, event, True)
+			executor.submit(self.sign_detection, pipeline_signs, event, True)
 			#time.sleep(0.1)
 			#logging.info("Main: about to set event")
 			#event.set()
@@ -72,9 +75,10 @@ class ControlUnit(object):
 				while(True):
 					#THREAD 3. Read the data received from the thread from your pipeline
 					#THREAD 4. In your module use  to load data in the queue: data_queue.put(...stuff...)
-					img=self.cam.getImage()
+					img = self.cam.getImage()
 
-					lines=pipeline_lines.get()
+					lines = pipeline_lines.get()
+					#signs = pipeline_signs.get()
 					#print("size " + str(pipeline_lines.qsize()))
 
 					distance_from_base = 0.6 #it's a percentage
@@ -118,6 +122,16 @@ class ControlUnit(object):
 							threshold_reset=5,
 							get_image_function=self.cam.getImage,
 							data_queue=data_queue)
+
+	def sign_detection(self, data_queue, event, verbose=True):
+		try :
+			sg = traffic.SignDetector(None,None, data_queue, self.cam.getImage)
+			sg.run()
+		except Exception as e:
+			print(e)
+			print(traceback.print_exc())
+		#SignDetection.start_sign_detection(
+		#					data_queue=data_queue)
 
 	# Algoritmo sulla linea obiettivo -> media all'inizio e poi aumentiamo la complessit con il path planning
 	#																								| ---> Funzione controllo che ha in input il risultato del machine learning e il line tracking
