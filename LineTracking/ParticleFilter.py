@@ -48,6 +48,7 @@ class ParticleFilter(object):
 
         self.failing_count  = 0
         self.approximation_to_show  = True
+        self.steps_good_approximation  = 0
 
         self.order          = order
         self.N_points       = N_points
@@ -93,6 +94,7 @@ class ParticleFilter(object):
             p.w = 1/self.N
             self.particles.append(p)
 
+        self.steps_good_approximation = 0
         return self.particles
 
     def sampling(self, verbose=False):
@@ -207,6 +209,7 @@ class ParticleFilter(object):
         else:
             self.failing_count=0
             self.approximation_to_show =True
+            self.steps_good_approximation=self.steps_good_approximation+1
 
         if(verbose):
             print("AFTER RESAMPLING")
@@ -393,7 +396,6 @@ def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None
 
         best_particles, offset_Approximation, lines = [], [], [None, None]
 
-
         if(pf1.approximation_to_show):
             best_particles.append(pf1.approximation)
             offset_Approximation.append(0)
@@ -403,9 +405,25 @@ def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None
             best_particles.append(pf2.approximation)
             offset_Approximation.append(int(image.shape[1]/2 ))
             lines[1]=pf2.approximation
+        ##########  TO AVOID THE MERGE OF 2 LINES
+        if(pf1.approximation_to_show & pf2.approximation_to_show):
+            too_near = False
+            acc_dist=0
+            for i in range(0, len(lines[0].spline)):
+                #print(abs(dist[0][i])+abs(dist[1][i]))
+                acc_dist = acc_dist + abs(lines[1].spline[i][0] - lines[0].spline[i][0])
+                #print(abs(lines[1].spline[i][0] - lines[0].spline[i][0]))
+            too_near = acc_dist/len(lines[0].spline) < 640/6
+            if(too_near):
+                print("too near")
+                if(pf1.steps_good_approximation > pf2.steps_good_approximation):
+                    pf2.initialization()
+                    lines[1] = None
+                else:
+                    pf1.initialization()
+                    lines[0] = None
 
         data_queue.put(lines)
-
         if(Images_print):
             image_color  = cv.cvtColor(pdf, cv.COLOR_GRAY2RGB)  # Image with color
 

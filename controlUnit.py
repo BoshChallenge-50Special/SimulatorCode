@@ -56,7 +56,7 @@ class ControlUnit(object):
 			#THREAD: 2. Duplicate the following line. Change the pipeline name and add or remove the other parameters
 			#			depending on the parameter of your Function
 			#			self.line_tracking is a method that configure the module and start it
-			executor.submit(self.line_tracking, pipeline_lines, event, False)
+			executor.submit(self.line_tracking, pipeline_lines, event, True)
 			#time.sleep(0.1)
 			#logging.info("Main: about to set event")
 			#event.set()
@@ -67,7 +67,7 @@ class ControlUnit(object):
 			img=self.cam.getImage()
 			steer=0
 			targetT = 0+20 #(img.shape[1]/2)#/img.shape[1]
-			
+
 			try:
 				while(True):
 					#THREAD 3. Read the data received from the thread from your pipeline
@@ -75,7 +75,7 @@ class ControlUnit(object):
 					img=self.cam.getImage()
 
 					lines=pipeline_lines.get()
-					print("size " + str(pipeline_lines.qsize()))
+					#print("size " + str(pipeline_lines.qsize()))
 
 					distance_from_base = 0.6 #it's a percentage
 
@@ -83,7 +83,7 @@ class ControlUnit(object):
 					if(actual_trajectory==None):
 						actual_trajectory=targetT
 					steer=self.get_steer(pid, actual_trajectory, targetT)
-					self.car.drive(0.2, -steer)
+					self.car.drive(0.3, -steer)
 					time.sleep(0.1)
 
 					offsetApproximation=[]#[0,int(img.shape[1]/2 )]
@@ -95,7 +95,7 @@ class ControlUnit(object):
 						steer_dir="right"
 					else:
 						steer_dir="left"
-					print("COMMAND : VELOCITY = 0.17 | STEER = "+steer_dir+ " --> " +str(steer) + " ERROR : "+str(targetT-actual_trajectory))
+					#print("COMMAND : VELOCITY = 0.17 | STEER = "+steer_dir+ " --> " +str(steer) + " ERROR : "+str(targetT-actual_trajectory))
 			#Read input from all modules
 			#line_tracking(True)
 			#get_location()
@@ -104,7 +104,7 @@ class ControlUnit(object):
 				print(e)
 				print(traceback.print_exc())
 
-	def line_tracking(self, data_queue, event, verbose=False):
+	def line_tracking(self, data_queue, event, verbose=True):
 		N_particles           = 60  #100 # Particles used in the filter
 		Interpolation_points  = 20  #25  # Interpolation points used for the spline
 		order                 = 1        # Spline order
@@ -115,7 +115,7 @@ class ControlUnit(object):
 							order=order,
 							N_points=N_c,
 							Images_print=verbose,
-							threshold_reset=10,
+							threshold_reset=5,
 							get_image_function=self.cam.getImage,
 							data_queue=data_queue)
 
@@ -158,6 +158,7 @@ class ControlUnit(object):
 			index = int(distance_from_base * len(dist[0]))
 			return dist[0][index]
 		else:
+			too_near=False
 			dist_avg = [(dist[0][i] + dist[1][i])/2 for i in range(0, len(dist[0])) ]
 			index = int(distance_from_base * len(dist[0]))
 			return dist_avg[index]
