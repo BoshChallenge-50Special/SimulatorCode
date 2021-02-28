@@ -60,13 +60,14 @@ class ControlUnit(object):
 			#time.sleep(0.1)
 			#logging.info("Main: about to set event")
 			#event.set()
-			P = 0.1
+			P = 0.08
 			I = 0.002
 			D = 0.002
 			pid = PID.PID(P, I, D)
 			img=self.cam.getImage()
 			steer=0
-			targetT = (img.shape[1]/2)#/img.shape[1]
+			targetT = 0+20 #(img.shape[1]/2)#/img.shape[1]
+			
 			try:
 				while(True):
 					#THREAD 3. Read the data received from the thread from your pipeline
@@ -74,15 +75,16 @@ class ControlUnit(object):
 					img=self.cam.getImage()
 
 					lines=pipeline_lines.get()
+					print("size " + str(pipeline_lines.qsize()))
 
-					distance_from_base = 0.2 #it's a percentage
+					distance_from_base = 0.6 #it's a percentage
 
-					actual_trajectory=self.get_current_trajectory_point(lines, distance_from_base, central_point=targetT)
+					actual_trajectory=self.get_current_trajectory_point(lines, distance_from_base, size=img.shape[1])
+					if(actual_trajectory==None):
+						actual_trajectory=targetT
 					steer=self.get_steer(pid, actual_trajectory, targetT)
-					print(steer)
+					self.car.drive(0.2, -steer)
 					time.sleep(0.1)
-					self.car.drive(0.17, -steer)
-
 
 					offsetApproximation=[]#[0,int(img.shape[1]/2 )]
 					res_1 = utils.draw_particles(img, [], "Result", lines, start_coo=[[0, 300], [320, 300]])#, offset=[], offsetApproximation=offset_Approximation))
@@ -93,7 +95,7 @@ class ControlUnit(object):
 						steer_dir="right"
 					else:
 						steer_dir="left"
-					print("COMMAND : VELOCITY = 0.17 | STEER = "+steer_dir+ " --> " +str(steer))
+					print("COMMAND : VELOCITY = 0.17 | STEER = "+steer_dir+ " --> " +str(steer) + " ERROR : "+str(targetT-actual_trajectory))
 			#Read input from all modules
 			#line_tracking(True)
 			#get_location()
@@ -135,7 +137,7 @@ class ControlUnit(object):
 
 		print(options)
 
-	def get_current_trajectory_point(self, lines, distance_from_base, central_point=320):
+	def get_current_trajectory_point_old(self, lines, distance_from_base, central_point=320):
 		if(lines[0] != None and lines[1] != None):
 			central_line=[(lines[0].spline[i][0]+central_point+lines[1].spline[i][0])/2 for i in range(0, len(lines[0].spline))]
 			index = int(distance_from_base * len(central_line))
@@ -143,11 +145,24 @@ class ControlUnit(object):
 		else:
 			return central_point
 
+	def get_current_trajectory_point(self, lines, distance_from_base, size=640):
+		dist = []
+		if(lines[0] != None):
+			dist.append([lines[0].spline[i][0] for i in range(0, len(lines[0].spline))])
+		if(lines[1] != None):
+			dist.append([lines[1].spline[i][0]-size/2 for i in range(0, len(lines[1].spline))])
 
-
+		if(len(dist)==0):
+			return None
+		elif(len(dist)==1):
+			index = int(distance_from_base * len(dist[0]))
+			return dist[0][index]
+		else:
+			dist_avg = [(dist[0][i] + dist[1][i])/2 for i in range(0, len(dist[0])) ]
+			index = int(distance_from_base * len(dist[0]))
+			return dist_avg[index]
 
 	def get_steer(self, pid, point_objective, targetT):
-
 		pid.SetPoint = targetT
 		pid.setSampleTime(0.1)
 		pid.update(point_objective)#central_line[17])#/img.shape[1])
