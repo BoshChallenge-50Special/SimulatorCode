@@ -11,24 +11,26 @@ from os import listdir
 from skimage.feature import blob_dog, blob_log, blob_doh
 import imutils
 import argparse
+import time
 # local modules
 from common import mosaic
 
 
 #Parameter
 SIZE = 32
-CLASS_NUMBER = 13
+CLASS_NUMBER = 10
 
 
 SIGNS = ["ERROR",
         "STOP",
-        "TURN LEFT",
-        "TURN RIGHT",
-        "DO NOT TURN LEFT",
-        "DO NOT TURN RIGHT",
+        "PARKING",
+        "PRIORITY",
+        "CROSSWALK SIGN",
+        "HIGHWAY ENTRANCE",
         "ONE WAY",
-        "SPEED LIMIT",
-        "OTHER"]
+        "HIGHWAY EXIT",
+        "ROUNDABOUT",
+        "NO-ENTRY"]
 
 
 # Clean all previous file
@@ -275,7 +277,7 @@ class SignDetector(Thread):
         #finalMask = red_det + yellow_det + blue_det
             
         # Bitwise-AND mask and original image
-        res = cv2.bitwise_and(imgHSV,imgHSV, mask= (yellow_det))
+        res = cv2.bitwise_and(imgHSV,imgHSV, mask= (red_det))
         cv2.imshow('res',res)
         #==============================================================================
         #==============================================================================
@@ -457,17 +459,26 @@ class SignDetector(Thread):
         #Training phase
         model = training()
 
-        vidcap = cv2.VideoCapture('/home/ebllaei/Downloads/video.mp4')
+        #vidcap = cv2.VideoCapture('/home/ebllaei/Downloads/video.mp4')
         #vidcap = cv2.VideoCapture('/home/ebllaei/traffic_signs.mp4')
         #vidcap = cv2.VideoCapture('/home/ebllaei/traffic/shape/Traffic-Sign-Detection/MVI_1049.avi')
-        success,watch = vidcap.read()
-        while success:
+        #success,watch = vidcap.read()
+        
+        #while success:
+
+
+        folder = '/home/ebllaei/Downloads/dataset'
+
+        for filename in sorted(os.listdir(folder)):
             '''
             victim - the image I actually do the processing on
             watch - this is where I draw the rectangles and whatnot so it can be tested in practice
             centers - the centers of the regions of interest
             '''
+            print(filename)
             # A dirty drick, unsure if still necessary, but I will leave it here.
+            watch = cv2.imread(os.path.join(folder,filename))
+            #watch = cv2.imread('/home/ebllaei/Downloads/dataset/img_426.png')
             victim = watch[0:(int)(watch.shape[0]/2), (int)(watch.shape[1]/2):watch.shape[1]]
             victim = cv2.copyMakeBorder(victim, 0, 0, 0, 32, cv2.BORDER_REPLICATE)
             
@@ -485,8 +496,8 @@ class SignDetector(Thread):
             cv2.imshow("watch", watch)
             #self.outP.send(0)
             print(0)
-           
-            success,watch = vidcap.read()
+            time.sleep(0.1)
+            #success,watch = vidcap.read()
             if cv2.waitKey(1) == 27:
                 break
             
