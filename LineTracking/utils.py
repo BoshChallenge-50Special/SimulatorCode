@@ -13,7 +13,7 @@ from scipy.spatial import distance as dist
 class Utils(object):
 
     def draw_particles(self, image, particles, name, approximations=None, offset=[], offsetApproximation=[], start_coo=[]):
-
+        image= image.copy()
         line_thickness=1
         for i, p in enumerate(particles):
 

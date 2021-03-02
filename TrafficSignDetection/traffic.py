@@ -1,15 +1,11 @@
 from threading import Thread
 
-import cv2
-import joblib
 import numpy as np
-import sklearn
+import cv2
 import os
 from matplotlib import pyplot as plt
 from math import sqrt
 from os import listdir
-from skimage.feature import blob_dog, blob_log, blob_doh
-import imutils
 import argparse
 import time
 # local modules
@@ -18,7 +14,7 @@ from common import mosaic
 
 #Parameter
 SIZE = 32
-CLASS_NUMBER = 10
+CLASS_NUMBER = 11
 
 
 SIGNS = ["ERROR",
@@ -30,7 +26,8 @@ SIGNS = ["ERROR",
         "ONE WAY",
         "HIGHWAY EXIT",
         "ROUNDABOUT",
-        "NO-ENTRY"]
+        "NO-ENTRY",
+        "OTHER"]
 
 
 # Clean all previous file
@@ -44,6 +41,7 @@ def load_traffic_dataset():
     dataset = []
     labels = []
     for sign_type in range(CLASS_NUMBER):
+        print(sign_type)
         sign_list = listdir("/home/ebllaei/dataset_bosch/{}".format(sign_type))
         for sign_file in sign_list:
             if '.png' in sign_file:
@@ -105,7 +103,7 @@ def evaluate_model(model, data, samples, labels):
         img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
         if not flag:
             img[...,:2] = 0
-        
+
         vis.append(img)
     return mosaic(16, vis)
 
@@ -113,7 +111,7 @@ def preprocess_simple(data):
     return np.float32(data).reshape(-1, SIZE*SIZE) / 255.0
 
 
-def get_hog() : 
+def get_hog() :
     winSize = (20,20)
     blockSize = (10,10)
     blockStride = (5,5)
@@ -144,10 +142,10 @@ def training():
     rand = np.random.RandomState(10)
     shuffle = rand.permutation(len(data))
     data, labels = data[shuffle], labels[shuffle]
-    
+
     print('Deskew images ... ')
     data_deskewed = list(map(deskew, data))
-    
+
     print('Defining HoG parameters ...')
     # HoG feature descriptor
     hog = get_hog()
@@ -163,8 +161,8 @@ def training():
     data_train, data_test = np.split(data_deskewed, [train_n])
     hog_descriptors_train, hog_descriptors_test = np.split(hog_descriptors, [train_n])
     labels_train, labels_test = np.split(labels, [train_n])
-    
-    
+
+
     print('Training SVM model ...')
     model = SVM()
     model.train(hog_descriptors_train, labels_train)
@@ -188,7 +186,7 @@ def getLabel(model, data):
 
 class SignDetector(Thread):
 
-    def __init__(self, inP, outP):
+    def __init__(self, inP, outP, data_queue, get_image_function):
         '''
         :)
         '''
@@ -229,10 +227,18 @@ class SignDetector(Thread):
         self.params.filterByInertia = False
         # As is this.
         self.detector = cv2.SimpleBlobDetector_create(self.params)
+
+        self.data_queue = data_queue
+        print(data_queue)
+        if(get_image_function != None):
+            self.get_image_function = get_image_function
+        else:
+            self.get_image_function_test_load()
+            self.get_image_function = self.get_image_function_test
         # And these three.
         #self.clf02 = joblib.load("classifierSVM.joblib")
         #self.clf = joblib.load("LDA.joblib")
-        #self.pca = joblib.load("pca.joblib")    
+        #self.pca = joblib.load("pca.joblib")
 
     #====================================================================
     def withinBoundsX(self, coord, img):
@@ -275,7 +281,7 @@ class SignDetector(Thread):
         # green mask
         green_det = cv2.inRange( imgHSV, (70,50,50), (85,255,255))
         #finalMask = red_det + yellow_det + blue_det
-            
+
         # Bitwise-AND mask and original image
         res = cv2.bitwise_and(imgHSV,imgHSV, mask= (red_det))
         cv2.imshow('res',res)
@@ -299,9 +305,9 @@ class SignDetector(Thread):
         finalImage = red_image + yellow_image + blue_image + green_image
         cv2.imshow("watch1", finalImage)
         keypoints_all = keypoints_red + keypoints_yellow + keypoints_blue + keypoints_green
-
-
-
+        print(keypoints_all)
+    
+        cv2.drawKeypoints( finalImage, keypoints_all, finalImage, (0, 0, 255))
         cv2.imshow("finalImage", finalImage)
 
         return (keypoints_all)
@@ -310,6 +316,7 @@ class SignDetector(Thread):
 
     def detectSign(self, img, watch, centers,model):
         for points in centers:
+            
             x1 = int(points.pt[0]) - 35
             y1 = int(points.pt[1]) - 35
             x2 = int(points.pt[0]) + 35
@@ -317,10 +324,13 @@ class SignDetector(Thread):
 
             for disp in (0, 4):
                 if (not self.withinBoundsX(x1, img) or  not self.withinBoundsY(y1+disp, img) or not self.withinBoundsX(x2, img) or not self.withinBoundsY(y2+disp, img)):
+                    print(points)
+
                     break
                 #The window to check using the HOG.
                 roi = img[y1+disp:y2+disp, x1:x2]
                 sign = cv2.resize(roi, (40, 40), interpolation=cv2.INTER_AREA)
+                cv2.imshow("roi",roi)
                 #Computing the HOG and making it so we can give it to the SVM, with PCA.
                 #descriptor = self.hog.compute(roi)
                 #descriptor = np.array(descriptor)
@@ -335,16 +345,16 @@ class SignDetector(Thread):
 
                 if sign is not None:
                     sign_type = getLabel(model, sign)
-                    sign_type = sign_type if sign_type <= 8 else 8
+                    sign_type = sign_type if sign_type <= 11 else 11
                     text = SIGNS[sign_type]
                     cv2.rectangle(watch, (x1, y1 + disp), (x2, y2 + disp), (255, 255, 255), 2)
                     #cv2.imwrite(str(count)+'_'+text+'.png', sign)
                     print(text)
 
-                if sign_type > 0 and sign_type != self.current_sign_type:        
-                    cv2.rectangle(watch, (x1, y1 + disp), (x2, y2 + disp), (0, 0, 255), 2) 
+                if sign_type > 0 and sign_type != self.current_sign_type:
+                    cv2.rectangle(watch, (x1, y1 + disp), (x2, y2 + disp), (0, 0, 255), 2)
                     cv2.putText(original_image,text,(x1, x2 -15), font, 1,(0,0,255),2,cv2.LINE_4)
-                                       
+
                 if sign_type > 0 and (not self.current_sign or sign_type != current_sign):
                     self.current_sign = sign_type
                     self.current_text = text
@@ -425,26 +435,7 @@ class SignDetector(Thread):
                     '''
                     Succesive detections imeplemented on the receiving end, maybe?
                     '''
-                 #   if(self.clf.predict(descriptor) == 1):
-                  #      self.outP.send(1)
-                   #     cv2.rectangle(watch, (x1, y1 + disp), (x2, y2 + disp), (255, 0, 0), 2)
 
-                    #elif (self.clf.predict(descriptor) == 2):
-                    #    self.outP.send(2)
-                    #    cv2.rectangle(watch, (x1, y1 + disp), (x2, y2 + disp), (255, 255, 255), 2)
-
-#                    elif (self.clf.predict(descriptor) == 3):
- #                       self.outP.send(3)
-  #                      cv2.rectangle(watch, (x1, y1 + disp), (x2, y2 + disp), (0, 255, 0), 2)
-#
- #                   elif (self.clf.predict(descriptor) == 4):
-  #                      self.outP.send(4)
-   #                     cv2.rectangle(watch, (x1, y1 + disp), (x2, y2 + disp), (0, 0, 255), 2)
-    #                print("O intrat")
-     #              
-      #          else:
-       #            # self.outP.send(0)
-        #           print(0)
 
     #====================================================================================
 
@@ -454,22 +445,24 @@ class SignDetector(Thread):
         self.current_size = 0
         self.sign_count = 0
         self.count = 0
-        	#Clean previous image    
-        #clean_images()
+        	#Clean previous image
+        clean_images()
         #Training phase
+
         model = training()
 
         #vidcap = cv2.VideoCapture('/home/ebllaei/Downloads/video.mp4')
         #vidcap = cv2.VideoCapture('/home/ebllaei/traffic_signs.mp4')
-        vidcap = cv2.VideoCapture('/home/ebllaei/traffic/shape/Traffic-Sign-Detection/MVI_1049.avi')
-        success,watch = vidcap.read()
+        #vidcap = cv2.VideoCapture('/home/ebllaei/traffic/shape/Traffic-Sign-Detection/MVI_1049.avi')
+        #success,watch = vidcap.read()
         
-        while success:
+        #while success:
 
 
-        #folder = '/home/ebllaei/Downloads/dataset'
+        folder = '/home/ebllaei/Downloads/dataset'
 
         #for filename in sorted(os.listdir(folder)):
+        for filename in range(20):
             '''
             victim - the image I actually do the processing on
             watch - this is where I draw the rectangles and whatnot so it can be tested in practice
@@ -478,17 +471,17 @@ class SignDetector(Thread):
             #print(filename)
             # A dirty drick, unsure if still necessary, but I will leave it here.
             #watch = cv2.imread(os.path.join(folder,filename))
-            #watch = cv2.imread('/home/ebllaei/Downloads/dataset/img_426.png')
+            watch = cv2.imread("/home/ebllaei/Downloads/dataset/0816.png")
             victim = watch[0:(int)(watch.shape[0]/2), (int)(watch.shape[1]/2):watch.shape[1]]
             victim = cv2.copyMakeBorder(victim, 0, 0, 0, 32, cv2.BORDER_REPLICATE)
-            
+
             img = np.int16(watch)
             contrast = 10
             brightness = 50
             img = img * (contrast/127+1) - contrast + brightness
             img = np.clip(img, 0, 255)
             watch = np.uint8(img)
-            
+
             # Get the centers.
             centers = self.detectColorAndCenters(watch)
             # Detect and classify the signs.
@@ -496,15 +489,22 @@ class SignDetector(Thread):
             cv2.imshow("watch", watch)
             #self.outP.send(0)
             #print(0)
-            #time.sleep(1)
-            success,watch = vidcap.read()
+            time.sleep(0.5)
+            #success,watch = vidcap.read()
             if cv2.waitKey(1) == 27:
                 break
-            
-        cv2.destroyAllWindows()
 
-sg = SignDetector(None,None)
-sg.run()
+        #cv2.destroyAllWindows()
 
+    def get_image_function_test_load(self):
+        folder = '/home/ebllaei/Downloads/dataset'
+        self.image_files = os.listdir(folder)
+        self.index_file = -1
 
+    def get_image_function_test(self):
+        self.index_file = self.index_file+1
+        return cv2.imread(os.path.join(folder,filename))
 
+if __name__ == '__main__':
+    sg = SignDetector(None,None,None,None)
+    sg.run()
