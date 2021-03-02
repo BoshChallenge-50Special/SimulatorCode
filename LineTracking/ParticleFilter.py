@@ -237,52 +237,74 @@ class ParticleFilter(object):
 
 def filter_usage(N_Particles, Interpolation_points, order=2, N_points=3, dataset_number=1, Images_print=False, blur=7, threshold_reset=4, pts=[]):
 
+     # pts = np.array([(0, 120), (600, 86), (-148, 278), (780, 279)]) # Up-left - - -
+    
     # Function used for creating and running the particle filter
 
     utils = Utils()
 
-    path = "../datasets/dataset_"+str(dataset_number)+"/"
+    # path = "../datasets/dataset_"+str(dataset_number)+"/"
+    path = "../Dataset/"
 
     save_images   = False
     testImageCrop = False
 
     type_approximation = "max"
     threshold_reset    = threshold_reset
-    crop_points, approximationPF1, approximationPF2 = [], [], []
 
-    if(dataset_number==1):
-        crop_points = [0, 120, 640, 480]
-    else:
-        crop_points = [0, 200, 640, 480]
+    crop_points, approximationPF1, approximationPF2 = [], [], []
+    
+    # crop_points = [0, 200, 640, 480]
 
     # First image upload (one frame) in order to find shapes
-    ip    = ImageProcessing(pts, path=path, crop_points=crop_points, kernel_size=blur)
-    pdf, pdf1, pdf2, image, image1, image2 = ip.get_lines_pdf()
+    # image.shape[0] -> height
+    # image.shape[1] -> width 
 
-    if(testImageCrop):
-        # Temporarly, when decided the size of image it can be put fixed
-        ip    = ImageProcessing(pts)
-        pdf, pdf1, pdf2, image, image1, image2 = ip.get_lines_pdf()
-        cv.imshow("pdf1", pdf1)
-        k = cv.waitKey(0)
-        cv.imshow("pdf2", pdf2)
-        k = cv.waitKey(0)
-        cv.imshow("image1", image1)
-        k = cv.waitKey(0)
-        cv.imshow("image2", image2)
-        k = cv.waitKey(0)
-
-    pf1 = ParticleFilter(N_Particles, order, N_points, Interpolation_points, image1.shape[0], image1.shape[1], type_approximation=type_approximation, threshold_reset=threshold_reset)
-    pf2 = ParticleFilter(N_Particles, order, N_points, Interpolation_points, image2.shape[0], image2.shape[1], type_approximation=type_approximation, threshold_reset=threshold_reset)
-
-    ip = ImageProcessing(pts, path, crop_points=crop_points, kernel_size=blur)
+    pts = np.array([(190, 30), (0, 280), (490, 30), (640, 280)]) # Total pic: [(0, 0), (0, 280), (640, 0), (640, 280)] -> UL, DL, UR, DR
 
     N_STEP = len([path+name for name in os.listdir(path) if (os.path.isfile(path+name) and ".png" in name) ])-2
 
-    pf1.initialization()
-    pf2.initialization()
+    crop = 0
 
     for step in range(0, N_STEP):
+        
+        
+        if(crop == 1 and number < 3):    
+            crop_points = np.array( ( crop_points[0], crop_points[1]/(3/2), crop_points[2], crop_points[3]) )
+            crop_points = crop_points.astype(int)
+            pts = np.array([(100, 0), (0, 400 - crop_points[1]), (500, 0), (640, 400 - crop_points[1])])
+            print(crop_points)
+        else:
+            pts = np.array([(190, 30), (0, 280), (490, 30), (640, 280)])
+            crop_points = [0, 200, 640, 480]
+            number = 0
+            crop = 0
+
+        
+        if(step == 0 or crop == 1):
+            ip    = ImageProcessing(pts, path=path, crop_points=crop_points, kernel_size=blur)
+            pdf, pdf1, pdf2, image, image1, image2 = ip.get_lines_pdf()
+
+            if(testImageCrop):
+                # Temporarly, when decided the size of image it can be put fixed
+                ip    = ImageProcessing(pts)
+                pdf, pdf1, pdf2, image, image1, image2 = ip.get_lines_pdf()
+                cv.imshow("pdf1", pdf1)
+                k = cv.waitKey(0)
+                cv.imshow("pdf2", pdf2)
+                k = cv.waitKey(0)
+                cv.imshow("image1", image1)
+                k = cv.waitKey(0)
+                cv.imshow("image2", image2)
+                k = cv.waitKey(0)
+            
+            pf1 = ParticleFilter(N_Particles, order, N_points, Interpolation_points, image1.shape[0], image1.shape[1], type_approximation=type_approximation, threshold_reset=threshold_reset)
+            pf2 = ParticleFilter(N_Particles, order, N_points, Interpolation_points, image2.shape[0], image2.shape[1], type_approximation=type_approximation, threshold_reset=threshold_reset)
+            
+            ip = ImageProcessing(pts, path, crop_points=crop_points, kernel_size=blur)
+            
+            pf1.initialization()
+            pf2.initialization()
 
         pf1.sampling()
         pf2.sampling()
@@ -295,12 +317,10 @@ def filter_usage(N_Particles, Interpolation_points, order=2, N_points=3, dataset
         pf1.resampling()
         pf2.resampling()
 
-
         approximationPF1.append(pf1.approximation)
         approximationPF2.append(pf2.approximation)
 
         best_particles, offset_Approximation = [], []
-
 
         if(pf1.approximation_to_show):
             best_particles.append(pf1.approximation)
@@ -310,6 +330,13 @@ def filter_usage(N_Particles, Interpolation_points, order=2, N_points=3, dataset
             best_particles.append(pf2.approximation)
             offset_Approximation.append(int(image.shape[1]/2 ))
 
+        print('pf1 = ' + str(pf1.approximation.points))
+        print('pf2 = ' + str(pf2.approximation.points))
+        
+        if( abs(pf1.approximation.points[0][0] - pf1.approximation.points[1][0]) > 200 or abs(pf2.approximation.points[0][0] - pf2.approximation.points[1][0]) > 200 ):
+            crop = 1
+            print('crop rezised')
+            number = number + 1
 
         if(Images_print):
             image_color  = cv.cvtColor(pdf, cv.COLOR_GRAY2RGB)  # Image with color
@@ -424,60 +451,6 @@ def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None
     #return approximationPF1, approximationPF2, N_STEP
 
 
-def accuracy_computation(approximationPF1, approximationPF2, dataset_number=1, raw=False, pts=[]):
-
-    # Function used for find the filter accuracy using ground truth dataset
-
-    utils = Utils()
-    resultLeft       = []
-    resultRight      = []
-    resultAvg        = []
-    crop_points      = []
-    left_line_found  = 0
-    right_line_found = 0
-
-    path_ground_truth = "../datasets/ground_truth_"+str(dataset_number)+"/"
-    N_STEP = len(approximationPF1)
-
-    if(dataset_number==1):
-        crop_points = [0, 120, 640, 480]
-    else:
-        crop_points = [0, 200, 640, 480]
-
-    ip_truth = ImageProcessing(pts, path=path_ground_truth, crop_points=crop_points)
-
-    for step in range(0, N_STEP):
-
-        pdf_truth1, pdf_truth2 = ip_truth.get_raw_image()
-
-        # Print GroundTruth
-        # pdf_truth1_color= cv.cvtColor(pdf_truth1, cv.COLOR_GRAY2RGB)
-        # utils.draw_particles(pdf_truth1_color, [], [approximationPF1[step]], "GROUND TRUTH")
-
-        acc1 = utils.evaluate(approximationPF1[step], pdf_truth1)
-        acc2 = utils.evaluate(approximationPF2[step], pdf_truth2)
-
-        resultLeft.append(acc1)
-        resultRight.append(acc2)
-        resultAvg.append((acc1+acc2)/2)
-        left_line_found  += 1 if acc1 > 0.5 else 0
-        right_line_found += 1 if acc2 > 0.5 else 0
-
-    Avarage_accuracy   = (np.average(resultLeft) + np.average(resultRight))/2
-    Standard_deviation = (np.std(resultLeft) + np.std(resultRight))/2
-    Line_Found         = (left_line_found/N_STEP + right_line_found/N_STEP)/2
-
-    print("Average accuracy  : LEFT: " + str(np.average(resultLeft)) + " RIGHT: " + str(np.average(resultRight)) + " AVARAGE: " + str(Avarage_accuracy) )
-    print("Standard deviation: LEFT: " + str(np.std(resultLeft)) + " RIGHT: " + str(np.std(resultRight)) + " AVARAGE: " + str(Standard_deviation))
-    print("Percentage of line: LEFT: " + str(left_line_found/N_STEP) + " RIGHT: " + str(right_line_found/N_STEP) + " AVARAGE: " + str(Line_Found))
-
-    if(raw):
-        # resultAvg find the avarage for each Image frame
-        return Avarage_accuracy, Standard_deviation, Line_Found, resultAvg
-    else:
-        return Avarage_accuracy, Standard_deviation, Line_Found
-
-
 if __name__ == '__main__':
 
     N_particles           = 50  #100 # Particles used in the filter
@@ -487,12 +460,7 @@ if __name__ == '__main__':
     dataset_number        = 2        # Dataset number -> available 1/2/3/4
 
     # Dataset one has a different camera orientation with respect the others. Thus for this reason the points chosen for the IPM changes
-    if(dataset_number == 1):
-        pts = np.array([(0, 176-70), (500+100, 186-100), (-148, 345), (639+148, 350)])
-    else:
-        pts = np.array([(0, 106), (600, 86), (-148, 278), (780, 279)])
-
-    pts = []  # Comment this row to use IPM
-
-    approximationPF1, approximationPF2, N_frame      = filter_usage(N_particles, Interpolation_points, order, N_c, dataset_number, Images_print=True, pts = pts)
-    Avarage_accuracy, Standard_deviation, Line_Found = accuracy_computation(approximationPF1, approximationPF2, dataset_number)
+    
+    # pts = np.array([(0, 176-70), (500+100, 186-100), (-148, 345), (639+148, 350)])
+   
+    approximationPF1, approximationPF2, N_frame      = filter_usage(N_particles, Interpolation_points, order, N_c, dataset_number, Images_print=True)
