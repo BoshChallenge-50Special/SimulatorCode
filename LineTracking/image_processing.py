@@ -4,6 +4,8 @@ import cv2 as cv
 import numpy as np
 import matplotlib
 from matplotlib.pyplot import imshow
+from matplotlib import pyplot as plt
+
 import os, os.path
 
 from utils import Utils
@@ -21,10 +23,12 @@ class ImageProcessing(object):
             self.path = path
             self.count = 0
             self.input="FOLDER"
+
             #Upload list of files
             self.files = [name for name in os.listdir(path) if (os.path.isfile(path+name) and ".png" in name)]
             self.files.sort(key=lambda x: int( (x.split(".")[-2]).split("_")[1] ))
             self.files = [self.path + f for f in self.files]
+
         else:
             self.input="FUNCTION"
             self.get_image=get_image
@@ -105,7 +109,7 @@ class ImageProcessing(object):
 
 
     def IPM(self, image, verbose=False, tag=""):
-
+        
         utils = Utils()
 
         # pts correspond to the four points of the image
@@ -133,7 +137,6 @@ class ImageProcessing(object):
         if(img==None):
             img  = self.acquire_frame(False)
 
-
         img  = self.crop_image(img, self.crop_points[0], self.crop_points[1], self.crop_points[2], self.crop_points[3], False)
 
         if(len(self.pts)!=0):
@@ -142,14 +145,49 @@ class ImageProcessing(object):
         img1 = self.crop_image(img, 0, 0, int(img.shape[1]/2), int(img.shape[0]), verbose, tag="l")
         img2 = self.crop_image(img, int(img.shape[1]/2), 0, int(img.shape[1]), int(img.shape[0]), verbose, tag="r")
 
-        #img=self.bright_contr(img)
-        #img1=self.bright_contr(img1, verbose=verbose, tag="l")
-        #img2=self.bright_contr(img2, verbose=verbose, tag="r")
+        img  = self.bright_contr(img)
+        img1 = self.bright_contr(img1, verbose=verbose, tag="l")
+        img2 = self.bright_contr(img2, verbose=verbose, tag="r")
+        
 
         pdf  = self.blur(self.create_mask(img))
         pdf1 = self.blur(self.create_mask(img1, verbose, tag="l"),verbose, tag="l")
         pdf2 = self.blur(self.create_mask(img2, verbose, tag="r"),verbose, tag="r")
+
+        '''
+        edge = self.edges(img)
+        edge1 = self.edges(img1)
+        edge2 = self.edges(img2
+        cv.imshow("edge", edge)
+        k = cv.waitKey(1)
+        
+        pdf  = self.blur(edge)
+        pdf1 = self.blur(edge1,verbose, tag="l")
+        pdf2 = self.blur(edge2,verbose, tag="r")
+        
+        # return edge, edge1, edge2, img, img1, img2
+        '''
+
         return pdf, pdf1, pdf2, img, img1, img2
+        
+
+    
+    def edges(self, image, verbose=False, tag=""):
+
+        edges = cv.Canny(image,100,200)
+
+        # plt.subplot(121),plt.imshow(image,cmap = 'gray')
+        # plt.title('Original Image'), plt.xticks([]), plt.yticks([])
+        # plt.subplot(122),plt.imshow(edges,cmap = 'gray')
+        # plt.title('Edge Image'), plt.xticks([]), plt.yticks([])
+
+        # plt.show()
+        return edges
+
+
+
+
+
 
     def get_raw_image(self, verbose=False, img=None, tag=""):
         img=self.acquire_frame()
@@ -178,6 +216,10 @@ class ImageProcessing(object):
             k = cv.waitKey(0)
 
         return img
+
+        
+
+
 
     def bright_contr(self, img, brightness = -60, contrast = 100, verbose=False, tag=""):#-60 100   -120 127
         img = np.int16(img)

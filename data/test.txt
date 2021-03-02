@@ -1,0 +1,2400 @@
+0
+	GPS : {'timestamp': 22.021, 'coor': ((0.82297+14.82692j), (0.0139558737326122+0.9999026120519735j))}
+	IMU z:  -14.63641  - roll:  -1e-05   - pitch:  0.00026 yaw:  1.53305
+	Car: speed 1  and  steering  2
+1
+	GPS : {'timestamp': 22.021, 'coor': ((0.82297+14.82692j), (0.0139558737326122+0.9999026120519735j))}
+	IMU z:  -14.59894  - roll:  -1e-05   - pitch:  0.00026 yaw:  1.52836
+	Car: speed 1  and  steering  2
+2
+	GPS : {'timestamp': 22.021, 'coor': ((0.82297+14.82692j), (0.0139558737326122+0.9999026120519735j))}
+	IMU z:  -14.5645  - roll:  -1e-05   - pitch:  0.00026 yaw:  1.52403
+	Car: speed 1  and  steering  2
+3
+	GPS : {'timestamp': 22.021, 'coor': ((0.82297+14.82692j), (0.0139558737326122+0.9999026120519735j))}
+	IMU z:  -14.51893  - roll:  -1e-05   - pitch:  0.00026 yaw:  1.51832
+	Car: speed 1  and  steering  2
+4
+	GPS : {'timestamp': 22.021, 'coor': ((0.82297+14.82692j), (0.0139558737326122+0.9999026120519735j))}
+	IMU z:  -14.48047  - roll:  -0.0   - pitch:  0.00027 yaw:  1.51349
+	Car: speed 1  and  steering  2
+5
+	GPS : {'timestamp': 22.021, 'coor': ((0.82297+14.82692j), (0.0139558737326122+0.9999026120519735j))}
+	IMU z:  -14.441  - roll:  -1e-05   - pitch:  0.00026 yaw:  1.50854
+	Car: speed 1  and  steering  2
+6
+	GPS : {'timestamp': 22.021, 'coor': ((0.82297+14.82692j), (0.0139558737326122+0.9999026120519735j))}
+	IMU z:  -14.40256  - roll:  -0.0   - pitch:  0.00026 yaw:  1.50371
+	Car: speed 1  and  steering  2
+7
+	GPS : {'timestamp': 22.021, 'coor': ((0.82297+14.82692j), (0.0139558737326122+0.9999026120519735j))}
+	IMU z:  -14.36414  - roll:  -0.0   - pitch:  0.00026 yaw:  1.49889
+	Car: speed 1  and  steering  2
+8
+	GPS : {'timestamp': 22.021, 'coor': ((0.82297+14.82692j), (0.0139558737326122+0.9999026120519735j))}
+	IMU z:  -14.32877  - roll:  -0.0   - pitch:  0.00026 yaw:  1.49443
+	Car: speed 1  and  steering  2
+9
+	GPS : {'timestamp': 22.021, 'coor': ((0.82297+14.82692j), (0.0139558737326122+0.9999026120519735j))}
+	IMU z:  -14.3025  - roll:  -0.0   - pitch:  0.00026 yaw:  1.49115
+	Car: speed 1  and  steering  2
+10
+	GPS : {'timestamp': 22.021, 'coor': ((0.82297+14.82692j), (0.0139558737326122+0.9999026120519735j))}
+	IMU z:  -14.27725  - roll:  -0.0   - pitch:  0.00026 yaw:  1.48796
+	Car: speed 1  and  steering  2
+11
+	GPS : {'timestamp': 22.021, 'coor': ((0.82297+14.82692j), (0.0139558737326122+0.9999026120519735j))}
+	IMU z:  -14.24495  - roll:  -1e-05   - pitch:  0.00026 yaw:  1.48389
+	Car: speed 1  and  steering  2
+12
+	GPS : {'timestamp': 22.021, 'coor': ((0.82297+14.82692j), (0.0139558737326122+0.9999026120519735j))}
+	IMU z:  -14.21265  - roll:  -0.0   - pitch:  0.00026 yaw:  1.47984
+	Car: speed 1  and  steering  2
+13
+	GPS : {'timestamp': 22.021, 'coor': ((0.82297+14.82692j), (0.0139558737326122+0.9999026120519735j))}
+	IMU z:  -14.17533  - roll:  -1e-05   - pitch:  0.00026 yaw:  1.47512
+	Car: speed 1  and  steering  2
+14
+	GPS : {'timestamp': 22.021, 'coor': ((0.82297+14.82692j), (0.0139558737326122+0.9999026120519735j))}
+	IMU z:  -14.13803  - roll:  -0.0   - pitch:  0.00026 yaw:  1.47044
+	Car: speed 1  and  steering  2
+15
+	GPS : {'timestamp': 22.021, 'coor': ((0.82297+14.82692j), (0.0139558737326122+0.9999026120519735j))}
+	IMU z:  -14.10378  - roll:  -1e-05   - pitch:  0.00026 yaw:  1.46611
+	Car: speed 1  and  steering  2
+16
+	GPS : {'timestamp': 22.021, 'coor': ((0.82297+14.82692j), (0.0139558737326122+0.9999026120519735j))}
+	IMU z:  -14.07759  - roll:  0.0   - pitch:  0.00026 yaw:  1.46282
+	Car: speed 1  and  steering  2
+17
+	GPS : {'timestamp': 22.021, 'coor': ((0.82297+14.82692j), (0.0139558737326122+0.9999026120519735j))}
+	IMU z:  -14.05142  - roll:  -0.0   - pitch:  0.00026 yaw:  1.45951
+	Car: speed 1  and  steering  2
+18
+	GPS : {'timestamp': 22.021, 'coor': ((0.82297+14.82692j), (0.0139558737326122+0.9999026120519735j))}
+	IMU z:  -14.02123  - roll:  -1e-05   - pitch:  0.00026 yaw:  1.4557
+	Car: speed 1  and  steering  2
+19
+	GPS : {'timestamp': 22.021, 'coor': ((0.82297+14.82692j), (0.0139558737326122+0.9999026120519735j))}
+	IMU z:  -13.99106  - roll:  -0.0   - pitch:  0.00026 yaw:  1.4519
+	Car: speed 1  and  steering  2
+20
+	GPS : {'timestamp': 22.021, 'coor': ((0.82297+14.82692j), (0.0139558737326122+0.9999026120519735j))}
+	IMU z:  -13.9589  - roll:  -1e-05   - pitch:  0.00026 yaw:  1.44782
+	Car: speed 1  and  steering  2
+21
+	GPS : {'timestamp': 22.021, 'coor': ((0.82297+14.82692j), (0.0139558737326122+0.9999026120519735j))}
+	IMU z:  -13.92776  - roll:  0.0   - pitch:  0.00026 yaw:  1.4439
+	Car: speed 1  and  steering  2
+22
+	GPS : {'timestamp': 22.021, 'coor': ((0.82297+14.82692j), (0.0139558737326122+0.9999026120519735j))}
+	IMU z:  -13.90567  - roll:  -1e-05   - pitch:  0.00026 yaw:  1.4411
+	Car: speed 1  and  steering  2
+23
+	GPS : {'timestamp': 22.021, 'coor': ((0.82297+14.82692j), (0.0139558737326122+0.9999026120519735j))}
+	IMU z:  -13.87857  - roll:  -1e-05   - pitch:  0.00026 yaw:  1.43766
+	Car: speed 1  and  steering  2
+24
+	GPS : {'timestamp': 22.021, 'coor': ((0.82297+14.82692j), (0.0139558737326122+0.9999026120519735j))}
+	IMU z:  -13.85249  - roll:  0.0   - pitch:  0.00026 yaw:  1.43437
+	Car: speed 1  and  steering  2
+25
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -13.81941  - roll:  -0.0   - pitch:  0.00026 yaw:  1.43018
+	Car: speed 1  and  steering  2
+26
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -13.78535  - roll:  0.0   - pitch:  0.00026 yaw:  1.42586
+	Car: speed 1  and  steering  2
+27
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -13.75332  - roll:  -0.0   - pitch:  0.00026 yaw:  1.4218
+	Car: speed 1  and  steering  2
+28
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -13.72131  - roll:  -1e-05   - pitch:  0.00026 yaw:  1.41773
+	Car: speed 1  and  steering  2
+29
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -13.69431  - roll:  -0.0   - pitch:  0.00026 yaw:  1.41432
+	Car: speed 1  and  steering  2
+30
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -13.66534  - roll:  -0.0   - pitch:  0.00026 yaw:  1.41062
+	Car: speed 1  and  steering  2
+31
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -13.64038  - roll:  -1e-05   - pitch:  0.00026 yaw:  1.40745
+	Car: speed 1  and  steering  2
+32
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -13.61144  - roll:  -0.0   - pitch:  0.00026 yaw:  1.40378
+	Car: speed 1  and  steering  2
+33
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -13.58651  - roll:  -0.0   - pitch:  0.00026 yaw:  1.40059
+	Car: speed 1  and  steering  2
+34
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -13.5616  - roll:  -1e-05   - pitch:  0.00026 yaw:  1.39742
+	Car: speed 1  and  steering  2
+35
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -13.53073  - roll:  -0.0   - pitch:  0.00026 yaw:  1.3935
+	Car: speed 1  and  steering  2
+36
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -13.49291  - roll:  -0.0   - pitch:  0.00026 yaw:  1.38866
+	Car: speed 1  and  steering  2
+37
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -13.46309  - roll:  -0.0   - pitch:  0.00026 yaw:  1.38486
+	Car: speed 1  and  steering  2
+38
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -13.43528  - roll:  -0.0   - pitch:  0.00026 yaw:  1.38131
+	Car: speed 1  and  steering  2
+39
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -13.40153  - roll:  0.0   - pitch:  0.00026 yaw:  1.37699
+	Car: speed 1  and  steering  2
+40
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -13.36781  - roll:  -0.0   - pitch:  0.00026 yaw:  1.37267
+	Car: speed 1  and  steering  2
+41
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -13.34106  - roll:  -1e-05   - pitch:  0.00026 yaw:  1.36924
+	Car: speed 1  and  steering  2
+42
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -13.31235  - roll:  -0.0   - pitch:  0.00026 yaw:  1.36558
+	Car: speed 1  and  steering  2
+43
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -13.2896  - roll:  -0.0   - pitch:  0.00026 yaw:  1.36265
+	Car: speed 1  and  steering  2
+44
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -13.2639  - roll:  -0.0   - pitch:  0.00026 yaw:  1.35935
+	Car: speed 1  and  steering  2
+45
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -13.23822  - roll:  -0.0   - pitch:  0.00026 yaw:  1.35606
+	Car: speed 1  and  steering  2
+46
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -13.19776  - roll:  -0.0   - pitch:  0.00026 yaw:  1.35084
+	Car: speed 1  and  steering  2
+47
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -13.16524  - roll:  -0.0   - pitch:  0.00026 yaw:  1.34667
+	Car: speed 1  and  steering  2
+48
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -13.13274  - roll:  -0.0   - pitch:  0.00026 yaw:  1.34247
+	Car: speed 1  and  steering  2
+49
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -13.10324  - roll:  0.0   - pitch:  0.00026 yaw:  1.33868
+	Car: speed 1  and  steering  2
+50
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -13.07277  - roll:  -0.0   - pitch:  0.00026 yaw:  1.33474
+	Car: speed 1  and  steering  2
+51
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -13.03842  - roll:  -1e-05   - pitch:  0.00026 yaw:  1.33029
+	Car: speed 1  and  steering  2
+52
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -13.00215  - roll:  -0.0   - pitch:  0.00026 yaw:  1.32561
+	Car: speed 1  and  steering  2
+53
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -12.97571  - roll:  -0.0   - pitch:  0.00026 yaw:  1.32218
+	Car: speed 1  and  steering  2
+54
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -12.95125  - roll:  -0.0   - pitch:  0.00026 yaw:  1.31902
+	Car: speed 1  and  steering  2
+55
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -12.91997  - roll:  -0.0   - pitch:  0.00026 yaw:  1.31495
+	Car: speed 1  and  steering  2
+56
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -12.89361  - roll:  -0.0   - pitch:  0.00026 yaw:  1.31154
+	Car: speed 1  and  steering  2
+57
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -12.8663  - roll:  -0.0   - pitch:  0.00026 yaw:  1.30798
+	Car: speed 1  and  steering  2
+58
+	GPS : {'timestamp': 23.022, 'coor': ((0.92024+13.81941j), (0.14015338475346634+0.9901298039863999j))}
+	IMU z:  -12.83707  - roll:  0.0   - pitch:  0.00026 yaw:  1.30418
+	Car: speed 1  and  steering  2
+59
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -12.80884  - roll:  -0.0   - pitch:  0.00026 yaw:  1.3005
+	Car: speed 1  and  steering  2
+60
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -12.78453  - roll:  -0.0   - pitch:  0.00026 yaw:  1.29732
+	Car: speed 1  and  steering  2
+61
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -12.76802  - roll:  0.0   - pitch:  0.00026 yaw:  1.29518
+	Car: speed 1  and  steering  2
+62
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -12.7486  - roll:  -0.0   - pitch:  0.00026 yaw:  1.29265
+	Car: speed 1  and  steering  2
+63
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -12.72048  - roll:  -0.0   - pitch:  0.00026 yaw:  1.28896
+	Car: speed 1  and  steering  2
+64
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -12.68754  - roll:  -0.0   - pitch:  0.00026 yaw:  1.28466
+	Car: speed 1  and  steering  2
+65
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -12.65948  - roll:  -0.0   - pitch:  0.00026 yaw:  1.28098
+	Car: speed 1  and  steering  2
+66
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -12.6276  - roll:  -0.0   - pitch:  0.00026 yaw:  1.27679
+	Car: speed 1  and  steering  2
+67
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -12.60154  - roll:  -0.0   - pitch:  0.00026 yaw:  1.27338
+	Car: speed 1  and  steering  2
+68
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -12.57455  - roll:  -0.0   - pitch:  0.00026 yaw:  1.26982
+	Car: speed 1  and  steering  2
+69
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -12.5447  - roll:  0.0   - pitch:  0.00026 yaw:  1.2659
+	Car: speed 1  and  steering  2
+70
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -12.51298  - roll:  -0.0   - pitch:  0.00026 yaw:  1.26172
+	Car: speed 1  and  steering  2
+71
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -12.48033  - roll:  -0.0   - pitch:  0.00026 yaw:  1.2574
+	Car: speed 1  and  steering  2
+72
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -12.4487  - roll:  -0.0   - pitch:  0.00026 yaw:  1.25324
+	Car: speed 1  and  steering  2
+73
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -12.41328  - roll:  -0.0   - pitch:  0.00026 yaw:  1.24853
+	Car: speed 1  and  steering  2
+74
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -12.37984  - roll:  -0.0   - pitch:  0.00026 yaw:  1.24412
+	Car: speed 1  and  steering  2
+75
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -12.34168  - roll:  -0.0   - pitch:  0.00026 yaw:  1.23903
+	Car: speed 1  and  steering  2
+76
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -12.30644  - roll:  -0.0   - pitch:  0.00026 yaw:  1.23436
+	Car: speed 1  and  steering  2
+77
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -12.26747  - roll:  0.0   - pitch:  0.00026 yaw:  1.22916
+	Car: speed 1  and  steering  2
+78
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -12.2409  - roll:  -0.0   - pitch:  0.00026 yaw:  1.22562
+	Car: speed 1  and  steering  2
+79
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -12.20869  - roll:  -0.0   - pitch:  0.00026 yaw:  1.22131
+	Car: speed 1  and  steering  2
+80
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -12.17842  - roll:  -0.0   - pitch:  0.00026 yaw:  1.21727
+	Car: speed 1  and  steering  2
+81
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -12.14347  - roll:  0.0   - pitch:  0.00026 yaw:  1.21257
+	Car: speed 1  and  steering  2
+82
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -12.11425  - roll:  -0.0   - pitch:  0.00026 yaw:  1.20866
+	Car: speed 1  and  steering  2
+83
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -12.08789  - roll:  -0.0   - pitch:  0.00026 yaw:  1.20511
+	Car: speed 1  and  steering  2
+84
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -12.06063  - roll:  -0.0   - pitch:  0.00026 yaw:  1.20145
+	Car: speed 1  and  steering  2
+85
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -12.03247  - roll:  -0.0   - pitch:  0.00026 yaw:  1.19764
+	Car: speed 1  and  steering  2
+86
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -12.01841  - roll:  0.0   - pitch:  0.00026 yaw:  1.19574
+	Car: speed 1  and  steering  2
+87
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -11.99781  - roll:  -0.0   - pitch:  0.00026 yaw:  1.19297
+	Car: speed 1  and  steering  2
+88
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -11.97536  - roll:  -0.0   - pitch:  0.00026 yaw:  1.18993
+	Car: speed 1  and  steering  2
+89
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -11.95107  - roll:  0.0   - pitch:  0.00026 yaw:  1.18664
+	Car: speed 1  and  steering  2
+90
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -11.92868  - roll:  -0.0   - pitch:  0.00026 yaw:  1.18361
+	Car: speed 1  and  steering  2
+91
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -11.90819  - roll:  -0.0   - pitch:  0.00026 yaw:  1.18082
+	Car: speed 1  and  steering  2
+92
+	GPS : {'timestamp': 24.024, 'coor': ((1.14492+12.82928j), (0.2644430102591415+0.9644013139378667j))}
+	IMU z:  -11.88027  - roll:  0.0   - pitch:  0.00026 yaw:  1.17703
+	Car: speed 1  and  steering  2
+93
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.85427  - roll:  -0.0   - pitch:  0.00026 yaw:  1.17349
+	Car: speed 1  and  steering  2
+94
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.83015  - roll:  -0.0   - pitch:  0.00026 yaw:  1.17019
+	Car: speed 1  and  steering  2
+95
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.81533  - roll:  0.0   - pitch:  0.00026 yaw:  1.16818
+	Car: speed 1  and  steering  2
+96
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.78757  - roll:  -0.0   - pitch:  0.00026 yaw:  1.16438
+	Car: speed 1  and  steering  2
+97
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.76356  - roll:  -0.0   - pitch:  0.00026 yaw:  1.16109
+	Car: speed 1  and  steering  2
+98
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.74142  - roll:  0.0   - pitch:  0.00026 yaw:  1.15807
+	Car: speed 1  and  steering  2
+99
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.71564  - roll:  -0.0   - pitch:  0.00025 yaw:  1.15452
+	Car: speed 1  and  steering  2
+100
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.68714  - roll:  0.0   - pitch:  0.00026 yaw:  1.1506
+	Car: speed 1  and  steering  2
+101
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.66603  - roll:  -0.0   - pitch:  0.00026 yaw:  1.1477
+	Car: speed 1  and  steering  2
+102
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.65502  - roll:  -0.0   - pitch:  0.00026 yaw:  1.14618
+	Car: speed 1  and  steering  2
+103
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.64128  - roll:  -0.0   - pitch:  0.00026 yaw:  1.14428
+	Car: speed 1  and  steering  2
+104
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.62115  - roll:  0.0   - pitch:  0.00026 yaw:  1.1415
+	Car: speed 1  and  steering  2
+105
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.59556  - roll:  -0.0   - pitch:  0.00025 yaw:  1.13797
+	Car: speed 1  and  steering  2
+106
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.57093  - roll:  0.0   - pitch:  0.00025 yaw:  1.13455
+	Car: speed 1  and  steering  2
+107
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.54453  - roll:  -0.0   - pitch:  0.00025 yaw:  1.13089
+	Car: speed 1  and  steering  2
+108
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.52271  - roll:  0.0   - pitch:  0.00026 yaw:  1.12786
+	Car: speed 1  and  steering  2
+109
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.50001  - roll:  -0.0   - pitch:  0.00025 yaw:  1.1247
+	Car: speed 1  and  steering  2
+110
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.47826  - roll:  -0.0   - pitch:  0.00025 yaw:  1.12166
+	Car: speed 1  and  steering  2
+111
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.45654  - roll:  -0.0   - pitch:  0.00025 yaw:  1.11864
+	Car: speed 1  and  steering  2
+112
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.44028  - roll:  -0.0   - pitch:  0.00025 yaw:  1.11637
+	Car: speed 1  and  steering  2
+113
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.41411  - roll:  0.0   - pitch:  0.00025 yaw:  1.1127
+	Car: speed 1  and  steering  2
+114
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.38979  - roll:  0.0   - pitch:  0.00025 yaw:  1.1093
+	Car: speed 1  and  steering  2
+115
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.36462  - roll:  -0.0   - pitch:  0.00025 yaw:  1.10575
+	Car: speed 1  and  steering  2
+116
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.3395  - roll:  -0.0   - pitch:  0.00025 yaw:  1.10222
+	Car: speed 1  and  steering  2
+117
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.31352  - roll:  -0.0   - pitch:  0.00025 yaw:  1.09856
+	Car: speed 1  and  steering  2
+118
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.29296  - roll:  1e-05   - pitch:  0.00025 yaw:  1.09566
+	Car: speed 1  and  steering  2
+119
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.2644  - roll:  -0.0   - pitch:  0.00025 yaw:  1.09162
+	Car: speed 1  and  steering  2
+120
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.22968  - roll:  0.0   - pitch:  0.00025 yaw:  1.0867
+	Car: speed 1  and  steering  2
+121
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.19772  - roll:  0.0   - pitch:  0.00025 yaw:  1.08216
+	Car: speed 1  and  steering  2
+122
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.17645  - roll:  1e-05   - pitch:  0.00025 yaw:  1.07913
+	Car: speed 1  and  steering  2
+123
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.14639  - roll:  -0.0   - pitch:  0.00025 yaw:  1.07484
+	Car: speed 1  and  steering  2
+124
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.11464  - roll:  0.0   - pitch:  0.00025 yaw:  1.0703
+	Car: speed 1  and  steering  2
+125
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.08736  - roll:  0.0   - pitch:  0.00025 yaw:  1.06639
+	Car: speed 1  and  steering  2
+126
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.05313  - roll:  0.0   - pitch:  0.00025 yaw:  1.06148
+	Car: speed 1  and  steering  2
+127
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.0225  - roll:  0.0   - pitch:  0.00025 yaw:  1.05706
+	Car: speed 1  and  steering  2
+128
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -11.00067  - roll:  0.0   - pitch:  0.00025 yaw:  1.05391
+	Car: speed 1  and  steering  2
+129
+	GPS : {'timestamp': 25.024, 'coor': ((1.49303+11.87563j), (0.384250930431623+0.9232286945618794j))}
+	IMU z:  -10.97539  - roll:  -0.0   - pitch:  0.00025 yaw:  1.05026
+	Car: speed 1  and  steering  2
+130
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.94931  - roll:  1e-05   - pitch:  0.00025 yaw:  1.04648
+	Car: speed 1  and  steering  2
+131
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.92415  - roll:  -0.0   - pitch:  0.00025 yaw:  1.04283
+	Car: speed 1  and  steering  2
+132
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.89731  - roll:  0.0   - pitch:  0.00025 yaw:  1.03892
+	Car: speed 1  and  steering  2
+133
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.86968  - roll:  0.0   - pitch:  0.00025 yaw:  1.03489
+	Car: speed 1  and  steering  2
+134
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.849  - roll:  0.0   - pitch:  0.00025 yaw:  1.03186
+	Car: speed 1  and  steering  2
+135
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.82321  - roll:  0.0   - pitch:  0.00025 yaw:  1.02809
+	Car: speed 1  and  steering  2
+136
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.79233  - roll:  1e-05   - pitch:  0.00025 yaw:  1.02355
+	Car: speed 1  and  steering  2
+137
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.77095  - roll:  0.0   - pitch:  0.00025 yaw:  1.02041
+	Car: speed 1  and  steering  2
+138
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.75216  - roll:  0.0   - pitch:  0.00025 yaw:  1.01763
+	Car: speed 1  and  steering  2
+139
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.7249  - roll:  0.0   - pitch:  0.00025 yaw:  1.01361
+	Car: speed 1  and  steering  2
+140
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.69347  - roll:  0.0   - pitch:  0.00025 yaw:  1.00895
+	Car: speed 1  and  steering  2
+141
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.66551  - roll:  0.0   - pitch:  0.00025 yaw:  1.00481
+	Car: speed 1  and  steering  2
+142
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.63848  - roll:  -0.0   - pitch:  0.00025 yaw:  1.00077
+	Car: speed 1  and  steering  2
+143
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.61236  - roll:  0.0   - pitch:  0.00025 yaw:  0.99688
+	Car: speed 1  and  steering  2
+144
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.58715  - roll:  0.0   - pitch:  0.00025 yaw:  0.9931
+	Car: speed 1  and  steering  2
+145
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.56116  - roll:  1e-05   - pitch:  0.00025 yaw:  0.98921
+	Car: speed 1  and  steering  2
+146
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.5269  - roll:  0.0   - pitch:  0.00025 yaw:  0.98405
+	Car: speed 1  and  steering  2
+147
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.50358  - roll:  -0.0   - pitch:  0.00025 yaw:  0.98053
+	Car: speed 1  and  steering  2
+148
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.4828  - roll:  0.0   - pitch:  0.00025 yaw:  0.9774
+	Car: speed 1  and  steering  2
+149
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.45958  - roll:  0.0   - pitch:  0.00025 yaw:  0.97387
+	Car: speed 1  and  steering  2
+150
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.43229  - roll:  1e-05   - pitch:  0.00025 yaw:  0.96973
+	Car: speed 1  and  steering  2
+151
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.41249  - roll:  0.0   - pitch:  0.00025 yaw:  0.96671
+	Car: speed 1  and  steering  2
+152
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.39192  - roll:  0.0   - pitch:  0.00025 yaw:  0.96356
+	Car: speed 1  and  steering  2
+153
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.36975  - roll:  0.0   - pitch:  0.00025 yaw:  0.96018
+	Car: speed 1  and  steering  2
+154
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.34518  - roll:  0.0   - pitch:  0.00025 yaw:  0.95641
+	Car: speed 1  and  steering  2
+155
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.31253  - roll:  0.0   - pitch:  0.00025 yaw:  0.9514
+	Car: speed 1  and  steering  2
+156
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.28568  - roll:  0.0   - pitch:  0.00025 yaw:  0.94724
+	Car: speed 1  and  steering  2
+157
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.26054  - roll:  1e-05   - pitch:  0.00025 yaw:  0.94336
+	Car: speed 1  and  steering  2
+158
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.23708  - roll:  0.0   - pitch:  0.00025 yaw:  0.93972
+	Car: speed 1  and  steering  2
+159
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.21208  - roll:  0.0   - pitch:  0.00025 yaw:  0.93582
+	Car: speed 1  and  steering  2
+160
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.19117  - roll:  0.0   - pitch:  0.00025 yaw:  0.93257
+	Car: speed 1  and  steering  2
+161
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.17432  - roll:  0.0   - pitch:  0.00025 yaw:  0.92993
+	Car: speed 1  and  steering  2
+162
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.16231  - roll:  0.0   - pitch:  0.00025 yaw:  0.92805
+	Car: speed 1  and  steering  2
+163
+	GPS : {'timestamp': 26.026, 'coor': ((1.95865+10.97365j), (0.49756237363459255+0.8674282012611246j))}
+	IMU z:  -10.14072  - roll:  1e-05   - pitch:  0.00025 yaw:  0.92468
+	Car: speed 1  and  steering  2
+164
+	GPS : {'timestamp': 27.026, 'coor': ((2.53385+10.13753j), (0.602489258997768+0.7981269903920807j))}
+	IMU z:  -10.1176  - roll:  0.0   - pitch:  0.00025 yaw:  0.92103
+	Car: speed 1  and  steering  2
+165
+	GPS : {'timestamp': 27.026, 'coor': ((2.53385+10.13753j), (0.602489258997768+0.7981269903920807j))}
+	IMU z:  -10.08979  - roll:  1e-05   - pitch:  0.00025 yaw:  0.91665
+	Car: speed 1  and  steering  2
+166
+	GPS : {'timestamp': 27.026, 'coor': ((2.53385+10.13753j), (0.602489258997768+0.7981269903920807j))}
+	IMU z:  -10.06524  - roll:  0.0   - pitch:  0.00025 yaw:  0.91276
+	Car: speed 1  and  steering  2
+167
+	GPS : {'timestamp': 27.026, 'coor': ((2.53385+10.13753j), (0.602489258997768+0.7981269903920807j))}
+	IMU z:  -10.04155  - roll:  0.0   - pitch:  0.00024 yaw:  0.90899
+	Car: speed 1  and  steering  2
+168
+	GPS : {'timestamp': 27.026, 'coor': ((2.53385+10.13753j), (0.602489258997768+0.7981269903920807j))}
+	IMU z:  -10.0203  - roll:  0.0   - pitch:  0.00025 yaw:  0.90562
+	Car: speed 1  and  steering  2
+169
+	GPS : {'timestamp': 27.026, 'coor': ((2.53385+10.13753j), (0.602489258997768+0.7981269903920807j))}
+	IMU z:  -9.9991  - roll:  0.0   - pitch:  0.00025 yaw:  0.90224
+	Car: speed 1  and  steering  2
+170
+	GPS : {'timestamp': 27.026, 'coor': ((2.53385+10.13753j), (0.602489258997768+0.7981269903920807j))}
+	IMU z:  -9.97483  - roll:  1e-05   - pitch:  0.00025 yaw:  0.89836
+	Car: speed 1  and  steering  2
+171
+	GPS : {'timestamp': 27.026, 'coor': ((2.53385+10.13753j), (0.602489258997768+0.7981269903920807j))}
+	IMU z:  -9.95376  - roll:  0.0   - pitch:  0.00024 yaw:  0.89498
+	Car: speed 1  and  steering  2
+172
+	GPS : {'timestamp': 27.026, 'coor': ((2.53385+10.13753j), (0.602489258997768+0.7981269903920807j))}
+	IMU z:  -9.92964  - roll:  0.0   - pitch:  0.00024 yaw:  0.89108
+	Car: speed 1  and  steering  2
+173
+	GPS : {'timestamp': 27.026, 'coor': ((2.53385+10.13753j), (0.602489258997768+0.7981269903920807j))}
+	IMU z:  -9.90637  - roll:  0.0   - pitch:  0.00024 yaw:  0.88735
+	Car: speed 1  and  steering  2
+174
+	GPS : {'timestamp': 27.026, 'coor': ((2.53385+10.13753j), (0.602489258997768+0.7981269903920807j))}
+	IMU z:  -9.88704  - roll:  0.0   - pitch:  0.00024 yaw:  0.88421
+	Car: speed 1  and  steering  2
+175
+	GPS : {'timestamp': 27.026, 'coor': ((2.53385+10.13753j), (0.602489258997768+0.7981269903920807j))}
+	IMU z:  -9.86622  - roll:  0.0   - pitch:  0.00024 yaw:  0.88083
+	Car: speed 1  and  steering  2
+176
+	GPS : {'timestamp': 27.026, 'coor': ((2.53385+10.13753j), (0.602489258997768+0.7981269903920807j))}
+	IMU z:  -9.84085  - roll:  0.0   - pitch:  0.00024 yaw:  0.87671
+	Car: speed 1  and  steering  2
+177
+	GPS : {'timestamp': 27.026, 'coor': ((2.53385+10.13753j), (0.602489258997768+0.7981269903920807j))}
+	IMU z:  -9.81022  - roll:  0.0   - pitch:  0.00024 yaw:  0.8717
+	Car: speed 1  and  steering  2
+178
+	GPS : {'timestamp': 27.026, 'coor': ((2.53385+10.13753j), (0.602489258997768+0.7981269903920807j))}
+	IMU z:  -9.78125  - roll:  0.0   - pitch:  0.00024 yaw:  0.86695
+	Car: speed 1  and  steering  2
+179
+	GPS : {'timestamp': 27.026, 'coor': ((2.53385+10.13753j), (0.602489258997768+0.7981269903920807j))}
+	IMU z:  -9.75392  - roll:  1e-05   - pitch:  0.00024 yaw:  0.86245
+	Car: speed 1  and  steering  2
+180
+	GPS : {'timestamp': 27.026, 'coor': ((2.53385+10.13753j), (0.602489258997768+0.7981269903920807j))}
+	IMU z:  -9.72594  - roll:  0.0   - pitch:  0.00024 yaw:  0.85783
+	Car: speed 1  and  steering  2
+181
+	GPS : {'timestamp': 27.026, 'coor': ((2.53385+10.13753j), (0.602489258997768+0.7981269903920807j))}
+	IMU z:  -9.69883  - roll:  0.0   - pitch:  0.00024 yaw:  0.85332
+	Car: speed 1  and  steering  2
+182
+	GPS : {'timestamp': 27.026, 'coor': ((2.53385+10.13753j), (0.602489258997768+0.7981269903920807j))}
+	IMU z:  -9.68006  - roll:  0.0   - pitch:  0.00024 yaw:  0.85021
+	Car: speed 1  and  steering  2
+183
+	GPS : {'timestamp': 27.026, 'coor': ((2.53385+10.13753j), (0.602489258997768+0.7981269903920807j))}
+	IMU z:  -9.65687  - roll:  0.0   - pitch:  0.00024 yaw:  0.84633
+	Car: speed 1  and  steering  2
+184
+	GPS : {'timestamp': 27.026, 'coor': ((2.53385+10.13753j), (0.602489258997768+0.7981269903920807j))}
+	IMU z:  -9.63004  - roll:  1e-05   - pitch:  0.00024 yaw:  0.84185
+	Car: speed 1  and  steering  2
+185
+	GPS : {'timestamp': 27.026, 'coor': ((2.53385+10.13753j), (0.602489258997768+0.7981269903920807j))}
+	IMU z:  -9.60184  - roll:  0.0   - pitch:  0.00024 yaw:  0.8371
+	Car: speed 1  and  steering  2
+186
+	GPS : {'timestamp': 27.026, 'coor': ((2.53385+10.13753j), (0.602489258997768+0.7981269903920807j))}
+	IMU z:  -9.5841  - roll:  0.0   - pitch:  0.00024 yaw:  0.83412
+	Car: speed 1  and  steering  2
+187
+	GPS : {'timestamp': 27.026, 'coor': ((2.53385+10.13753j), (0.602489258997768+0.7981269903920807j))}
+	IMU z:  -9.5745  - roll:  0.0   - pitch:  0.00024 yaw:  0.8325
+	Car: speed 1  and  steering  2
+188
+	GPS : {'timestamp': 27.026, 'coor': ((2.53385+10.13753j), (0.602489258997768+0.7981269903920807j))}
+	IMU z:  -9.55904  - roll:  0.0   - pitch:  0.00024 yaw:  0.82987
+	Car: speed 1  and  steering  2
+189
+	GPS : {'timestamp': 27.026, 'coor': ((2.53385+10.13753j), (0.602489258997768+0.7981269903920807j))}
+	IMU z:  -9.54508  - roll:  1e-05   - pitch:  0.00024 yaw:  0.82749
+	Car: speed 1  and  steering  2
+190
+	GPS : {'timestamp': 27.026, 'coor': ((2.53385+10.13753j), (0.602489258997768+0.7981269903920807j))}
+	IMU z:  -9.5209  - roll:  0.0   - pitch:  0.00024 yaw:  0.82337
+	Car: speed 1  and  steering  2
+191
+	GPS : {'timestamp': 27.026, 'coor': ((2.53385+10.13753j), (0.602489258997768+0.7981269903920807j))}
+	IMU z:  -9.50046  - roll:  1e-05   - pitch:  0.00024 yaw:  0.81987
+	Car: speed 1  and  steering  2
+192
+	GPS : {'timestamp': 27.026, 'coor': ((2.53385+10.13753j), (0.602489258997768+0.7981269903920807j))}
+	IMU z:  -9.48517  - roll:  0.0   - pitch:  0.00024 yaw:  0.81725
+	Car: speed 1  and  steering  2
+193
+	GPS : {'timestamp': 27.026, 'coor': ((2.53385+10.13753j), (0.602489258997768+0.7981269903920807j))}
+	IMU z:  -9.46992  - roll:  0.0   - pitch:  0.00024 yaw:  0.81462
+	Car: speed 1  and  steering  2
+194
+	GPS : {'timestamp': 27.026, 'coor': ((2.53385+10.13753j), (0.602489258997768+0.7981269903920807j))}
+	IMU z:  -9.44675  - roll:  0.0   - pitch:  0.00024 yaw:  0.81062
+	Car: speed 1  and  steering  2
+195
+	GPS : {'timestamp': 27.026, 'coor': ((2.53385+10.13753j), (0.602489258997768+0.7981269903920807j))}
+	IMU z:  -9.42367  - roll:  0.0   - pitch:  0.00024 yaw:  0.80661
+	Car: speed 1  and  steering  2
+196
+	GPS : {'timestamp': 27.026, 'coor': ((2.53385+10.13753j), (0.602489258997768+0.7981269903920807j))}
+	IMU z:  -9.39996  - roll:  1e-05   - pitch:  0.00024 yaw:  0.80249
+	Car: speed 1  and  steering  2
+197
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -9.37278  - roll:  0.0   - pitch:  0.00024 yaw:  0.79774
+	Car: speed 1  and  steering  2
+198
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -9.35212  - roll:  0.0   - pitch:  0.00024 yaw:  0.79412
+	Car: speed 1  and  steering  2
+199
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -9.328  - roll:  0.0   - pitch:  0.00024 yaw:  0.78987
+	Car: speed 1  and  steering  2
+200
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -9.30821  - roll:  1e-05   - pitch:  0.00024 yaw:  0.78637
+	Car: speed 1  and  steering  2
+201
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -9.28779  - roll:  0.0   - pitch:  0.00024 yaw:  0.78274
+	Car: speed 1  and  steering  2
+202
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -9.27796  - roll:  0.0   - pitch:  0.00024 yaw:  0.78098
+	Car: speed 1  and  steering  2
+203
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -9.26465  - roll:  1e-05   - pitch:  0.00024 yaw:  0.77861
+	Car: speed 1  and  steering  2
+204
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -9.24718  - roll:  0.0   - pitch:  0.00024 yaw:  0.77549
+	Car: speed 1  and  steering  2
+205
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -9.23047  - roll:  0.0   - pitch:  0.00024 yaw:  0.77248
+	Car: speed 1  and  steering  2
+206
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -9.21867  - roll:  1e-05   - pitch:  0.00024 yaw:  0.77035
+	Car: speed 1  and  steering  2
+207
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -9.20689  - roll:  0.0   - pitch:  0.00025 yaw:  0.76823
+	Car: speed 1  and  steering  2
+208
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -9.18824  - roll:  0.0   - pitch:  0.00024 yaw:  0.76484
+	Car: speed 1  and  steering  2
+209
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -9.16416  - roll:  1e-05   - pitch:  0.00025 yaw:  0.76047
+	Car: speed 1  and  steering  2
+210
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -9.15593  - roll:  0.0   - pitch:  0.00025 yaw:  0.75897
+	Car: speed 1  and  steering  2
+211
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -9.15045  - roll:  0.0   - pitch:  0.00025 yaw:  0.75797
+	Car: speed 1  and  steering  2
+212
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -9.13747  - roll:  0.0   - pitch:  0.00024 yaw:  0.75558
+	Car: speed 1  and  steering  2
+213
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -9.11839  - roll:  0.0   - pitch:  0.00025 yaw:  0.75207
+	Car: speed 1  and  steering  2
+214
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -9.09736  - roll:  0.0   - pitch:  0.00025 yaw:  0.74819
+	Car: speed 1  and  steering  2
+215
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -9.08249  - roll:  0.0   - pitch:  0.00025 yaw:  0.74543
+	Car: speed 1  and  steering  2
+216
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -9.06094  - roll:  1e-05   - pitch:  0.00025 yaw:  0.74143
+	Car: speed 1  and  steering  2
+217
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -9.04083  - roll:  0.0   - pitch:  0.00025 yaw:  0.73766
+	Car: speed 1  and  steering  2
+218
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -9.02414  - roll:  1e-05   - pitch:  0.00025 yaw:  0.73453
+	Car: speed 1  and  steering  2
+219
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -9.00551  - roll:  0.0   - pitch:  0.00025 yaw:  0.73103
+	Car: speed 1  and  steering  2
+220
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -8.98498  - roll:  0.0   - pitch:  0.00025 yaw:  0.72713
+	Car: speed 1  and  steering  2
+221
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -8.95928  - roll:  0.0   - pitch:  0.00025 yaw:  0.72225
+	Car: speed 1  and  steering  2
+222
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -8.94682  - roll:  0.0   - pitch:  0.00025 yaw:  0.71986
+	Car: speed 1  and  steering  2
+223
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -8.93569  - roll:  0.0   - pitch:  0.00025 yaw:  0.71773
+	Car: speed 1  and  steering  2
+224
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -8.91613  - roll:  0.0   - pitch:  0.00025 yaw:  0.71397
+	Car: speed 1  and  steering  2
+225
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -8.89731  - roll:  0.0   - pitch:  0.00025 yaw:  0.71032
+	Car: speed 1  and  steering  2
+226
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -8.88695  - roll:  1e-05   - pitch:  0.00025 yaw:  0.70832
+	Car: speed 1  and  steering  2
+227
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -8.87985  - roll:  0.0   - pitch:  0.00025 yaw:  0.70695
+	Car: speed 1  and  steering  2
+228
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -8.86697  - roll:  0.0   - pitch:  0.00025 yaw:  0.70443
+	Car: speed 1  and  steering  2
+229
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -8.85669  - roll:  0.0   - pitch:  0.00025 yaw:  0.70242
+	Car: speed 1  and  steering  2
+230
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -8.83557  - roll:  0.0   - pitch:  0.00025 yaw:  0.69829
+	Car: speed 1  and  steering  2
+231
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -8.81076  - roll:  0.0   - pitch:  0.00025 yaw:  0.69338
+	Car: speed 1  and  steering  2
+232
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -8.79114  - roll:  1e-05   - pitch:  0.00025 yaw:  0.6895
+	Car: speed 1  and  steering  2
+233
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -8.77476  - roll:  0.0   - pitch:  0.00025 yaw:  0.68623
+	Car: speed 1  and  steering  2
+234
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -8.7597  - roll:  1e-05   - pitch:  0.00025 yaw:  0.68321
+	Car: speed 1  and  steering  2
+235
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -8.74096  - roll:  0.0   - pitch:  0.00025 yaw:  0.67945
+	Car: speed 1  and  steering  2
+236
+	GPS : {'timestamp': 28.028, 'coor': ((3.20912+9.37992j), (0.6974308835205649+0.7166520513552753j))}
+	IMU z:  -8.72479  - roll:  0.0   - pitch:  0.00025 yaw:  0.67617
+	Car: speed 1  and  steering  2
+237
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.70498  - roll:  1e-05   - pitch:  0.00025 yaw:  0.67216
+	Car: speed 1  and  steering  2
+238
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.68958  - roll:  0.0   - pitch:  0.00025 yaw:  0.66902
+	Car: speed 1  and  steering  2
+239
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.67118  - roll:  0.0   - pitch:  0.00025 yaw:  0.66524
+	Car: speed 1  and  steering  2
+240
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.65592  - roll:  1e-05   - pitch:  0.00025 yaw:  0.66211
+	Car: speed 1  and  steering  2
+241
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.64011  - roll:  0.0   - pitch:  0.00025 yaw:  0.65883
+	Car: speed 1  and  steering  2
+242
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.62861  - roll:  0.0   - pitch:  0.00025 yaw:  0.65644
+	Car: speed 1  and  steering  2
+243
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.61533  - roll:  1e-05   - pitch:  0.00025 yaw:  0.65368
+	Car: speed 1  and  steering  2
+244
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.59971  - roll:  0.0   - pitch:  0.00025 yaw:  0.65042
+	Car: speed 1  and  steering  2
+245
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.58535  - roll:  0.0   - pitch:  0.00025 yaw:  0.64738
+	Car: speed 1  and  steering  2
+246
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.57223  - roll:  1e-05   - pitch:  0.00025 yaw:  0.64462
+	Car: speed 1  and  steering  2
+247
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.55561  - roll:  0.0   - pitch:  0.00025 yaw:  0.64111
+	Car: speed 1  and  steering  2
+248
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.54734  - roll:  0.0   - pitch:  0.00025 yaw:  0.63934
+	Car: speed 1  and  steering  2
+249
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.52791  - roll:  1e-05   - pitch:  0.00025 yaw:  0.63518
+	Car: speed 1  and  steering  2
+250
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.50626  - roll:  0.0   - pitch:  0.00025 yaw:  0.63054
+	Car: speed 1  and  steering  2
+251
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.49403  - roll:  0.0   - pitch:  0.00025 yaw:  0.62788
+	Car: speed 1  and  steering  2
+252
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.48128  - roll:  1e-05   - pitch:  0.00025 yaw:  0.62512
+	Car: speed 1  and  steering  2
+253
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.45879  - roll:  0.0   - pitch:  0.00025 yaw:  0.62021
+	Car: speed 1  and  steering  2
+254
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.43931  - roll:  1e-05   - pitch:  0.00025 yaw:  0.61593
+	Car: speed 1  and  steering  2
+255
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.42905  - roll:  0.0   - pitch:  0.00025 yaw:  0.61367
+	Car: speed 1  and  steering  2
+256
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.41203  - roll:  0.0   - pitch:  0.00025 yaw:  0.60988
+	Car: speed 1  and  steering  2
+257
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.39566  - roll:  0.0   - pitch:  0.00025 yaw:  0.60624
+	Car: speed 1  and  steering  2
+258
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.3805  - roll:  0.0   - pitch:  0.00025 yaw:  0.60283
+	Car: speed 1  and  steering  2
+259
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.37156  - roll:  1e-05   - pitch:  0.00025 yaw:  0.60082
+	Car: speed 1  and  steering  2
+260
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.36041  - roll:  0.0   - pitch:  0.00025 yaw:  0.59831
+	Car: speed 1  and  steering  2
+261
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.35042  - roll:  0.0   - pitch:  0.00025 yaw:  0.59604
+	Car: speed 1  and  steering  2
+262
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.34544  - roll:  0.0   - pitch:  0.00025 yaw:  0.5949
+	Car: speed 1  and  steering  2
+263
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.33715  - roll:  0.0   - pitch:  0.00025 yaw:  0.593
+	Car: speed 1  and  steering  2
+264
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.32175  - roll:  0.0   - pitch:  0.00025 yaw:  0.58949
+	Car: speed 1  and  steering  2
+265
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.30262  - roll:  0.0   - pitch:  0.00025 yaw:  0.58507
+	Car: speed 1  and  steering  2
+266
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.28578  - roll:  1e-05   - pitch:  0.00025 yaw:  0.58117
+	Car: speed 1  and  steering  2
+267
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.26797  - roll:  0.0   - pitch:  0.00025 yaw:  0.577
+	Car: speed 1  and  steering  2
+268
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.24655  - roll:  0.0   - pitch:  0.00025 yaw:  0.57197
+	Car: speed 1  and  steering  2
+269
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.22583  - roll:  0.0   - pitch:  0.00025 yaw:  0.56704
+	Car: speed 1  and  steering  2
+270
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.20789  - roll:  1e-05   - pitch:  0.00025 yaw:  0.56277
+	Car: speed 1  and  steering  2
+271
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.19166  - roll:  0.0   - pitch:  0.00025 yaw:  0.55885
+	Car: speed 1  and  steering  2
+272
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.17812  - roll:  0.0   - pitch:  0.00025 yaw:  0.55556
+	Car: speed 1  and  steering  2
+273
+	GPS : {'timestamp': 29.029, 'coor': ((3.97464+8.71178j), (0.7816247063425298+0.6237490027526731j))}
+	IMU z:  -8.16362  - roll:  1e-05   - pitch:  0.00025 yaw:  0.55205
+	Car: speed 1  and  steering  2
+274
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -8.14409  - roll:  0.0   - pitch:  0.00025 yaw:  0.54724
+	Car: speed 1  and  steering  2
+275
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -8.13387  - roll:  1e-05   - pitch:  0.00025 yaw:  0.54472
+	Car: speed 1  and  steering  2
+276
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -8.12319  - roll:  0.0   - pitch:  0.00025 yaw:  0.54208
+	Car: speed 1  and  steering  2
+277
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -8.10853  - roll:  0.0   - pitch:  0.00025 yaw:  0.53841
+	Car: speed 1  and  steering  2
+278
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -8.09145  - roll:  0.0   - pitch:  0.00025 yaw:  0.53413
+	Car: speed 1  and  steering  2
+279
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -8.07599  - roll:  0.0   - pitch:  0.00025 yaw:  0.5302
+	Car: speed 1  and  steering  2
+280
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -8.05916  - roll:  1e-05   - pitch:  0.00026 yaw:  0.52592
+	Car: speed 1  and  steering  2
+281
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -8.04148  - roll:  0.0   - pitch:  0.00025 yaw:  0.52137
+	Car: speed 1  and  steering  2
+282
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -8.02735  - roll:  1e-05   - pitch:  0.00025 yaw:  0.51771
+	Car: speed 1  and  steering  2
+283
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -8.01524  - roll:  0.0   - pitch:  0.00025 yaw:  0.51456
+	Car: speed 1  and  steering  2
+284
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -8.00224  - roll:  0.0   - pitch:  0.00025 yaw:  0.51114
+	Car: speed 1  and  steering  2
+285
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -7.98742  - roll:  0.0   - pitch:  0.00026 yaw:  0.50724
+	Car: speed 1  and  steering  2
+286
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -7.9746  - roll:  0.0   - pitch:  0.00025 yaw:  0.50382
+	Car: speed 1  and  steering  2
+287
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -7.96233  - roll:  0.0   - pitch:  0.00025 yaw:  0.50053
+	Car: speed 1  and  steering  2
+288
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -7.9478  - roll:  0.0   - pitch:  0.00025 yaw:  0.49663
+	Car: speed 1  and  steering  2
+289
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -7.93756  - roll:  0.0   - pitch:  0.00025 yaw:  0.49384
+	Car: speed 1  and  steering  2
+290
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -7.92922  - roll:  0.0   - pitch:  0.00025 yaw:  0.49156
+	Car: speed 1  and  steering  2
+291
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -7.92322  - roll:  1e-05   - pitch:  0.00026 yaw:  0.48993
+	Car: speed 1  and  steering  2
+292
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -7.9154  - roll:  0.0   - pitch:  0.00026 yaw:  0.48779
+	Car: speed 1  and  steering  2
+293
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -7.90169  - roll:  0.0   - pitch:  0.00025 yaw:  0.48398
+	Car: speed 1  and  steering  2
+294
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -7.89351  - roll:  0.0   - pitch:  0.00025 yaw:  0.48171
+	Car: speed 1  and  steering  2
+295
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -7.88086  - roll:  1e-05   - pitch:  0.00026 yaw:  0.47819
+	Car: speed 1  and  steering  2
+296
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -7.86518  - roll:  0.0   - pitch:  0.00025 yaw:  0.47374
+	Car: speed 1  and  steering  2
+297
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -7.84786  - roll:  1e-05   - pitch:  0.00026 yaw:  0.46883
+	Car: speed 1  and  steering  2
+298
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -7.83905  - roll:  0.0   - pitch:  0.00026 yaw:  0.4663
+	Car: speed 1  and  steering  2
+299
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -7.82767  - roll:  0.0   - pitch:  0.00026 yaw:  0.463
+	Car: speed 1  and  steering  2
+300
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -7.81118  - roll:  1e-05   - pitch:  0.00026 yaw:  0.45822
+	Car: speed 1  and  steering  2
+301
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -7.80256  - roll:  0.0   - pitch:  0.00026 yaw:  0.45567
+	Car: speed 1  and  steering  2
+302
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -7.78973  - roll:  0.0   - pitch:  0.00026 yaw:  0.45187
+	Car: speed 1  and  steering  2
+303
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -7.77827  - roll:  0.0   - pitch:  0.00026 yaw:  0.44847
+	Car: speed 1  and  steering  2
+304
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -7.76522  - roll:  0.0   - pitch:  0.00026 yaw:  0.44455
+	Car: speed 1  and  steering  2
+305
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -7.75686  - roll:  1e-05   - pitch:  0.00026 yaw:  0.44202
+	Car: speed 1  and  steering  2
+306
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -7.74854  - roll:  0.0   - pitch:  0.00026 yaw:  0.43949
+	Car: speed 1  and  steering  2
+307
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -7.73493  - roll:  0.0   - pitch:  0.00026 yaw:  0.43531
+	Car: speed 1  and  steering  2
+308
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -7.72307  - roll:  1e-05   - pitch:  0.00026 yaw:  0.43165
+	Car: speed 1  and  steering  2
+309
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -7.719  - roll:  0.0   - pitch:  0.00026 yaw:  0.43039
+	Car: speed 1  and  steering  2
+310
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -7.71454  - roll:  0.0   - pitch:  0.00026 yaw:  0.42899
+	Car: speed 1  and  steering  2
+311
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -7.70446  - roll:  0.0   - pitch:  0.00026 yaw:  0.42581
+	Car: speed 1  and  steering  2
+312
+	GPS : {'timestamp': 30.029, 'coor': ((4.81782+8.14512j), (0.8538337801330973+0.5205457481371121j))}
+	IMU z:  -7.69405  - roll:  1e-05   - pitch:  0.00026 yaw:  0.42254
+	Car: speed 1  and  steering  2
+313
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.68056  - roll:  0.0   - pitch:  0.00026 yaw:  0.41823
+	Car: speed 1  and  steering  2
+314
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.66799  - roll:  1e-05   - pitch:  0.00026 yaw:  0.41418
+	Car: speed 1  and  steering  2
+315
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.6536  - roll:  0.0   - pitch:  0.00026 yaw:  0.4095
+	Car: speed 1  and  steering  2
+316
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.64129  - roll:  0.0   - pitch:  0.00026 yaw:  0.40544
+	Car: speed 1  and  steering  2
+317
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.62797  - roll:  0.0   - pitch:  0.00026 yaw:  0.40103
+	Car: speed 1  and  steering  2
+318
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.61479  - roll:  0.0   - pitch:  0.00026 yaw:  0.39658
+	Car: speed 1  and  steering  2
+319
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.60287  - roll:  0.0   - pitch:  0.00026 yaw:  0.39255
+	Car: speed 1  and  steering  2
+320
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.59254  - roll:  0.0   - pitch:  0.00026 yaw:  0.38899
+	Car: speed 1  and  steering  2
+321
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.58086  - roll:  1e-05   - pitch:  0.00026 yaw:  0.38494
+	Car: speed 1  and  steering  2
+322
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.57037  - roll:  0.0   - pitch:  0.00026 yaw:  0.38128
+	Car: speed 1  and  steering  2
+323
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.56355  - roll:  0.0   - pitch:  0.00026 yaw:  0.37886
+	Car: speed 1  and  steering  2
+324
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.55714  - roll:  1e-05   - pitch:  0.00026 yaw:  0.37658
+	Car: speed 1  and  steering  2
+325
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.54934  - roll:  0.0   - pitch:  0.00026 yaw:  0.37381
+	Car: speed 1  and  steering  2
+326
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.53638  - roll:  0.0   - pitch:  0.00026 yaw:  0.3691
+	Car: speed 1  and  steering  2
+327
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.52391  - roll:  1e-05   - pitch:  0.00026 yaw:  0.36456
+	Car: speed 1  and  steering  2
+328
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.51433  - roll:  0.0   - pitch:  0.00026 yaw:  0.36101
+	Car: speed 1  and  steering  2
+329
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.50148  - roll:  1e-05   - pitch:  0.00026 yaw:  0.35619
+	Car: speed 1  and  steering  2
+330
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.49378  - roll:  0.0   - pitch:  0.00026 yaw:  0.35329
+	Car: speed 1  and  steering  2
+331
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.48747  - roll:  0.0   - pitch:  0.00026 yaw:  0.35087
+	Car: speed 1  and  steering  2
+332
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.48022  - roll:  0.0   - pitch:  0.00026 yaw:  0.34808
+	Car: speed 1  and  steering  2
+333
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.46978  - roll:  0.0   - pitch:  0.00026 yaw:  0.34403
+	Car: speed 1  and  steering  2
+334
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.46332  - roll:  0.0   - pitch:  0.00026 yaw:  0.3415
+	Car: speed 1  and  steering  2
+335
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.45372  - roll:  1e-05   - pitch:  0.00026 yaw:  0.3377
+	Car: speed 1  and  steering  2
+336
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.44392  - roll:  0.0   - pitch:  0.00026 yaw:  0.33377
+	Car: speed 1  and  steering  2
+337
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.43548  - roll:  0.0   - pitch:  0.00026 yaw:  0.33033
+	Car: speed 1  and  steering  2
+338
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.42897  - roll:  1e-05   - pitch:  0.00026 yaw:  0.32769
+	Car: speed 1  and  steering  2
+339
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.42191  - roll:  0.0   - pitch:  0.00026 yaw:  0.32477
+	Car: speed 1  and  steering  2
+340
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.414  - roll:  0.0   - pitch:  0.00026 yaw:  0.32146
+	Car: speed 1  and  steering  2
+341
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.40379  - roll:  0.0   - pitch:  0.00026 yaw:  0.31717
+	Car: speed 1  and  steering  2
+342
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.39844  - roll:  0.0   - pitch:  0.00026 yaw:  0.31488
+	Car: speed 1  and  steering  2
+343
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.3949  - roll:  0.0   - pitch:  0.00026 yaw:  0.31336
+	Car: speed 1  and  steering  2
+344
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.38932  - roll:  0.0   - pitch:  0.00026 yaw:  0.31094
+	Car: speed 1  and  steering  2
+345
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.3809  - roll:  0.0   - pitch:  0.00026 yaw:  0.30728
+	Car: speed 1  and  steering  2
+346
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.37286  - roll:  0.0   - pitch:  0.00026 yaw:  0.30372
+	Car: speed 1  and  steering  2
+347
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.36775  - roll:  0.0   - pitch:  0.00026 yaw:  0.30143
+	Car: speed 1  and  steering  2
+348
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.36155  - roll:  0.0   - pitch:  0.00026 yaw:  0.29865
+	Car: speed 1  and  steering  2
+349
+	GPS : {'timestamp': 31.03, 'coor': ((5.72555+7.68927j), (0.9126684627719331+0.40870071820528586j))}
+	IMU z:  -7.35403  - roll:  0.0   - pitch:  0.00026 yaw:  0.29524
+	Car: speed 1  and  steering  2
+350
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.34742  - roll:  0.0   - pitch:  0.00026 yaw:  0.29219
+	Car: speed 1  and  steering  2
+351
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.34196  - roll:  0.0   - pitch:  0.00026 yaw:  0.28966
+	Car: speed 1  and  steering  2
+352
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.33629  - roll:  0.0   - pitch:  0.00026 yaw:  0.28699
+	Car: speed 1  and  steering  2
+353
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.33041  - roll:  1e-05   - pitch:  0.00026 yaw:  0.2842
+	Car: speed 1  and  steering  2
+354
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.32222  - roll:  0.0   - pitch:  0.00026 yaw:  0.28027
+	Car: speed 1  and  steering  2
+355
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.31752  - roll:  0.0   - pitch:  0.00026 yaw:  0.27798
+	Car: speed 1  and  steering  2
+356
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.31285  - roll:  1e-05   - pitch:  0.00026 yaw:  0.27571
+	Car: speed 1  and  steering  2
+357
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.30747  - roll:  0.0   - pitch:  0.00026 yaw:  0.27305
+	Car: speed 1  and  steering  2
+358
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.30163  - roll:  0.0   - pitch:  0.00026 yaw:  0.27011
+	Car: speed 1  and  steering  2
+359
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.29537  - roll:  1e-05   - pitch:  0.00026 yaw:  0.26694
+	Car: speed 1  and  steering  2
+360
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.29114  - roll:  0.0   - pitch:  0.00026 yaw:  0.2648
+	Car: speed 1  and  steering  2
+361
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.28893  - roll:  0.0   - pitch:  0.00026 yaw:  0.26366
+	Car: speed 1  and  steering  2
+362
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.28647  - roll:  0.0   - pitch:  0.00026 yaw:  0.26239
+	Car: speed 1  and  steering  2
+363
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.28136  - roll:  0.0   - pitch:  0.00026 yaw:  0.25971
+	Car: speed 1  and  steering  2
+364
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.27249  - roll:  1e-05   - pitch:  0.00026 yaw:  0.25503
+	Car: speed 1  and  steering  2
+365
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.26426  - roll:  0.0   - pitch:  0.00026 yaw:  0.25058
+	Car: speed 1  and  steering  2
+366
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.26032  - roll:  -0.0   - pitch:  0.00026 yaw:  0.24842
+	Car: speed 1  and  steering  2
+367
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.25345  - roll:  1e-05   - pitch:  0.00026 yaw:  0.24463
+	Car: speed 1  and  steering  2
+368
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.24624  - roll:  -0.0   - pitch:  0.00026 yaw:  0.24056
+	Car: speed 1  and  steering  2
+369
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.23873  - roll:  -0.0   - pitch:  0.00026 yaw:  0.23624
+	Car: speed 1  and  steering  2
+370
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.23179  - roll:  0.0   - pitch:  0.00026 yaw:  0.23219
+	Car: speed 1  and  steering  2
+371
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.22414  - roll:  1e-05   - pitch:  0.00026 yaw:  0.22762
+	Car: speed 1  and  steering  2
+372
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.21686  - roll:  -0.0   - pitch:  0.00026 yaw:  0.22318
+	Car: speed 1  and  steering  2
+373
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.21053  - roll:  -0.0   - pitch:  0.00026 yaw:  0.21924
+	Car: speed 1  and  steering  2
+374
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.20552  - roll:  0.0   - pitch:  0.00026 yaw:  0.21608
+	Car: speed 1  and  steering  2
+375
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.19962  - roll:  0.0   - pitch:  0.00026 yaw:  0.21226
+	Car: speed 1  and  steering  2
+376
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.19344  - roll:  -0.0   - pitch:  0.00026 yaw:  0.2082
+	Car: speed 1  and  steering  2
+377
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.18721  - roll:  0.0   - pitch:  0.00026 yaw:  0.20402
+	Car: speed 1  and  steering  2
+378
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.18332  - roll:  0.0   - pitch:  0.00026 yaw:  0.20135
+	Car: speed 1  and  steering  2
+379
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.17893  - roll:  1e-05   - pitch:  0.00026 yaw:  0.19831
+	Car: speed 1  and  steering  2
+380
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.17338  - roll:  -0.0   - pitch:  0.00026 yaw:  0.19436
+	Car: speed 1  and  steering  2
+381
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.16899  - roll:  -0.0   - pitch:  0.00026 yaw:  0.19119
+	Car: speed 1  and  steering  2
+382
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.16451  - roll:  1e-05   - pitch:  0.00026 yaw:  0.1879
+	Car: speed 1  and  steering  2
+383
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.15928  - roll:  -0.0   - pitch:  0.00026 yaw:  0.18396
+	Car: speed 1  and  steering  2
+384
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.15353  - roll:  0.0   - pitch:  0.00026 yaw:  0.17951
+	Car: speed 1  and  steering  2
+385
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.15031  - roll:  -0.0   - pitch:  0.00026 yaw:  0.17698
+	Car: speed 1  and  steering  2
+386
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.14636  - roll:  -0.0   - pitch:  0.00026 yaw:  0.17379
+	Car: speed 1  and  steering  2
+387
+	GPS : {'timestamp': 32.032, 'coor': ((6.68351+7.35182j), (0.9570286283219183+0.2899934560852498j))}
+	IMU z:  -7.14141  - roll:  -0.0   - pitch:  0.00026 yaw:  0.16974
+	Car: speed 1  and  steering  2
+388
+	GPS : {'timestamp': 33.033, 'coor': ((7.67641+7.13839j), (0.9860546133782045+0.1664220521311989j))}
+	IMU z:  -7.1363  - roll:  -0.0   - pitch:  0.00026 yaw:  0.16542
+	Car: speed 1  and  steering  2
+389
+	GPS : {'timestamp': 33.033, 'coor': ((7.67641+7.13839j), (0.9860546133782045+0.1664220521311989j))}
+	IMU z:  -7.13163  - roll:  1e-05   - pitch:  0.00026 yaw:  0.16137
+	Car: speed 1  and  steering  2
+390
+	GPS : {'timestamp': 33.033, 'coor': ((7.67641+7.13839j), (0.9860546133782045+0.1664220521311989j))}
+	IMU z:  -7.12807  - roll:  -0.0   - pitch:  0.00026 yaw:  0.15818
+	Car: speed 1  and  steering  2
+391
+	GPS : {'timestamp': 33.033, 'coor': ((7.67641+7.13839j), (0.9860546133782045+0.1664220521311989j))}
+	IMU z:  -7.12349  - roll:  0.0   - pitch:  0.00026 yaw:  0.15399
+	Car: speed 1  and  steering  2
+392
+	GPS : {'timestamp': 33.033, 'coor': ((7.67641+7.13839j), (0.9860546133782045+0.1664220521311989j))}
+	IMU z:  -7.11958  - roll:  -0.0   - pitch:  0.00026 yaw:  0.15032
+	Car: speed 1  and  steering  2
+393
+	GPS : {'timestamp': 33.033, 'coor': ((7.67641+7.13839j), (0.9860546133782045+0.1664220521311989j))}
+	IMU z:  -7.11501  - roll:  -0.0   - pitch:  0.00026 yaw:  0.14585
+	Car: speed 1  and  steering  2
+394
+	GPS : {'timestamp': 33.033, 'coor': ((7.67641+7.13839j), (0.9860546133782045+0.1664220521311989j))}
+	IMU z:  -7.11121  - roll:  -0.0   - pitch:  0.00026 yaw:  0.14206
+	Car: speed 1  and  steering  2
+395
+	GPS : {'timestamp': 33.033, 'coor': ((7.67641+7.13839j), (0.9860546133782045+0.1664220521311989j))}
+	IMU z:  -7.10789  - roll:  -0.0   - pitch:  0.00026 yaw:  0.13863
+	Car: speed 1  and  steering  2
+396
+	GPS : {'timestamp': 33.033, 'coor': ((7.67641+7.13839j), (0.9860546133782045+0.1664220521311989j))}
+	IMU z:  -7.10467  - roll:  -0.0   - pitch:  0.00026 yaw:  0.1352
+	Car: speed 1  and  steering  2
+397
+	GPS : {'timestamp': 33.033, 'coor': ((7.67641+7.13839j), (0.9860546133782045+0.1664220521311989j))}
+	IMU z:  -7.10029  - roll:  -0.0   - pitch:  0.00026 yaw:  0.13037
+	Car: speed 1  and  steering  2
+398
+	GPS : {'timestamp': 33.033, 'coor': ((7.67641+7.13839j), (0.9860546133782045+0.1664220521311989j))}
+	IMU z:  -7.09663  - roll:  -0.0   - pitch:  0.00026 yaw:  0.12618
+	Car: speed 1  and  steering  2
+399
+	GPS : {'timestamp': 33.033, 'coor': ((7.67641+7.13839j), (0.9860546133782045+0.1664220521311989j))}
+	IMU z:  -7.09364  - roll:  -0.0   - pitch:  0.00026 yaw:  0.12264
+	Car: speed 1  and  steering  2
+400
+	GPS : {'timestamp': 33.033, 'coor': ((7.67641+7.13839j), (0.9860546133782045+0.1664220521311989j))}
+	IMU z:  -7.09025  - roll:  -0.0   - pitch:  0.00026 yaw:  0.11843
+	Car: speed 1  and  steering  2
+401
+	GPS : {'timestamp': 33.033, 'coor': ((7.67641+7.13839j), (0.9860546133782045+0.1664220521311989j))}
+	IMU z:  -7.08594  - roll:  -0.0   - pitch:  0.00026 yaw:  0.11285
+	Car: speed 1  and  steering  2
+402
+	GPS : {'timestamp': 33.033, 'coor': ((7.67641+7.13839j), (0.9860546133782045+0.1664220521311989j))}
+	IMU z:  -7.0826  - roll:  -0.0   - pitch:  0.00026 yaw:  0.10827
+	Car: speed 1  and  steering  2
+403
+	GPS : {'timestamp': 33.033, 'coor': ((7.67641+7.13839j), (0.9860546133782045+0.1664220521311989j))}
+	IMU z:  -7.07977  - roll:  -0.0   - pitch:  0.00026 yaw:  0.10421
+	Car: speed 1  and  steering  2
+404
+	GPS : {'timestamp': 33.033, 'coor': ((7.67641+7.13839j), (0.9860546133782045+0.1664220521311989j))}
+	IMU z:  -7.07732  - roll:  -0.0   - pitch:  0.00026 yaw:  0.10052
+	Car: speed 1  and  steering  2
+405
+	GPS : {'timestamp': 33.033, 'coor': ((7.67641+7.13839j), (0.9860546133782045+0.1664220521311989j))}
+	IMU z:  -7.07489  - roll:  0.0   - pitch:  0.00026 yaw:  0.09672
+	Car: speed 1  and  steering  2
+406
+	GPS : {'timestamp': 33.033, 'coor': ((7.67641+7.13839j), (0.9860546133782045+0.1664220521311989j))}
+	IMU z:  -7.07266  - roll:  -0.0   - pitch:  0.00026 yaw:  0.09303
+	Car: speed 1  and  steering  2
+407
+	GPS : {'timestamp': 33.033, 'coor': ((7.67641+7.13839j), (0.9860546133782045+0.1664220521311989j))}
+	IMU z:  -7.07054  - roll:  -0.0   - pitch:  0.00026 yaw:  0.08934
+	Car: speed 1  and  steering  2
+408
+	GPS : {'timestamp': 33.033, 'coor': ((7.67641+7.13839j), (0.9860546133782045+0.1664220521311989j))}
+	IMU z:  -7.06934  - roll:  0.0   - pitch:  0.00026 yaw:  0.08719
+	Car: speed 1  and  steering  2
+409
+	GPS : {'timestamp': 33.033, 'coor': ((7.67641+7.13839j), (0.9860546133782045+0.1664220521311989j))}
+	IMU z:  -7.06766  - roll:  -0.0   - pitch:  0.00026 yaw:  0.08402
+	Car: speed 1  and  steering  2
+410
+	GPS : {'timestamp': 33.033, 'coor': ((7.67641+7.13839j), (0.9860546133782045+0.1664220521311989j))}
+	IMU z:  -7.06605  - roll:  -0.0   - pitch:  0.00026 yaw:  0.08083
+	Car: speed 1  and  steering  2
+411
+	GPS : {'timestamp': 33.033, 'coor': ((7.67641+7.13839j), (0.9860546133782045+0.1664220521311989j))}
+	IMU z:  -7.06452  - roll:  0.0   - pitch:  0.00026 yaw:  0.07767
+	Car: speed 1  and  steering  2
+412
+	GPS : {'timestamp': 33.033, 'coor': ((7.67641+7.13839j), (0.9860546133782045+0.1664220521311989j))}
+	IMU z:  -7.06285  - roll:  -0.0   - pitch:  0.00026 yaw:  0.07398
+	Car: speed 1  and  steering  2
+413
+	GPS : {'timestamp': 33.033, 'coor': ((7.67641+7.13839j), (0.9860546133782045+0.1664220521311989j))}
+	IMU z:  -7.06118  - roll:  -0.0   - pitch:  0.00026 yaw:  0.07004
+	Car: speed 1  and  steering  2
+414
+	GPS : {'timestamp': 33.033, 'coor': ((7.67641+7.13839j), (0.9860546133782045+0.1664220521311989j))}
+	IMU z:  -7.05997  - roll:  -0.0   - pitch:  0.00026 yaw:  0.067
+	Car: speed 1  and  steering  2
+415
+	GPS : {'timestamp': 33.033, 'coor': ((7.67641+7.13839j), (0.9860546133782045+0.1664220521311989j))}
+	IMU z:  -7.05862  - roll:  -0.0   - pitch:  0.00026 yaw:  0.0633
+	Car: speed 1  and  steering  2
+416
+	GPS : {'timestamp': 33.033, 'coor': ((7.67641+7.13839j), (0.9860546133782045+0.1664220521311989j))}
+	IMU z:  -7.05696  - roll:  0.0   - pitch:  0.00026 yaw:  0.05836
+	Car: speed 1  and  steering  2
+417
+	GPS : {'timestamp': 33.033, 'coor': ((7.67641+7.13839j), (0.9860546133782045+0.1664220521311989j))}
+	IMU z:  -7.05568  - roll:  -0.0   - pitch:  0.00026 yaw:  0.05403
+	Car: speed 1  and  steering  2
+418
+	GPS : {'timestamp': 33.033, 'coor': ((7.67641+7.13839j), (0.9860546133782045+0.1664220521311989j))}
+	IMU z:  -7.05451  - roll:  -0.0   - pitch:  0.00027 yaw:  0.04959
+	Car: speed 1  and  steering  2
+419
+	GPS : {'timestamp': 33.033, 'coor': ((7.67641+7.13839j), (0.9860546133782045+0.1664220521311989j))}
+	IMU z:  -7.05338  - roll:  -0.0   - pitch:  0.00026 yaw:  0.0445
+	Car: speed 1  and  steering  2
+420
+	GPS : {'timestamp': 33.033, 'coor': ((7.67641+7.13839j), (0.9860546133782045+0.1664220521311989j))}
+	IMU z:  -7.05282  - roll:  -1e-05   - pitch:  0.00026 yaw:  0.04158
+	Car: speed 1  and  steering  2
+421
+	GPS : {'timestamp': 34.033, 'coor': ((8.68828+7.05255j), (0.999197705502368+0.04004928612101705j))}
+	IMU z:  -7.05218  - roll:  -0.0   - pitch:  0.00026 yaw:  0.03778
+	Car: speed 1  and  steering  2
+422
+	GPS : {'timestamp': 34.033, 'coor': ((8.68828+7.05255j), (0.999197705502368+0.04004928612101705j))}
+	IMU z:  -7.05158  - roll:  -1e-05   - pitch:  0.00026 yaw:  0.03319
+	Car: speed 1  and  steering  2
+423
+	GPS : {'timestamp': 34.033, 'coor': ((8.68828+7.05255j), (0.999197705502368+0.04004928612101705j))}
+	IMU z:  -7.05115  - roll:  -0.0   - pitch:  0.00026 yaw:  0.02863
+	Car: speed 1  and  steering  2
+424
+	GPS : {'timestamp': 34.033, 'coor': ((8.68828+7.05255j), (0.999197705502368+0.04004928612101705j))}
+	IMU z:  -7.05091  - roll:  -0.0   - pitch:  0.00026 yaw:  0.02481
+	Car: speed 1  and  steering  2
+425
+	GPS : {'timestamp': 34.033, 'coor': ((8.68828+7.05255j), (0.999197705502368+0.04004928612101705j))}
+	IMU z:  -7.05079  - roll:  -0.0   - pitch:  0.00027 yaw:  0.0205
+	Car: speed 1  and  steering  2
+426
+	GPS : {'timestamp': 34.033, 'coor': ((8.68828+7.05255j), (0.999197705502368+0.04004928612101705j))}
+	IMU z:  -7.05081  - roll:  -1e-05   - pitch:  0.00026 yaw:  0.0163
+	Car: speed 1  and  steering  2
+427
+	GPS : {'timestamp': 34.033, 'coor': ((8.68828+7.05255j), (0.999197705502368+0.04004928612101705j))}
+	IMU z:  -7.05094  - roll:  0.0   - pitch:  0.00026 yaw:  0.01262
+	Car: speed 1  and  steering  2
+428
+	GPS : {'timestamp': 34.033, 'coor': ((8.68828+7.05255j), (0.999197705502368+0.04004928612101705j))}
+	IMU z:  -7.0511  - roll:  -1e-05   - pitch:  0.00026 yaw:  0.01009
+	Car: speed 1  and  steering  2
+429
+	GPS : {'timestamp': 34.033, 'coor': ((8.68828+7.05255j), (0.999197705502368+0.04004928612101705j))}
+	IMU z:  -7.05148  - roll:  -1e-05   - pitch:  0.00026 yaw:  0.00575
+	Car: speed 1  and  steering  2
+430
+	GPS : {'timestamp': 34.033, 'coor': ((8.68828+7.05255j), (0.999197705502368+0.04004928612101705j))}
+	IMU z:  -7.05186  - roll:  -0.0   - pitch:  0.00027 yaw:  0.00258
+	Car: speed 1  and  steering  2
+431
+	GPS : {'timestamp': 34.033, 'coor': ((8.68828+7.05255j), (0.999197705502368+0.04004928612101705j))}
+	IMU z:  -7.05246  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.00148
+	Car: speed 1  and  steering  2
+432
+	GPS : {'timestamp': 34.033, 'coor': ((8.68828+7.05255j), (0.999197705502368+0.04004928612101705j))}
+	IMU z:  -7.05329  - roll:  -0.0   - pitch:  0.00026 yaw:  -0.00606
+	Car: speed 1  and  steering  2
+433
+	GPS : {'timestamp': 34.033, 'coor': ((8.68828+7.05255j), (0.999197705502368+0.04004928612101705j))}
+	IMU z:  -7.05399  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.00935
+	Car: speed 1  and  steering  2
+434
+	GPS : {'timestamp': 34.033, 'coor': ((8.68828+7.05255j), (0.999197705502368+0.04004928612101705j))}
+	IMU z:  -7.05492  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.01318
+	Car: speed 1  and  steering  2
+435
+	GPS : {'timestamp': 34.033, 'coor': ((8.68828+7.05255j), (0.999197705502368+0.04004928612101705j))}
+	IMU z:  -7.0561  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.01749
+	Car: speed 1  and  steering  2
+436
+	GPS : {'timestamp': 34.033, 'coor': ((8.68828+7.05255j), (0.999197705502368+0.04004928612101705j))}
+	IMU z:  -7.05723  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.02117
+	Car: speed 1  and  steering  2
+437
+	GPS : {'timestamp': 34.033, 'coor': ((8.68828+7.05255j), (0.999197705502368+0.04004928612101705j))}
+	IMU z:  -7.05833  - roll:  -0.0   - pitch:  0.00027 yaw:  -0.02447
+	Car: speed 1  and  steering  2
+438
+	GPS : {'timestamp': 34.033, 'coor': ((8.68828+7.05255j), (0.999197705502368+0.04004928612101705j))}
+	IMU z:  -7.05972  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.02829
+	Car: speed 1  and  steering  2
+439
+	GPS : {'timestamp': 34.033, 'coor': ((8.68828+7.05255j), (0.999197705502368+0.04004928612101705j))}
+	IMU z:  -7.06111  - roll:  -0.0   - pitch:  0.00026 yaw:  -0.03185
+	Car: speed 1  and  steering  2
+440
+	GPS : {'timestamp': 34.033, 'coor': ((8.68828+7.05255j), (0.999197705502368+0.04004928612101705j))}
+	IMU z:  -7.06272  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.03565
+	Car: speed 1  and  steering  2
+441
+	GPS : {'timestamp': 34.033, 'coor': ((8.68828+7.05255j), (0.999197705502368+0.04004928612101705j))}
+	IMU z:  -7.06498  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.04061
+	Car: speed 1  and  steering  2
+442
+	GPS : {'timestamp': 34.033, 'coor': ((8.68828+7.05255j), (0.999197705502368+0.04004928612101705j))}
+	IMU z:  -7.06724  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.04518
+	Car: speed 1  and  steering  2
+443
+	GPS : {'timestamp': 34.033, 'coor': ((8.68828+7.05255j), (0.999197705502368+0.04004928612101705j))}
+	IMU z:  -7.06904  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.04862
+	Car: speed 1  and  steering  2
+444
+	GPS : {'timestamp': 34.033, 'coor': ((8.68828+7.05255j), (0.999197705502368+0.04004928612101705j))}
+	IMU z:  -7.07051  - roll:  -0.0   - pitch:  0.00027 yaw:  -0.05128
+	Car: speed 1  and  steering  2
+445
+	GPS : {'timestamp': 34.033, 'coor': ((8.68828+7.05255j), (0.999197705502368+0.04004928612101705j))}
+	IMU z:  -7.07189  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.05369
+	Car: speed 1  and  steering  2
+446
+	GPS : {'timestamp': 34.033, 'coor': ((8.68828+7.05255j), (0.999197705502368+0.04004928612101705j))}
+	IMU z:  -7.0737  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.05675
+	Car: speed 1  and  steering  2
+447
+	GPS : {'timestamp': 34.033, 'coor': ((8.68828+7.05255j), (0.999197705502368+0.04004928612101705j))}
+	IMU z:  -7.07574  - roll:  -0.0   - pitch:  0.00027 yaw:  -0.06004
+	Car: speed 1  and  steering  2
+448
+	GPS : {'timestamp': 34.033, 'coor': ((8.68828+7.05255j), (0.999197705502368+0.04004928612101705j))}
+	IMU z:  -7.07871  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.06462
+	Car: speed 1  and  steering  2
+449
+	GPS : {'timestamp': 34.033, 'coor': ((8.68828+7.05255j), (0.999197705502368+0.04004928612101705j))}
+	IMU z:  -7.08166  - roll:  -1e-05   - pitch:  0.00027 yaw:  -0.06893
+	Car: speed 1  and  steering  2
+450
+	GPS : {'timestamp': 34.033, 'coor': ((8.68828+7.05255j), (0.999197705502368+0.04004928612101705j))}
+	IMU z:  -7.08421  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.07249
+	Car: speed 1  and  steering  2
+451
+	GPS : {'timestamp': 34.033, 'coor': ((8.68828+7.05255j), (0.999197705502368+0.04004928612101705j))}
+	IMU z:  -7.08725  - roll:  -0.0   - pitch:  0.00026 yaw:  -0.07656
+	Car: speed 1  and  steering  2
+452
+	GPS : {'timestamp': 34.033, 'coor': ((8.68828+7.05255j), (0.999197705502368+0.04004928612101705j))}
+	IMU z:  -7.09081  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.08113
+	Car: speed 1  and  steering  2
+453
+	GPS : {'timestamp': 34.033, 'coor': ((8.68828+7.05255j), (0.999197705502368+0.04004928612101705j))}
+	IMU z:  -7.09392  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.08495
+	Car: speed 1  and  steering  2
+454
+	GPS : {'timestamp': 35.035, 'coor': ((9.70279+7.09573j), (0.9962091924610201-0.08698991238162192j))}
+	IMU z:  -7.09735  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.089
+	Car: speed 1  and  steering  2
+455
+	GPS : {'timestamp': 35.035, 'coor': ((9.70279+7.09573j), (0.9962091924610201-0.08698991238162192j))}
+	IMU z:  -7.1016  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.09384
+	Car: speed 1  and  steering  2
+456
+	GPS : {'timestamp': 35.035, 'coor': ((9.70279+7.09573j), (0.9962091924610201-0.08698991238162192j))}
+	IMU z:  -7.10474  - roll:  -0.0   - pitch:  0.00026 yaw:  -0.09726
+	Car: speed 1  and  steering  2
+457
+	GPS : {'timestamp': 35.035, 'coor': ((9.70279+7.09573j), (0.9962091924610201-0.08698991238162192j))}
+	IMU z:  -7.10784  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.10056
+	Car: speed 1  and  steering  2
+458
+	GPS : {'timestamp': 35.035, 'coor': ((9.70279+7.09573j), (0.9962091924610201-0.08698991238162192j))}
+	IMU z:  -7.11029  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.10311
+	Car: speed 1  and  steering  2
+459
+	GPS : {'timestamp': 35.035, 'coor': ((9.70279+7.09573j), (0.9962091924610201-0.08698991238162192j))}
+	IMU z:  -7.11355  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.1064
+	Car: speed 1  and  steering  2
+460
+	GPS : {'timestamp': 35.035, 'coor': ((9.70279+7.09573j), (0.9962091924610201-0.08698991238162192j))}
+	IMU z:  -7.11715  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.10996
+	Car: speed 1  and  steering  2
+461
+	GPS : {'timestamp': 35.035, 'coor': ((9.70279+7.09573j), (0.9962091924610201-0.08698991238162192j))}
+	IMU z:  -7.12072  - roll:  -0.0   - pitch:  0.00026 yaw:  -0.11339
+	Car: speed 1  and  steering  2
+462
+	GPS : {'timestamp': 35.035, 'coor': ((9.70279+7.09573j), (0.9962091924610201-0.08698991238162192j))}
+	IMU z:  -7.12521  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.11758
+	Car: speed 1  and  steering  2
+463
+	GPS : {'timestamp': 35.035, 'coor': ((9.70279+7.09573j), (0.9962091924610201-0.08698991238162192j))}
+	IMU z:  -7.12928  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.12126
+	Car: speed 1  and  steering  2
+464
+	GPS : {'timestamp': 35.035, 'coor': ((9.70279+7.09573j), (0.9962091924610201-0.08698991238162192j))}
+	IMU z:  -7.1333  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.12481
+	Car: speed 1  and  steering  2
+465
+	GPS : {'timestamp': 35.035, 'coor': ((9.70279+7.09573j), (0.9962091924610201-0.08698991238162192j))}
+	IMU z:  -7.13817  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.12901
+	Car: speed 1  and  steering  2
+466
+	GPS : {'timestamp': 35.035, 'coor': ((9.70279+7.09573j), (0.9962091924610201-0.08698991238162192j))}
+	IMU z:  -7.14504  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.13472
+	Car: speed 1  and  steering  2
+467
+	GPS : {'timestamp': 35.035, 'coor': ((9.70279+7.09573j), (0.9962091924610201-0.08698991238162192j))}
+	IMU z:  -7.1496  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.1384
+	Car: speed 1  and  steering  2
+468
+	GPS : {'timestamp': 35.035, 'coor': ((9.70279+7.09573j), (0.9962091924610201-0.08698991238162192j))}
+	IMU z:  -7.15606  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.14348
+	Car: speed 1  and  steering  2
+469
+	GPS : {'timestamp': 35.035, 'coor': ((9.70279+7.09573j), (0.9962091924610201-0.08698991238162192j))}
+	IMU z:  -7.16172  - roll:  -0.0   - pitch:  0.00026 yaw:  -0.1478
+	Car: speed 1  and  steering  2
+470
+	GPS : {'timestamp': 35.035, 'coor': ((9.70279+7.09573j), (0.9962091924610201-0.08698991238162192j))}
+	IMU z:  -7.16683  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.1516
+	Car: speed 1  and  steering  2
+471
+	GPS : {'timestamp': 35.035, 'coor': ((9.70279+7.09573j), (0.9962091924610201-0.08698991238162192j))}
+	IMU z:  -7.17294  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.15605
+	Car: speed 1  and  steering  2
+472
+	GPS : {'timestamp': 35.035, 'coor': ((9.70279+7.09573j), (0.9962091924610201-0.08698991238162192j))}
+	IMU z:  -7.17903  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.16037
+	Car: speed 1  and  steering  2
+473
+	GPS : {'timestamp': 35.035, 'coor': ((9.70279+7.09573j), (0.9962091924610201-0.08698991238162192j))}
+	IMU z:  -7.1847  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.1643
+	Car: speed 1  and  steering  2
+474
+	GPS : {'timestamp': 35.035, 'coor': ((9.70279+7.09573j), (0.9962091924610201-0.08698991238162192j))}
+	IMU z:  -7.19068  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.16836
+	Car: speed 1  and  steering  2
+475
+	GPS : {'timestamp': 35.035, 'coor': ((9.70279+7.09573j), (0.9962091924610201-0.08698991238162192j))}
+	IMU z:  -7.19699  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.17255
+	Car: speed 1  and  steering  2
+476
+	GPS : {'timestamp': 35.035, 'coor': ((9.70279+7.09573j), (0.9962091924610201-0.08698991238162192j))}
+	IMU z:  -7.20245  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.1761
+	Car: speed 1  and  steering  2
+477
+	GPS : {'timestamp': 35.035, 'coor': ((9.70279+7.09573j), (0.9962091924610201-0.08698991238162192j))}
+	IMU z:  -7.21063  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.1813
+	Car: speed 1  and  steering  2
+478
+	GPS : {'timestamp': 35.035, 'coor': ((9.70279+7.09573j), (0.9962091924610201-0.08698991238162192j))}
+	IMU z:  -7.21736  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.18549
+	Car: speed 1  and  steering  2
+479
+	GPS : {'timestamp': 35.035, 'coor': ((9.70279+7.09573j), (0.9962091924610201-0.08698991238162192j))}
+	IMU z:  -7.2236  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.1893
+	Car: speed 1  and  steering  2
+480
+	GPS : {'timestamp': 35.035, 'coor': ((9.70279+7.09573j), (0.9962091924610201-0.08698991238162192j))}
+	IMU z:  -7.23145  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.194
+	Car: speed 1  and  steering  2
+481
+	GPS : {'timestamp': 35.035, 'coor': ((9.70279+7.09573j), (0.9962091924610201-0.08698991238162192j))}
+	IMU z:  -7.23773  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.19767
+	Car: speed 1  and  steering  2
+482
+	GPS : {'timestamp': 35.035, 'coor': ((9.70279+7.09573j), (0.9962091924610201-0.08698991238162192j))}
+	IMU z:  -7.24433  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.20148
+	Car: speed 1  and  steering  2
+483
+	GPS : {'timestamp': 35.035, 'coor': ((9.70279+7.09573j), (0.9962091924610201-0.08698991238162192j))}
+	IMU z:  -7.25195  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.20579
+	Car: speed 1  and  steering  2
+484
+	GPS : {'timestamp': 35.035, 'coor': ((9.70279+7.09573j), (0.9962091924610201-0.08698991238162192j))}
+	IMU z:  -7.25902  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.20973
+	Car: speed 1  and  steering  2
+485
+	GPS : {'timestamp': 35.035, 'coor': ((9.70279+7.09573j), (0.9962091924610201-0.08698991238162192j))}
+	IMU z:  -7.26598  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.21353
+	Car: speed 1  and  steering  2
+486
+	GPS : {'timestamp': 36.036, 'coor': ((10.70355+7.26715j), (0.9771531360325209-0.21253646449917687j))}
+	IMU z:  -7.27353  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.21759
+	Car: speed 1  and  steering  2
+487
+	GPS : {'timestamp': 36.036, 'coor': ((10.70355+7.26715j), (0.9771531360325209-0.21253646449917687j))}
+	IMU z:  -7.28072  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.2214
+	Car: speed 1  and  steering  2
+488
+	GPS : {'timestamp': 36.036, 'coor': ((10.70355+7.26715j), (0.9771531360325209-0.21253646449917687j))}
+	IMU z:  -7.28705  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.2247
+	Car: speed 1  and  steering  2
+489
+	GPS : {'timestamp': 36.036, 'coor': ((10.70355+7.26715j), (0.9771531360325209-0.21253646449917687j))}
+	IMU z:  -7.2952  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.22888
+	Car: speed 1  and  steering  2
+490
+	GPS : {'timestamp': 36.036, 'coor': ((10.70355+7.26715j), (0.9771531360325209-0.21253646449917687j))}
+	IMU z:  -7.30348  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.23307
+	Car: speed 1  and  steering  2
+491
+	GPS : {'timestamp': 36.036, 'coor': ((10.70355+7.26715j), (0.9771531360325209-0.21253646449917687j))}
+	IMU z:  -7.31036  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.23649
+	Car: speed 1  and  steering  2
+492
+	GPS : {'timestamp': 36.036, 'coor': ((10.70355+7.26715j), (0.9771531360325209-0.21253646449917687j))}
+	IMU z:  -7.31942  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.24093
+	Car: speed 1  and  steering  2
+493
+	GPS : {'timestamp': 36.036, 'coor': ((10.70355+7.26715j), (0.9771531360325209-0.21253646449917687j))}
+	IMU z:  -7.32809  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.24511
+	Car: speed 1  and  steering  2
+494
+	GPS : {'timestamp': 36.036, 'coor': ((10.70355+7.26715j), (0.9771531360325209-0.21253646449917687j))}
+	IMU z:  -7.33556  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.24867
+	Car: speed 1  and  steering  2
+495
+	GPS : {'timestamp': 36.036, 'coor': ((10.70355+7.26715j), (0.9771531360325209-0.21253646449917687j))}
+	IMU z:  -7.3434  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.25234
+	Car: speed 1  and  steering  2
+496
+	GPS : {'timestamp': 36.036, 'coor': ((10.70355+7.26715j), (0.9771531360325209-0.21253646449917687j))}
+	IMU z:  -7.35382  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.25716
+	Car: speed 1  and  steering  2
+497
+	GPS : {'timestamp': 36.036, 'coor': ((10.70355+7.26715j), (0.9771531360325209-0.21253646449917687j))}
+	IMU z:  -7.36274  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.26122
+	Car: speed 1  and  steering  2
+498
+	GPS : {'timestamp': 36.036, 'coor': ((10.70355+7.26715j), (0.9771531360325209-0.21253646449917687j))}
+	IMU z:  -7.3715  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.26515
+	Car: speed 1  and  steering  2
+499
+	GPS : {'timestamp': 36.036, 'coor': ((10.70355+7.26715j), (0.9771531360325209-0.21253646449917687j))}
+	IMU z:  -7.38124  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.26946
+	Car: speed 1  and  steering  2
+500
+	GPS : {'timestamp': 36.036, 'coor': ((10.70355+7.26715j), (0.9771531360325209-0.21253646449917687j))}
+	IMU z:  -7.39113  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.27377
+	Car: speed 1  and  steering  2
+501
+	GPS : {'timestamp': 36.036, 'coor': ((10.70355+7.26715j), (0.9771531360325209-0.21253646449917687j))}
+	IMU z:  -7.40205  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.27846
+	Car: speed 1  and  steering  2
+502
+	GPS : {'timestamp': 36.036, 'coor': ((10.70355+7.26715j), (0.9771531360325209-0.21253646449917687j))}
+	IMU z:  -7.41344  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.28327
+	Car: speed 1  and  steering  2
+503
+	GPS : {'timestamp': 36.036, 'coor': ((10.70355+7.26715j), (0.9771531360325209-0.21253646449917687j))}
+	IMU z:  -7.42226  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.28695
+	Car: speed 1  and  steering  2
+504
+	GPS : {'timestamp': 36.036, 'coor': ((10.70355+7.26715j), (0.9771531360325209-0.21253646449917687j))}
+	IMU z:  -7.43055  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.29037
+	Car: speed 1  and  steering  2
+505
+	GPS : {'timestamp': 36.036, 'coor': ((10.70355+7.26715j), (0.9771531360325209-0.21253646449917687j))}
+	IMU z:  -7.44176  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.29493
+	Car: speed 1  and  steering  2
+506
+	GPS : {'timestamp': 36.036, 'coor': ((10.70355+7.26715j), (0.9771531360325209-0.21253646449917687j))}
+	IMU z:  -7.45439  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.3
+	Car: speed 1  and  steering  2
+507
+	GPS : {'timestamp': 36.036, 'coor': ((10.70355+7.26715j), (0.9771531360325209-0.21253646449917687j))}
+	IMU z:  -7.46367  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.30367
+	Car: speed 1  and  steering  2
+508
+	GPS : {'timestamp': 36.036, 'coor': ((10.70355+7.26715j), (0.9771531360325209-0.21253646449917687j))}
+	IMU z:  -7.47436  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.30786
+	Car: speed 1  and  steering  2
+509
+	GPS : {'timestamp': 36.036, 'coor': ((10.70355+7.26715j), (0.9771531360325209-0.21253646449917687j))}
+	IMU z:  -7.48386  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.31153
+	Car: speed 1  and  steering  2
+510
+	GPS : {'timestamp': 36.036, 'coor': ((10.70355+7.26715j), (0.9771531360325209-0.21253646449917687j))}
+	IMU z:  -7.49179  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.31457
+	Car: speed 1  and  steering  2
+511
+	GPS : {'timestamp': 36.036, 'coor': ((10.70355+7.26715j), (0.9771531360325209-0.21253646449917687j))}
+	IMU z:  -7.50383  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.31913
+	Car: speed 1  and  steering  2
+512
+	GPS : {'timestamp': 36.036, 'coor': ((10.70355+7.26715j), (0.9771531360325209-0.21253646449917687j))}
+	IMU z:  -7.51603  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.32369
+	Car: speed 1  and  steering  2
+513
+	GPS : {'timestamp': 36.036, 'coor': ((10.70355+7.26715j), (0.9771531360325209-0.21253646449917687j))}
+	IMU z:  -7.52666  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.32761
+	Car: speed 1  and  steering  2
+514
+	GPS : {'timestamp': 36.036, 'coor': ((10.70355+7.26715j), (0.9771531360325209-0.21253646449917687j))}
+	IMU z:  -7.5374  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.33154
+	Car: speed 1  and  steering  2
+515
+	GPS : {'timestamp': 36.036, 'coor': ((10.70355+7.26715j), (0.9771531360325209-0.21253646449917687j))}
+	IMU z:  -7.54897  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.33572
+	Car: speed 1  and  steering  2
+516
+	GPS : {'timestamp': 36.036, 'coor': ((10.70355+7.26715j), (0.9771531360325209-0.21253646449917687j))}
+	IMU z:  -7.5596  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.33952
+	Car: speed 1  and  steering  2
+517
+	GPS : {'timestamp': 37.037, 'coor': ((11.67447+7.56388j), (0.9424106738000081-0.33445795237640064j))}
+	IMU z:  -7.57141  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.34369
+	Car: speed 1  and  steering  2
+518
+	GPS : {'timestamp': 37.037, 'coor': ((11.67447+7.56388j), (0.9424106738000081-0.33445795237640064j))}
+	IMU z:  -7.58263  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.34762
+	Car: speed 1  and  steering  2
+519
+	GPS : {'timestamp': 37.037, 'coor': ((11.67447+7.56388j), (0.9424106738000081-0.33445795237640064j))}
+	IMU z:  -7.59507  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.35192
+	Car: speed 1  and  steering  2
+520
+	GPS : {'timestamp': 37.037, 'coor': ((11.67447+7.56388j), (0.9424106738000081-0.33445795237640064j))}
+	IMU z:  -7.60764  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.35623
+	Car: speed 1  and  steering  2
+521
+	GPS : {'timestamp': 37.037, 'coor': ((11.67447+7.56388j), (0.9424106738000081-0.33445795237640064j))}
+	IMU z:  -7.61885  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.36002
+	Car: speed 1  and  steering  2
+522
+	GPS : {'timestamp': 37.037, 'coor': ((11.67447+7.56388j), (0.9424106738000081-0.33445795237640064j))}
+	IMU z:  -7.63055  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.36395
+	Car: speed 1  and  steering  2
+523
+	GPS : {'timestamp': 37.037, 'coor': ((11.67447+7.56388j), (0.9424106738000081-0.33445795237640064j))}
+	IMU z:  -7.64045  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.36723
+	Car: speed 1  and  steering  2
+524
+	GPS : {'timestamp': 37.037, 'coor': ((11.67447+7.56388j), (0.9424106738000081-0.33445795237640064j))}
+	IMU z:  -7.65197  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.37103
+	Car: speed 1  and  steering  2
+525
+	GPS : {'timestamp': 37.037, 'coor': ((11.67447+7.56388j), (0.9424106738000081-0.33445795237640064j))}
+	IMU z:  -7.66398  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.37495
+	Car: speed 1  and  steering  2
+526
+	GPS : {'timestamp': 37.037, 'coor': ((11.67447+7.56388j), (0.9424106738000081-0.33445795237640064j))}
+	IMU z:  -7.67533  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.37862
+	Car: speed 1  and  steering  2
+527
+	GPS : {'timestamp': 37.037, 'coor': ((11.67447+7.56388j), (0.9424106738000081-0.33445795237640064j))}
+	IMU z:  -7.69194  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.38393
+	Car: speed 1  and  steering  2
+528
+	GPS : {'timestamp': 37.037, 'coor': ((11.67447+7.56388j), (0.9424106738000081-0.33445795237640064j))}
+	IMU z:  -7.70433  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.38785
+	Car: speed 1  and  steering  2
+529
+	GPS : {'timestamp': 37.037, 'coor': ((11.67447+7.56388j), (0.9424106738000081-0.33445795237640064j))}
+	IMU z:  -7.71562  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.3914
+	Car: speed 1  and  steering  2
+530
+	GPS : {'timestamp': 37.037, 'coor': ((11.67447+7.56388j), (0.9424106738000081-0.33445795237640064j))}
+	IMU z:  -7.73067  - roll:  -2e-05   - pitch:  0.00026 yaw:  -0.39608
+	Car: speed 1  and  steering  2
+531
+	GPS : {'timestamp': 37.037, 'coor': ((11.67447+7.56388j), (0.9424106738000081-0.33445795237640064j))}
+	IMU z:  -7.74053  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.39911
+	Car: speed 1  and  steering  2
+532
+	GPS : {'timestamp': 37.037, 'coor': ((11.67447+7.56388j), (0.9424106738000081-0.33445795237640064j))}
+	IMU z:  -7.75253  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.40278
+	Car: speed 1  and  steering  2
+533
+	GPS : {'timestamp': 37.037, 'coor': ((11.67447+7.56388j), (0.9424106738000081-0.33445795237640064j))}
+	IMU z:  -7.76378  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.40619
+	Car: speed 1  and  steering  2
+534
+	GPS : {'timestamp': 37.037, 'coor': ((11.67447+7.56388j), (0.9424106738000081-0.33445795237640064j))}
+	IMU z:  -7.77681  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.41011
+	Car: speed 1  and  steering  2
+535
+	GPS : {'timestamp': 37.037, 'coor': ((11.67447+7.56388j), (0.9424106738000081-0.33445795237640064j))}
+	IMU z:  -7.79123  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.41441
+	Car: speed 1  and  steering  2
+536
+	GPS : {'timestamp': 37.037, 'coor': ((11.67447+7.56388j), (0.9424106738000081-0.33445795237640064j))}
+	IMU z:  -7.80622  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.41883
+	Car: speed 1  and  steering  2
+537
+	GPS : {'timestamp': 37.037, 'coor': ((11.67447+7.56388j), (0.9424106738000081-0.33445795237640064j))}
+	IMU z:  -7.82091  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.42313
+	Car: speed 1  and  steering  2
+538
+	GPS : {'timestamp': 37.037, 'coor': ((11.67447+7.56388j), (0.9424106738000081-0.33445795237640064j))}
+	IMU z:  -7.83486  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.42717
+	Car: speed 1  and  steering  2
+539
+	GPS : {'timestamp': 37.037, 'coor': ((11.67447+7.56388j), (0.9424106738000081-0.33445795237640064j))}
+	IMU z:  -7.84761  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.43083
+	Car: speed 1  and  steering  2
+540
+	GPS : {'timestamp': 37.037, 'coor': ((11.67447+7.56388j), (0.9424106738000081-0.33445795237640064j))}
+	IMU z:  -7.86758  - roll:  -1e-05   - pitch:  0.00026 yaw:  -0.43652
+	Car: speed 1  and  steering  2
+541
+	GPS : {'timestamp': 37.037, 'coor': ((11.67447+7.56388j), (0.9424106738000081-0.33445795237640064j))}
+	IMU z:  -7.88552  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.44157
+	Car: speed 1  and  steering  2
+542
+	GPS : {'timestamp': 37.037, 'coor': ((11.67447+7.56388j), (0.9424106738000081-0.33445795237640064j))}
+	IMU z:  -7.90046  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.44574
+	Car: speed 1  and  steering  2
+543
+	GPS : {'timestamp': 37.037, 'coor': ((11.67447+7.56388j), (0.9424106738000081-0.33445795237640064j))}
+	IMU z:  -7.91645  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.45016
+	Car: speed 1  and  steering  2
+544
+	GPS : {'timestamp': 37.037, 'coor': ((11.67447+7.56388j), (0.9424106738000081-0.33445795237640064j))}
+	IMU z:  -7.9298  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.45382
+	Car: speed 1  and  steering  2
+545
+	GPS : {'timestamp': 37.037, 'coor': ((11.67447+7.56388j), (0.9424106738000081-0.33445795237640064j))}
+	IMU z:  -7.94604  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.45824
+	Car: speed 1  and  steering  2
+546
+	GPS : {'timestamp': 37.037, 'coor': ((11.67447+7.56388j), (0.9424106738000081-0.33445795237640064j))}
+	IMU z:  -7.96054  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.46215
+	Car: speed 1  and  steering  2
+547
+	GPS : {'timestamp': 37.037, 'coor': ((11.67447+7.56388j), (0.9424106738000081-0.33445795237640064j))}
+	IMU z:  -7.97326  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.46556
+	Car: speed 1  and  steering  2
+548
+	GPS : {'timestamp': 38.037, 'coor': ((12.60002+7.98084j), (0.8926616612472049-0.4507273660866181j))}
+	IMU z:  -7.98749  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.46934
+	Car: speed 1  and  steering  2
+549
+	GPS : {'timestamp': 38.037, 'coor': ((12.60002+7.98084j), (0.8926616612472049-0.4507273660866181j))}
+	IMU z:  -8.00422  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.47376
+	Car: speed 1  and  steering  2
+550
+	GPS : {'timestamp': 38.037, 'coor': ((12.60002+7.98084j), (0.8926616612472049-0.4507273660866181j))}
+	IMU z:  -8.02108  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.47818
+	Car: speed 1  and  steering  2
+551
+	GPS : {'timestamp': 38.037, 'coor': ((12.60002+7.98084j), (0.8926616612472049-0.4507273660866181j))}
+	IMU z:  -8.03809  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.48259
+	Car: speed 1  and  steering  2
+552
+	GPS : {'timestamp': 38.037, 'coor': ((12.60002+7.98084j), (0.8926616612472049-0.4507273660866181j))}
+	IMU z:  -8.05818  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.48777
+	Car: speed 1  and  steering  2
+553
+	GPS : {'timestamp': 38.037, 'coor': ((12.60002+7.98084j), (0.8926616612472049-0.4507273660866181j))}
+	IMU z:  -8.0735  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.49167
+	Car: speed 1  and  steering  2
+554
+	GPS : {'timestamp': 38.037, 'coor': ((12.60002+7.98084j), (0.8926616612472049-0.4507273660866181j))}
+	IMU z:  -8.08992  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.49583
+	Car: speed 1  and  steering  2
+555
+	GPS : {'timestamp': 38.037, 'coor': ((12.60002+7.98084j), (0.8926616612472049-0.4507273660866181j))}
+	IMU z:  -8.10898  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.50063
+	Car: speed 1  and  steering  2
+556
+	GPS : {'timestamp': 38.037, 'coor': ((12.60002+7.98084j), (0.8926616612472049-0.4507273660866181j))}
+	IMU z:  -8.12719  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.50516
+	Car: speed 1  and  steering  2
+557
+	GPS : {'timestamp': 38.037, 'coor': ((12.60002+7.98084j), (0.8926616612472049-0.4507273660866181j))}
+	IMU z:  -8.13941  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.50819
+	Car: speed 1  and  steering  2
+558
+	GPS : {'timestamp': 38.037, 'coor': ((12.60002+7.98084j), (0.8926616612472049-0.4507273660866181j))}
+	IMU z:  -8.15425  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.51184
+	Car: speed 1  and  steering  2
+559
+	GPS : {'timestamp': 38.037, 'coor': ((12.60002+7.98084j), (0.8926616612472049-0.4507273660866181j))}
+	IMU z:  -8.16868  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.51537
+	Car: speed 1  and  steering  2
+560
+	GPS : {'timestamp': 38.037, 'coor': ((12.60002+7.98084j), (0.8926616612472049-0.4507273660866181j))}
+	IMU z:  -8.18059  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.51827
+	Car: speed 1  and  steering  2
+561
+	GPS : {'timestamp': 38.037, 'coor': ((12.60002+7.98084j), (0.8926616612472049-0.4507273660866181j))}
+	IMU z:  -8.19778  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.52243
+	Car: speed 1  and  steering  2
+562
+	GPS : {'timestamp': 38.037, 'coor': ((12.60002+7.98084j), (0.8926616612472049-0.4507273660866181j))}
+	IMU z:  -8.21457  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.52646
+	Car: speed 1  and  steering  2
+563
+	GPS : {'timestamp': 38.037, 'coor': ((12.60002+7.98084j), (0.8926616612472049-0.4507273660866181j))}
+	IMU z:  -8.23305  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.53087
+	Car: speed 1  and  steering  2
+564
+	GPS : {'timestamp': 38.037, 'coor': ((12.60002+7.98084j), (0.8926616612472049-0.4507273660866181j))}
+	IMU z:  -8.25221  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.5354
+	Car: speed 1  and  steering  2
+565
+	GPS : {'timestamp': 38.037, 'coor': ((12.60002+7.98084j), (0.8926616612472049-0.4507273660866181j))}
+	IMU z:  -8.27581  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.54094
+	Car: speed 1  and  steering  2
+566
+	GPS : {'timestamp': 38.037, 'coor': ((12.60002+7.98084j), (0.8926616612472049-0.4507273660866181j))}
+	IMU z:  -8.29527  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.54547
+	Car: speed 1  and  steering  2
+567
+	GPS : {'timestamp': 38.037, 'coor': ((12.60002+7.98084j), (0.8926616612472049-0.4507273660866181j))}
+	IMU z:  -8.31707  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.55051
+	Car: speed 1  and  steering  2
+568
+	GPS : {'timestamp': 38.037, 'coor': ((12.60002+7.98084j), (0.8926616612472049-0.4507273660866181j))}
+	IMU z:  -8.33627  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.55491
+	Car: speed 1  and  steering  2
+569
+	GPS : {'timestamp': 38.037, 'coor': ((12.60002+7.98084j), (0.8926616612472049-0.4507273660866181j))}
+	IMU z:  -8.3534  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.55881
+	Car: speed 1  and  steering  2
+570
+	GPS : {'timestamp': 38.037, 'coor': ((12.60002+7.98084j), (0.8926616612472049-0.4507273660866181j))}
+	IMU z:  -8.37564  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.56385
+	Car: speed 1  and  steering  2
+571
+	GPS : {'timestamp': 38.037, 'coor': ((12.60002+7.98084j), (0.8926616612472049-0.4507273660866181j))}
+	IMU z:  -8.39188  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.56749
+	Car: speed 1  and  steering  2
+572
+	GPS : {'timestamp': 38.037, 'coor': ((12.60002+7.98084j), (0.8926616612472049-0.4507273660866181j))}
+	IMU z:  -8.4099  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.57152
+	Car: speed 1  and  steering  2
+573
+	GPS : {'timestamp': 38.037, 'coor': ((12.60002+7.98084j), (0.8926616612472049-0.4507273660866181j))}
+	IMU z:  -8.42746  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.57542
+	Car: speed 1  and  steering  2
+574
+	GPS : {'timestamp': 38.037, 'coor': ((12.60002+7.98084j), (0.8926616612472049-0.4507273660866181j))}
+	IMU z:  -8.44797  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.57994
+	Car: speed 1  and  steering  2
+575
+	GPS : {'timestamp': 38.037, 'coor': ((12.60002+7.98084j), (0.8926616612472049-0.4507273660866181j))}
+	IMU z:  -8.4692  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.58459
+	Car: speed 1  and  steering  2
+576
+	GPS : {'timestamp': 38.037, 'coor': ((12.60002+7.98084j), (0.8926616612472049-0.4507273660866181j))}
+	IMU z:  -8.49231  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.58962
+	Car: speed 1  and  steering  2
+577
+	GPS : {'timestamp': 38.037, 'coor': ((12.60002+7.98084j), (0.8926616612472049-0.4507273660866181j))}
+	IMU z:  -8.50859  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.59314
+	Car: speed 1  and  steering  2
+578
+	GPS : {'timestamp': 39.039, 'coor': ((13.46556+8.51092j), (0.8289100246391056-0.5593819545291012j))}
+	IMU z:  -8.53081  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.59791
+	Car: speed 1  and  steering  2
+579
+	GPS : {'timestamp': 39.039, 'coor': ((13.46556+8.51092j), (0.8289100246391056-0.5593819545291012j))}
+	IMU z:  -8.54964  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.60193
+	Car: speed 1  and  steering  2
+580
+	GPS : {'timestamp': 39.039, 'coor': ((13.46556+8.51092j), (0.8289100246391056-0.5593819545291012j))}
+	IMU z:  -8.57155  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.60658
+	Car: speed 1  and  steering  2
+581
+	GPS : {'timestamp': 39.039, 'coor': ((13.46556+8.51092j), (0.8289100246391056-0.5593819545291012j))}
+	IMU z:  -8.5924  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.61097
+	Car: speed 1  and  steering  2
+582
+	GPS : {'timestamp': 39.039, 'coor': ((13.46556+8.51092j), (0.8289100246391056-0.5593819545291012j))}
+	IMU z:  -8.60797  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.61423
+	Car: speed 1  and  steering  2
+583
+	GPS : {'timestamp': 39.039, 'coor': ((13.46556+8.51092j), (0.8289100246391056-0.5593819545291012j))}
+	IMU z:  -8.62783  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.61838
+	Car: speed 1  and  steering  2
+584
+	GPS : {'timestamp': 39.039, 'coor': ((13.46556+8.51092j), (0.8289100246391056-0.5593819545291012j))}
+	IMU z:  -8.65023  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.62302
+	Car: speed 1  and  steering  2
+585
+	GPS : {'timestamp': 39.039, 'coor': ((13.46556+8.51092j), (0.8289100246391056-0.5593819545291012j))}
+	IMU z:  -8.67277  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.62766
+	Car: speed 1  and  steering  2
+586
+	GPS : {'timestamp': 39.039, 'coor': ((13.46556+8.51092j), (0.8289100246391056-0.5593819545291012j))}
+	IMU z:  -8.69299  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.6318
+	Car: speed 1  and  steering  2
+587
+	GPS : {'timestamp': 39.039, 'coor': ((13.46556+8.51092j), (0.8289100246391056-0.5593819545291012j))}
+	IMU z:  -8.71146  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.63556
+	Car: speed 1  and  steering  2
+588
+	GPS : {'timestamp': 39.039, 'coor': ((13.46556+8.51092j), (0.8289100246391056-0.5593819545291012j))}
+	IMU z:  -8.73003  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.63933
+	Car: speed 1  and  steering  2
+589
+	GPS : {'timestamp': 39.039, 'coor': ((13.46556+8.51092j), (0.8289100246391056-0.5593819545291012j))}
+	IMU z:  -8.74807  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.64296
+	Car: speed 1  and  steering  2
+590
+	GPS : {'timestamp': 39.039, 'coor': ((13.46556+8.51092j), (0.8289100246391056-0.5593819545291012j))}
+	IMU z:  -8.76807  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.64697
+	Car: speed 1  and  steering  2
+591
+	GPS : {'timestamp': 39.039, 'coor': ((13.46556+8.51092j), (0.8289100246391056-0.5593819545291012j))}
+	IMU z:  -8.78817  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.65098
+	Car: speed 1  and  steering  2
+592
+	GPS : {'timestamp': 39.039, 'coor': ((13.46556+8.51092j), (0.8289100246391056-0.5593819545291012j))}
+	IMU z:  -8.80773  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.65487
+	Car: speed 1  and  steering  2
+593
+	GPS : {'timestamp': 39.039, 'coor': ((13.46556+8.51092j), (0.8289100246391056-0.5593819545291012j))}
+	IMU z:  -8.82613  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.6585
+	Car: speed 1  and  steering  2
+594
+	GPS : {'timestamp': 39.039, 'coor': ((13.46556+8.51092j), (0.8289100246391056-0.5593819545291012j))}
+	IMU z:  -8.8478  - roll:  -1e-05   - pitch:  0.00024 yaw:  -0.66276
+	Car: speed 1  and  steering  2
+595
+	GPS : {'timestamp': 39.039, 'coor': ((13.46556+8.51092j), (0.8289100246391056-0.5593819545291012j))}
+	IMU z:  -8.86701  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.66651
+	Car: speed 1  and  steering  2
+596
+	GPS : {'timestamp': 39.039, 'coor': ((13.46556+8.51092j), (0.8289100246391056-0.5593819545291012j))}
+	IMU z:  -8.88954  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.6709
+	Car: speed 1  and  steering  2
+597
+	GPS : {'timestamp': 39.039, 'coor': ((13.46556+8.51092j), (0.8289100246391056-0.5593819545291012j))}
+	IMU z:  -8.91154  - roll:  -1e-05   - pitch:  0.00025 yaw:  -0.67515
+	Car: speed 1  and  steering  2
+598
+	GPS : {'timestamp': 39.039, 'coor': ((13.46556+8.51092j), (0.8289100246391056-0.5593819545291012j))}
+	IMU z:  -8.93561  - roll:  -1e-05   - pitch:  0.00024 yaw:  -0.67978
+	Car: speed 1  and  steering  2
+599
+	GPS : {'timestamp': 39.039, 'coor': ((13.46556+8.51092j), (0.8289100246391056-0.5593819545291012j))}
+	IMU z:  -8.96047  - roll:  -1e-05   - pitch:  0.00024 yaw:  -0.68454
+	Car: speed 1  and  steering  2
