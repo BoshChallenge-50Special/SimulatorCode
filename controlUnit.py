@@ -7,8 +7,11 @@ be able to communicate with the Gazebo simulator
 import concurrent.futures
 import Queue
 import threading
+import traceback
 
 from LineTracking import ParticleFilter
+from TrafficSignDetection import traffic
+from LineTracking.horizontal_line import HorizontalLine
 
 from Localization import GraphMap
 from LineTracking.utils import Utils
@@ -47,6 +50,7 @@ class ControlUnit(object):
 	def start(self):
 		#THREAD: 1. Add a pipeline for your module
 		pipeline_lines = Queue.Queue(maxsize=10)
+		pipeline_signs = Queue.Queue(maxsize=10)
 		event = threading.Event()
 
 		with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
@@ -55,45 +59,58 @@ class ControlUnit(object):
 			#THREAD: 2. Duplicate the following line. Change the pipeline name and add or remove the other parameters
 			#			depending on the parameter of your Function
 			#			self.line_tracking is a method that configure the module and start it
-			executor.submit(self.line_tracking, pipeline_lines, event, False)
+			executor.submit(self.line_tracking, pipeline_lines, event, True)
+			executor.submit(self.sign_detection, pipeline_signs, event, True)
+			executor.submit(self.horizontal_detection, pipeline_signs, event, True)
 			#time.sleep(0.1)
 			#logging.info("Main: about to set event")
 			#event.set()
-			P = 0.1
+			P = 0.08
 			I = 0.002
 			D = 0.002
 			pid = PID.PID(P, I, D)
 			img=self.cam.getImage()
 			steer=0
-			targetT = (img.shape[1]/2)#/img.shape[1]
-			while(True):
-				#THREAD 3. Read the data received from the thread from your pipeline
-				#THREAD 4. In your module use  to load data in the queue: data_queue.put(...stuff...)
-				img=self.cam.getImage()
+			targetT = 0+20 #(img.shape[1]/2)#/img.shape[1]
 
-				lines=pipeline_lines.get()
-				steer=self.get_steer(pid, lines, targetT)
-				print(steer)
-				time.sleep(0.1)
-				self.car.drive(0.17, steer)
+			try:
+				while(True):
+					#THREAD 3. Read the data received from the thread from your pipeline
+					#THREAD 4. In your module use  to load data in the queue: data_queue.put(...stuff...)
+					img = self.cam.getImage()
 
+					lines = pipeline_lines.get()
+					#signs = pipeline_signs.get()
+					#print("size " + str(pipeline_lines.qsize()))
 
-				#offsetApproximation=[]#[0,int(img.shape[1]/2 )]
-				#res_1 = utils.draw_particles(img, [], "Result", lines, start_coo=[[0, 300], [320, 300]])#, offset=[], offsetApproximation=offset_Approximation))
-				#error_lane = central_line[3] - img.shape[1]/2
-				#print("targetPwm : "+str(targetPwm)+ " error : "+str(error_lane))
-				steer_dir=""
-				if(-steer > 0):
-					steer_dir="right"
-				else:
-					steer_dir="left"
-				print("COMMAND : VELOCITY = 0.17 | STEER = "+steer_dir+ " --> " +str(steer))
+					distance_from_base = 0.6 #it's a percentage
+
+					actual_trajectory=self.get_current_trajectory_point(lines, distance_from_base, size=img.shape[1])
+					if(actual_trajectory==None):
+						actual_trajectory=targetT
+					steer=self.get_steer(pid, actual_trajectory, targetT)
+					self.car.drive(0.1, -steer)
+					time.sleep(0.1)
+
+					offsetApproximation=[]#[0,int(img.shape[1]/2 )]
+					res_1 = utils.draw_particles(img, [], "Result", lines, start_coo=[[0, 300], [320, 300]])#, offset=[], offsetApproximation=offset_Approximation))
+					#error_lane = central_line[3] - img.shape[1]/2
+					#print("targetPwm : "+str(targetPwm)+ " error : "+str(error_lane))
+					steer_dir=""
+					if(-steer > 0):
+						steer_dir="right"
+					else:
+						steer_dir="left"
+					#print("COMMAND : VELOCITY = 0.17 | STEER = "+steer_dir+ " --> " +str(steer) + " ERROR : "+str(targetT-actual_trajectory))
 			#Read input from all modules
 			#line_tracking(True)
 			#get_location()
 			#Do some control action
+			except Exception as e:
+				print(e)
+				print(traceback.print_exc())
 
-	def line_tracking(self, data_queue, event, verbose=False):
+	def line_tracking(self, data_queue, event, verbose=True):
 		N_particles           = 60  #100 # Particles used in the filter
 		Interpolation_points  = 20  #25  # Interpolation points used for the spline
 		order                 = 1        # Spline order
@@ -104,9 +121,19 @@ class ControlUnit(object):
 							order=order,
 							N_points=N_c,
 							Images_print=verbose,
-							threshold_reset=10,
+							threshold_reset=5,
 							get_image_function=self.cam.getImage,
 							data_queue=data_queue)
+
+	def sign_detection(self, data_queue, event, verbose=True):
+		try :
+			sg = traffic.SignDetector(None,None, data_queue, self.cam.getImage)
+			sg.run()
+		except Exception as e:
+			print(e)
+			print(traceback.print_exc())
+		#SignDetection.start_sign_detection(
+		#					data_queue=data_queue)
 
 	# Algoritmo sulla linea obiettivo -> media all'inizio e poi aumentiamo la complessit con il path planning
 	#																								| ---> Funzione controllo che ha in input il risultato del machine learning e il line tracking
@@ -126,16 +153,46 @@ class ControlUnit(object):
 
 		print(options)
 
-	def give_me_Elisa(self):
-		print("elisa")
-		return "ELISA"
+	def get_current_trajectory_point_old(self, lines, distance_from_base, central_point=320):
+		if(lines[0] != None and lines[1] != None):
+			central_line=[(lines[0].spline[i][0]+central_point+lines[1].spline[i][0])/2 for i in range(0, len(lines[0].spline))]
+			index = int(distance_from_base * len(central_line))
+			return central_line[index]
+		else:
+			return central_point
 
-	def get_steer(self, pid, lines, targetT):
-		central_line=[(lines[0].spline[i][0]+targetT+lines[1].spline[i][0])/2 for i in range(0, len(lines[0].spline))]
+	def get_current_trajectory_point(self, lines, distance_from_base, size=640):
+		dist = []
+		if(lines[0] != None):
+			dist.append([lines[0].spline[i][0] for i in range(0, len(lines[0].spline))])
+		if(lines[1] != None):
+			dist.append([lines[1].spline[i][0]-size/2 for i in range(0, len(lines[1].spline))])
 
+		if(len(dist)==0):
+			return None
+		elif(len(dist)==1):
+			index = int(distance_from_base * len(dist[0]))
+			return dist[0][index]
+		else:
+			too_near=False
+			dist_avg = [(dist[0][i] + dist[1][i])/2 for i in range(0, len(dist[0])) ]
+			index = int(distance_from_base * len(dist[0]))
+			return dist_avg[index]
+
+	def get_steer(self, pid, point_objective, targetT):
 		pid.SetPoint = targetT
 		pid.setSampleTime(0.1)
-		pid.update(central_line[17])#/img.shape[1])
+		pid.update(point_objective)#central_line[17])#/img.shape[1])
 		targetPwm = pid.output
 
 		return targetPwm
+
+	def horizontal_detection(self, data_queue, event, verbose=True):
+		try :
+			horizonLine = HorizontalLine()
+			while(True):
+				img = self.cam.getImage()
+				horizonLine.check_horizontal(img, data_queue)
+		except Exception as e:
+			print(e)
+			print(traceback.print_exc())
