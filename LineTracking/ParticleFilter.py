@@ -376,6 +376,9 @@ def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None
 
     #if(dataset_number==1):
     crop_points = [0, 300, 640, 465]
+    
+    pts = np.array([(190, 30), (0, 280), (490, 30), (640, 280)]) # Total pic: [(0, 0), (0, 280), (640, 0), (640, 280)] -> UL, DL, UR, DR
+
     #else:
     #    crop_points = [0, 200, 640, 480]
 
