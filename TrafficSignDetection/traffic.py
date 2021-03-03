@@ -10,6 +10,8 @@ import argparse
 import time
 # local modules
 from common import mosaic
+from classification import training, getLabel
+
 
 
 #Parameter
@@ -37,80 +39,6 @@ def clean_images():
 		if '.png' in file_name:
 			os.remove(file_name)
 
-def load_traffic_dataset():
-    dataset = []
-    labels = []
-    for sign_type in range(CLASS_NUMBER):
-        print(sign_type)
-        sign_list = listdir("/home/ebllaei/dataset_bosch/{}".format(sign_type))
-        for sign_file in sign_list:
-            if '.png' in sign_file:
-                path = "/home/ebllaei/dataset_bosch/{}/{}".format(sign_type,sign_file)
-                print(path)
-                img = cv2.imread(path,0)
-                img = cv2.resize(img, (SIZE, SIZE))
-                img = np.reshape(img, [SIZE, SIZE])
-                dataset.append(img)
-                labels.append(sign_type)
-    return np.array(dataset), np.array(labels)
-
-
-def deskew(img):
-    m = cv2.moments(img)
-    if abs(m['mu02']) < 1e-2:
-        return img.copy()
-    skew = m['mu11']/m['mu02']
-    M = np.float32([[1, skew, -0.5*SIZE*skew], [0, 1, 0]])
-    img = cv2.warpAffine(img, M, (SIZE, SIZE), flags=cv2.WARP_INVERSE_MAP | cv2.INTER_LINEAR)
-    return img
-
-class StatModel(object):
-    def load(self, fn):
-        self.model.load(fn)  # Known bug: https://github.com/opencv/opencv/issues/4969
-    def save(self, fn):
-        self.model.save(fn)
-
-class SVM(StatModel):
-    def __init__(self, C = 12.5, gamma = 0.50625):
-        self.model = cv2.ml.SVM_create()
-        self.model.setGamma(gamma)
-        self.model.setC(C)
-        self.model.setKernel(cv2.ml.SVM_RBF)
-        self.model.setType(cv2.ml.SVM_C_SVC)
-
-    def train(self, samples, responses):
-        self.model.train(samples, cv2.ml.ROW_SAMPLE, responses)
-
-    def predict(self, samples):
-
-        return self.model.predict(samples)[1].ravel()
-
-
-def evaluate_model(model, data, samples, labels):
-    resp = model.predict(samples)
-    print(resp)
-    err = (labels != resp).mean()
-    print('Accuracy: %.2f %%' % ((1 - err)*100))
-
-    confusion = np.zeros((10, 10), np.int32)
-    for i, j in zip(labels, resp):
-        confusion[int(i), int(j)] += 1
-    print('confusion matrix:')
-    print(confusion)
-
-    vis = []
-    for img, flag in zip(data, resp == labels):
-        img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
-        if not flag:
-            img[...,:2] = 0
-
-        vis.append(img)
-    return mosaic(16, vis)
-
-def preprocess_simple(data):
-    return np.float32(data).reshape(-1, SIZE*SIZE) / 255.0
-
-
 def get_hog() :
     winSize = (20,20)
     blockSize = (10,10)
@@ -130,59 +58,14 @@ def get_hog() :
     return hog
     affine_flags = cv2.WARP_INVERSE_MAP|cv2.INTER_LINEAR
 
-
-def training():
-    print('Loading data from data.png ... ')
-    # Load data.
-    #data, labels = load_data('data.png')
-    data, labels = load_traffic_dataset()
-    print(data.shape)
-    print('Shuffle data ... ')
-    # Shuffle data
-    rand = np.random.RandomState(10)
-    shuffle = rand.permutation(len(data))
-    data, labels = data[shuffle], labels[shuffle]
-
-    print('Deskew images ... ')
-    data_deskewed = list(map(deskew, data))
-
-    print('Defining HoG parameters ...')
-    # HoG feature descriptor
-    hog = get_hog()
-
-    print('Calculating HoG descriptor for every image ... ')
-    hog_descriptors = []
-    for img in data_deskewed:
-        hog_descriptors.append(hog.compute(img))
-    hog_descriptors = np.squeeze(hog_descriptors)
-
-    print('Spliting data into training (90%) and test set (10%)... ')
-    train_n=int(0.9*len(hog_descriptors))
-    data_train, data_test = np.split(data_deskewed, [train_n])
-    hog_descriptors_train, hog_descriptors_test = np.split(hog_descriptors, [train_n])
-    labels_train, labels_test = np.split(labels, [train_n])
-
-
-    print('Training SVM model ...')
-    model = SVM()
-    model.train(hog_descriptors_train, labels_train)
-
-    print('Saving SVM model ...')
-    model.save('data_svm.dat')
-    return model
-
-def getLabel(model, data):
-    gray = cv2.cvtColor(data, cv2.COLOR_BGR2GRAY)
-    img = [cv2.resize(gray,(SIZE,SIZE))]
-    #print(np.array(img).shape)
-    img_deskewed = list(map(deskew, img))
-    hog = get_hog()
-    hog_descriptors = np.array([hog.compute(img_deskewed[0])])
-    hog_descriptors = np.reshape(hog_descriptors, [-1, hog_descriptors.shape[1]])
-    return int(model.predict(hog_descriptors)[0])
-
-
-
+def deskew(img):
+    m = cv2.moments(img)
+    if abs(m['mu02']) < 1e-2:
+        return img.copy()
+    skew = m['mu11']/m['mu02']
+    M = np.float32([[1, skew, -0.5*SIZE*skew], [0, 1, 0]])
+    img = cv2.warpAffine(img, M, (SIZE, SIZE), flags=cv2.WARP_INVERSE_MAP | cv2.INTER_LINEAR)
+    return img
 
 class SignDetector():
 
@@ -235,10 +118,6 @@ class SignDetector():
         else:
             self.get_image_function_test_load()
             self.get_image_function = self.get_image_function_test
-        # And these three.
-        #self.clf02 = joblib.load("classifierSVM.joblib")
-        #self.clf = joblib.load("LDA.joblib")
-        #self.pca = joblib.load("pca.joblib")
 
     #====================================================================
     def withinBoundsX(self, coord, img):
@@ -321,7 +200,6 @@ class SignDetector():
             y1 = int(points.pt[1]) - 35
             x2 = int(points.pt[0]) + 35
             y2 = int(points.pt[1]) + 35
-
             for disp in (0, 4):
                 if (not self.withinBoundsX(x1, img) or  not self.withinBoundsY(y1+disp, img) or not self.withinBoundsX(x2, img) or not self.withinBoundsY(y2+disp, img)):
 
@@ -331,25 +209,20 @@ class SignDetector():
                 roi = img[y1+disp:y2+disp, x1:x2]
                 sign = cv2.resize(roi, (40, 40), interpolation=cv2.INTER_AREA)
                 cv2.imshow("roi "+str(c), sign)
-                #Computing the HOG and making it so we can give it to the SVM, with PCA.
-                #descriptor = self.hog.compute(roi)
-                #descriptor = np.array(descriptor)
-                #descriptor = descriptor.transpose()
 
-
-                #pca_values = self.pca.transform(descriptor)
                 #If the SVM gives a positive response (i.e. it is a sign) we show the image and draw a rectangle around the sign
                 #we further process it with the classifier.
                 sign_type = -1
                 i = 0
-                continue
-
+                #continue
+               
                 if sign is not None:
                     sign_type = getLabel(model, sign)
                     sign_type = sign_type if sign_type <= 11 else 11
                     text = SIGNS[sign_type]
                     cv2.rectangle(watch, (x1, y1 + disp), (x2, y2 + disp), (255, 255, 255), 2)
-                    #cv2.imwrite(str(count)+'_'+text+'.png', sign)
+                    # Uncomment to save images for dataset
+                    #cv2.imwrite(str(self.count)+'_'+text+'.png', sign)
                     print(text)
 
                 if sign_type > 0 and sign_type != self.current_sign_type:
@@ -446,24 +319,17 @@ class SignDetector():
         self.current_size = 0
         self.sign_count = 0
         self.count = 0
-        	#Clean previous image
+        #Clean previous image
         #clean_images()
         #Training phase
 
-        model = None # training()
-
-        #vidcap = cv2.VideoCapture('/home/ebllaei/Downloads/video.mp4')
-        #vidcap = cv2.VideoCapture('/home/ebllaei/traffic_signs.mp4')
-        #vidcap = cv2.VideoCapture('/home/ebllaei/traffic/shape/Traffic-Sign-Detection/MVI_1049.avi')
-        #success,watch = vidcap.read()
-
+        #model = training()
+        #model = cv2.ml.SVM_load('data_svm.dat')
+      
         #while success:
+        # Uncomment elisa
 
-
-        #folder = '/home/ebllaei/Downloads/dataset'
-
-        #for filename in sorted(os.listdir(folder)):
-        #for filename in range(20):
+        # uncomment simulator:
         while(True):
             #print("TRAFFIC")
             '''
@@ -471,13 +337,11 @@ class SignDetector():
             watch - this is where I draw the rectangles and whatnot so it can be tested in practice
             centers - the centers of the regions of interest
             '''
-            #print(filename)
-            # A dirty drick, unsure if still necessary, but I will leave it here.
-            #watch = cv2.imread(os.path.join(folder,filename))
+            # Uncomment one when Eisa:
             #watch = cv2.imread("/home/ebllaei/Downloads/dataset/0816.png")
-            watch = self.get_image_function()
+            # Uncomment when simulator:
+            # watch = self.get_image_function()
             #victim = watch[0:(int)(watch.shape[0]/2), (int)(watch.shape[1]/2):watch.shape[1]]
-            #victim = cv2.copyMakeBorder(victim, 0, 0, 0, 32, cv2.BORDER_REPLICATE)
             victim = cv2.copyMakeBorder(watch, 0, 0, 0, 32, cv2.BORDER_REPLICATE)
 
             img = np.int16(watch)
@@ -512,4 +376,5 @@ class SignDetector():
 
 if __name__ == '__main__':
     sg = SignDetector(None,None,None,None)
+    model = training()
     sg.run()
