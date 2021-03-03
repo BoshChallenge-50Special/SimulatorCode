@@ -184,10 +184,6 @@ class ImageProcessing(object):
         return edges
 
 
-
-
-
-
     def get_raw_image(self, verbose=False, img=None, tag=""):
         img=self.acquire_frame()
 

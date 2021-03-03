@@ -3,10 +3,12 @@ import sys
 import cv2 as cv
 import numpy as np
 import math
+import os
 
 class HorizontalLine(object):
 
-	def check_horizontal (self, image, data_queue):
+	def check_horizontal (self, image, data_queue=None):
+
 		#Loading test images
 		#image = cv.imread('test_images/solidWhiteRight.jpg')
 		
@@ -31,7 +33,10 @@ class HorizontalLine(object):
 		vertices = np.array([[(300,240),(imshape[1]-300, 240), (imshape[1]-150, imshape[0]-20), (150,imshape[0]-20)]], dtype=np.int32)
 		cv.fillPoly(mask, vertices, ignore_mask_color)
 		masked_edges = cv.bitwise_and(edges, mask)
-		
+
+		cv.imshow("masked_edges", masked_edges)
+		k = cv.waitKey(0)
+
 		# Define the Hough transform parameters
 		# Make a blank the same size as our image to draw on
 		rho = 2 # distance resolution in pixels of the Hough grid
@@ -46,6 +51,7 @@ class HorizontalLine(object):
 		lines = cv.HoughLinesP(masked_edges, rho, theta, threshold, np.array([]),
 									min_line_length, max_line_gap)
 		
+		
 		horizontal = 0
 		if str(lines) != "None":
 			# Iterate over the output "lines" and draw lines on a blank image
@@ -59,7 +65,9 @@ class HorizontalLine(object):
 						horizontal = horizontal + 1 
 
 						cv.line(line_image,(x1,y1),(x2,y2),(255,0,0),10)
-			#print(str(horizontal) +"\t"+str(len(lines[0])))
+			
+			# print(str(horizontal) +"\t"+str(len(lines)))
+
 			if(horizontal == 2 and horizontal == len(lines)):
 				print("Stop")
 				#data_queue.put("HorizontalLine: Found a STOP line")              
@@ -84,3 +92,43 @@ class HorizontalLine(object):
 				return
 		
 		cv.imshow("HorizontalLine", image)
+		k = cv.waitKey(10)
+
+
+
+if __name__ == '__main__':
+	
+	path = "../Dataset/"
+	hor = HorizontalLine()
+
+	N_STEP = len([path+name for name in os.listdir(path) if (os.path.isfile(path+name) and ".png" in name) ])-2
+	# ip     = ImageProcessing(pts, path=path, crop_points=crop_points, kernel_size=blur)
+	
+	#Upload list of files
+	files = [name for name in os.listdir(path) if (os.path.isfile(path+name) and ".png" in name)]
+	files.sort(key=lambda x: int( (x.split(".")[-2]).split("_")[1] ))
+	files = [path + f for f in files]
+	
+	count = 0
+	verbose = False
+
+	for step in range(0, N_STEP):
+		count += 1
+		img = cv.imread(files[count])
+
+		if verbose:
+			cv.imshow("Aquired frame", img)
+			#cv.imwrite('../AquiredFrame'+str(self.count)+'_'+tag+'.png', img)
+			k = cv.waitKey(0)
+
+		hor.check_horizontal(img)
+
+
+
+
+
+
+	
+
+
+
