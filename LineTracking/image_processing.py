@@ -133,7 +133,6 @@ class ImageProcessing(object):
         return warped
 
     def get_lines_pdf(self, verbose=False, img=None):
-
         if(img==None):
             img  = self.acquire_frame(False)
 

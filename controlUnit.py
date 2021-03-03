@@ -18,6 +18,10 @@ from LineTracking.utils import Utils
 import PID
 import time
 
+
+import sys
+sys.settrace
+
 class ControlUnit(object):
 
 	def __init__(self, cam, car, sem, gps, bno, map_path=None, parameters={}):
@@ -27,6 +31,9 @@ class ControlUnit(object):
 		self.gps=gps
 		self.bno=bno
 		self.map_path = map_path
+		self.pipeline_lines = Queue.Queue(maxsize=10)
+		self.pipeline_signs = Queue.Queue(maxsize=10)
+		self.pipeline_horizontal_line = Queue.Queue(maxsize=10)
 
 	#def producer(queue, event):
     #"""Pretend we're getting a number from the network."""
@@ -49,19 +56,19 @@ class ControlUnit(object):
 
 	def start(self):
 		#THREAD: 1. Add a pipeline for your module
-		pipeline_lines = Queue.Queue(maxsize=10)
-		pipeline_signs = Queue.Queue(maxsize=10)
+
 		event = threading.Event()
 
-		with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+		with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
 			utils = Utils()
 
 			#THREAD: 2. Duplicate the following line. Change the pipeline name and add or remove the other parameters
 			#			depending on the parameter of your Function
 			#			self.line_tracking is a method that configure the module and start it
-			executor.submit(self.line_tracking, pipeline_lines, event, True)
-			executor.submit(self.sign_detection, pipeline_signs, event, True)
-			executor.submit(self.horizontal_detection, pipeline_signs, event, True)
+			executor.submit(self.line_tracking, self.pipeline_lines, event, True)
+			executor.submit(self.sign_detection, self.pipeline_signs, event, True)
+			executor.submit(self.horizontal_detection, self.pipeline_horizontal_line, event, True)
+			executor.submit(self.execute_pid, event, True)
 			#time.sleep(0.1)
 			#logging.info("Main: about to set event")
 			#event.set()
@@ -79,7 +86,7 @@ class ControlUnit(object):
 					#THREAD 4. In your module use  to load data in the queue: data_queue.put(...stuff...)
 					img = self.cam.getImage()
 
-					lines = pipeline_lines.get()
+					lines = self.pipeline_lines.get()
 					#signs = pipeline_signs.get()
 					#print("size " + str(pipeline_lines.qsize()))
 
@@ -89,7 +96,7 @@ class ControlUnit(object):
 					if(actual_trajectory==None):
 						actual_trajectory=targetT
 					steer=self.get_steer(pid, actual_trajectory, targetT)
-					self.car.drive(0.1, -steer)
+					self.car.drive(0.18, -steer)
 					time.sleep(0.1)
 
 					offsetApproximation=[]#[0,int(img.shape[1]/2 )]
@@ -113,8 +120,8 @@ class ControlUnit(object):
 	def line_tracking(self, data_queue, event, verbose=True):
 		N_particles           = 60  #100 # Particles used in the filter
 		Interpolation_points  = 20  #25  # Interpolation points used for the spline
-		order                 = 1        # Spline order
-		N_c                   = 4       # Number of spline control points
+		order                 = 2        # Spline order
+		N_c                   = 3       # Number of spline control points
 
 		ParticleFilter.filter_usage_BOSH(N_Particles=N_particles,
 							Interpolation_points=Interpolation_points,
@@ -191,8 +198,21 @@ class ControlUnit(object):
 		try :
 			horizonLine = HorizontalLine()
 			while(True):
-				img = self.cam.getImage()
+				img = self.cam.getImage().copy()
 				horizonLine.check_horizontal(img, data_queue)
 		except Exception as e:
 			print(e)
 			print(traceback.print_exc())
+
+	def execute_pid(self, event, verbose=True):
+		return
+		#while(True):
+			#print(self.pipeline_lines.get())
+		#try :
+		#	horizonLine = HorizontalLine()
+		#	while(True):
+		#		img = self.cam.getImage().copy()
+		#		horizonLine.check_horizontal(img, data_queue)
+		#except Exception as e:
+		#	print(e)
+		#	print(traceback.print_exc())
