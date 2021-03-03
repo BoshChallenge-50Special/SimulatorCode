@@ -184,13 +184,13 @@ def getLabel(model, data):
 
 
 
-class SignDetector(Thread):
+class SignDetector():
 
     def __init__(self, inP, outP, data_queue, get_image_function):
         '''
         :)
         '''
-        super(SignDetector, self).__init__()
+        #super(SignDetector, self).__init__()
         self.inP = inP
         self.outP = outP
 
@@ -229,7 +229,7 @@ class SignDetector(Thread):
         self.detector = cv2.SimpleBlobDetector_create(self.params)
 
         self.data_queue = data_queue
-        print(data_queue)
+
         if(get_image_function != None):
             self.get_image_function = get_image_function
         else:
@@ -283,8 +283,9 @@ class SignDetector(Thread):
         #finalMask = red_det + yellow_det + blue_det
 
         # Bitwise-AND mask and original image
+        ##### ATTENZIONE----> res non sembra mai utilizzato#################################################
         res = cv2.bitwise_and(imgHSV,imgHSV, mask= (red_det))
-        cv2.imshow('res',res)
+        #cv2.imshow('res',res)
         #==============================================================================
         #==============================================================================
 
@@ -303,20 +304,19 @@ class SignDetector(Thread):
                                      cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
         finalImage = red_image + yellow_image + blue_image + green_image
-        cv2.imshow("watch1", finalImage)
+        #cv2.imshow("Image after applied the masks", finalImage)
         keypoints_all = keypoints_red + keypoints_yellow + keypoints_blue + keypoints_green
-        print(keypoints_all)
-    
+
         cv2.drawKeypoints( finalImage, keypoints_all, finalImage, (0, 0, 255))
-        cv2.imshow("finalImage", finalImage)
+        cv2.imshow("finalImage + IMAGE plus keypoints", finalImage)
 
         return (keypoints_all)
     # ===================================================================================
 
 
     def detectSign(self, img, watch, centers,model):
-        for points in centers:
-            
+        for c, points in enumerate(centers):
+
             x1 = int(points.pt[0]) - 35
             y1 = int(points.pt[1]) - 35
             x2 = int(points.pt[0]) + 35
@@ -324,13 +324,13 @@ class SignDetector(Thread):
 
             for disp in (0, 4):
                 if (not self.withinBoundsX(x1, img) or  not self.withinBoundsY(y1+disp, img) or not self.withinBoundsX(x2, img) or not self.withinBoundsY(y2+disp, img)):
-                    print(points)
 
                     break
+
                 #The window to check using the HOG.
                 roi = img[y1+disp:y2+disp, x1:x2]
                 sign = cv2.resize(roi, (40, 40), interpolation=cv2.INTER_AREA)
-                cv2.imshow("roi",roi)
+                cv2.imshow("roi "+str(c), sign)
                 #Computing the HOG and making it so we can give it to the SVM, with PCA.
                 #descriptor = self.hog.compute(roi)
                 #descriptor = np.array(descriptor)
@@ -342,6 +342,7 @@ class SignDetector(Thread):
                 #we further process it with the classifier.
                 sign_type = -1
                 i = 0
+                continue
 
                 if sign is not None:
                     sign_type = getLabel(model, sign)
@@ -424,7 +425,7 @@ class SignDetector(Thread):
                     self.sign_count += 1
                     coordinates.append(position)
 
-                cv2.imshow('Result', img)
+                #cv2.imshow('Result detectSign', img)
                 self.count = self.count + 1
                 #Write to video
                 #out.write(img)
@@ -446,23 +447,25 @@ class SignDetector(Thread):
         self.sign_count = 0
         self.count = 0
         	#Clean previous image
-        clean_images()
+        #clean_images()
         #Training phase
 
-        model = training()
+        model = None # training()
 
         #vidcap = cv2.VideoCapture('/home/ebllaei/Downloads/video.mp4')
         #vidcap = cv2.VideoCapture('/home/ebllaei/traffic_signs.mp4')
         #vidcap = cv2.VideoCapture('/home/ebllaei/traffic/shape/Traffic-Sign-Detection/MVI_1049.avi')
         #success,watch = vidcap.read()
-        
+
         #while success:
 
 
-        folder = '/home/ebllaei/Downloads/dataset'
+        #folder = '/home/ebllaei/Downloads/dataset'
 
         #for filename in sorted(os.listdir(folder)):
-        for filename in range(20):
+        #for filename in range(20):
+        while(True):
+            #print("TRAFFIC")
             '''
             victim - the image I actually do the processing on
             watch - this is where I draw the rectangles and whatnot so it can be tested in practice
@@ -471,9 +474,11 @@ class SignDetector(Thread):
             #print(filename)
             # A dirty drick, unsure if still necessary, but I will leave it here.
             #watch = cv2.imread(os.path.join(folder,filename))
-            watch = cv2.imread("/home/ebllaei/Downloads/dataset/0816.png")
-            victim = watch[0:(int)(watch.shape[0]/2), (int)(watch.shape[1]/2):watch.shape[1]]
-            victim = cv2.copyMakeBorder(victim, 0, 0, 0, 32, cv2.BORDER_REPLICATE)
+            #watch = cv2.imread("/home/ebllaei/Downloads/dataset/0816.png")
+            watch = self.get_image_function()
+            #victim = watch[0:(int)(watch.shape[0]/2), (int)(watch.shape[1]/2):watch.shape[1]]
+            #victim = cv2.copyMakeBorder(victim, 0, 0, 0, 32, cv2.BORDER_REPLICATE)
+            victim = cv2.copyMakeBorder(watch, 0, 0, 0, 32, cv2.BORDER_REPLICATE)
 
             img = np.int16(watch)
             contrast = 10
@@ -486,7 +491,7 @@ class SignDetector(Thread):
             centers = self.detectColorAndCenters(watch)
             # Detect and classify the signs.
             self.detectSign(victim, watch, centers,model)
-            cv2.imshow("watch", watch)
+            #cv2.imshow("Input image to detection sign", watch)
             #self.outP.send(0)
             #print(0)
             time.sleep(0.5)
@@ -494,7 +499,7 @@ class SignDetector(Thread):
             if cv2.waitKey(1) == 27:
                 break
 
-        #cv2.destroyAllWindows()
+        cv2.destroyAllWindows()
 
     def get_image_function_test_load(self):
         folder = '/home/ebllaei/Downloads/dataset'
