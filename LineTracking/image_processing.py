@@ -109,7 +109,7 @@ class ImageProcessing(object):
 
 
     def IPM(self, image, verbose=False, tag=""):
-        
+
         utils = Utils()
 
         # pts correspond to the four points of the image
@@ -145,10 +145,10 @@ class ImageProcessing(object):
         img1 = self.crop_image(img, 0, 0, int(img.shape[1]/2), int(img.shape[0]), verbose, tag="l")
         img2 = self.crop_image(img, int(img.shape[1]/2), 0, int(img.shape[1]), int(img.shape[0]), verbose, tag="r")
 
-        img  = self.bright_contr(img)
-        img1 = self.bright_contr(img1, verbose=verbose, tag="l")
-        img2 = self.bright_contr(img2, verbose=verbose, tag="r")
-        
+        #img  = self.bright_contr(img)
+        #img1 = self.bright_contr(img1, verbose=verbose, tag="l")
+        #img2 = self.bright_contr(img2, verbose=verbose, tag="r")
+
 
         pdf  = self.blur(self.create_mask(img))
         pdf1 = self.blur(self.create_mask(img1, verbose, tag="l"),verbose, tag="l")
@@ -160,18 +160,18 @@ class ImageProcessing(object):
         edge2 = self.edges(img2
         cv.imshow("edge", edge)
         k = cv.waitKey(1)
-        
+
         pdf  = self.blur(edge)
         pdf1 = self.blur(edge1,verbose, tag="l")
         pdf2 = self.blur(edge2,verbose, tag="r")
-        
+
         # return edge, edge1, edge2, img, img1, img2
         '''
 
         return pdf, pdf1, pdf2, img, img1, img2
-        
 
-    
+
+
     def edges(self, image, verbose=False, tag=""):
 
         edges = cv.Canny(image,100,200)
@@ -217,7 +217,7 @@ class ImageProcessing(object):
 
         return img
 
-        
+
 
 
 
