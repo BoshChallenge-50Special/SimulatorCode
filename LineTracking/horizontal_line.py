@@ -4,9 +4,39 @@ import cv2 as cv
 import numpy as np
 import math
 
+
+import sys
+#sys.path.insert(0, '/home/{YOUR_USERNAME}/Documents/BFMC_Simulator/startup_workspace/src/startup_package/src')
+sys.path.insert(0, '/home/marco/Documents/BFMC_Simulator/startup_workspace/src/startup_package/src/')
+
+
+from bfmclib.gps_s import Gps
+from bfmclib.bno055_s import BNO055
+from bfmclib.camera_s import CameraHandler
+from bfmclib.controller_p import Controller
+from bfmclib.trafficlight_s import TLColor, TLLabel, TrafficLight
+
+import rospy
+from std_msgs.msg import String
+
+import rospy
+import cv2
+
+from time import sleep
+
+import numpy as np
+import math
+
+
 class HorizontalLine(object):
 
-	def check_horizontal (self, image, data_queue):
+	def __init__(self):
+		pub = rospy.Publisher('HorizontalLine', String, queue_size=10)
+		rospy.init_node('HorizontalLineDetector', anonymous=True)
+		self.rate = rospy.Rate(10) # 10hz
+		self.pub = pub
+
+	def check_horizontal (self, image):
 		#Loading test images
 		#image = cv.imread('test_images/solidWhiteRight.jpg')
 		
@@ -61,7 +91,10 @@ class HorizontalLine(object):
 						cv.line(line_image,(x1,y1),(x2,y2),(255,0,0),10)
 			#print(str(horizontal) +"\t"+str(len(lines[0])))
 			if(horizontal == 2 and horizontal == len(lines)):
-				print("Stop")
+				message = "Stop"
+				#print(message)
+				#rospy.loginfo(message)
+				self.pub.publish(message)
 				#data_queue.put("HorizontalLine: Found a STOP line")              
 				
 				# Draw the lines on the original image
@@ -72,7 +105,11 @@ class HorizontalLine(object):
 				return 
 
 			elif(horizontal >= 2 and horizontal < len(lines)):
-				print("Stop and be aware of pedestrians")
+				message = "Stop and be aware of pedestrians"
+				#print(message)
+				#rospy.loginfo(message)
+				self.pub.publish(message)
+
 				#data_queue.put("HorizontalLine: Found a STOP line with Pedestrians") 
 
 				# Draw the lines on the original image
@@ -84,3 +121,20 @@ class HorizontalLine(object):
 				return
 		
 		cv.imshow("HorizontalLine", image)
+		message = "Safe"
+		self.pub.publish(message)
+
+
+if __name__ == '__main__':
+	try:		
+		cam = CameraHandler()
+		print("Camera loaded for Horizontal Line Detection")
+		horizonLine = HorizontalLine()
+
+		while not rospy.is_shutdown():
+			img = cam.getImage()
+			horizonLine.check_horizontal(img)
+
+			horizonLine.rate.sleep()	
+	except Exception as e:
+		print(e)
