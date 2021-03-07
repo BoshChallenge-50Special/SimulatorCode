@@ -66,8 +66,8 @@ class ControlUnit(object):
 			#			depending on the parameter of your Function
 			#			self.line_tracking is a method that configure the module and start it
 			executor.submit(self.line_tracking, self.pipeline_lines, event, True)
-			executor.submit(self.sign_detection, self.pipeline_signs, event, True)
-			executor.submit(self.horizontal_detection, self.pipeline_horizontal_line, event, True)
+			#executor.submit(self.sign_detection, self.pipeline_signs, event, True)
+			#executor.submit(self.horizontal_detection, self.pipeline_horizontal_line, event, True)
 			executor.submit(self.execute_pid, event, True)
 			#time.sleep(0.1)
 			#logging.info("Main: about to set event")
