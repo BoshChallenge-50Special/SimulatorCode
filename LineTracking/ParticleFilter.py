@@ -18,6 +18,8 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
 import sys
+sys.settrace
+import traceback
 sys.path.insert(0, './src/startup_package/src/')
 from bfmclib.gps_s import Gps
 from bfmclib.bno055_s import BNO055
@@ -439,17 +441,21 @@ def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None
         #approximationPF1.append(pf1.approximation)
         #approximationPF2.append(pf2.approximation)
 
-        best_particles, offset_Approximation, lines = [], [], [None, None]
+        best_particles, offset_Approximation, lines, result = [], [], [None, None], [None, None]
+
 
         if(pf1.approximation_to_show):
             best_particles.append(pf1.approximation)
             offset_Approximation.append(0)
             lines[0]=pf1.approximation
+            result[0] = lines[0].spline
 
         if(pf2.approximation_to_show):
             best_particles.append(pf2.approximation)
             offset_Approximation.append(int(image.shape[1]/2 ))
             lines[1]=pf2.approximation
+            result[1] = lines[1].spline
+
         ##########  TO AVOID THE MERGE OF 2 LINES
         if(pf1.approximation_to_show & pf2.approximation_to_show):
             too_near = False
@@ -463,14 +469,13 @@ def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None
                     too_near=True
                 #print(abs(lines[1].spline[i][0] - lines[0].spline[i][0]))
             #too_near = acc_dist/len(lines[0].spline) < 640/6
-            result=[lines[0].spline, lines[1].spline]
+
             if(too_near):
                 print("too near")
                 if(pf1.steps_good_approximation > pf2.steps_good_approximation):
                     pf2.initialization()
                     lines[1] = None
                     result[1] = None
-                    result.append()
                 else:
                     pf1.initialization()
                     lines[0] = None
@@ -538,4 +543,6 @@ if __name__ == '__main__':
                                 stop_function=rospy.is_shutdown,
                                 producer=producer)
     	except Exception as e:
-    		print(e)
+		print("Error in ParticleFilter")
+		print(e)
+        print(traceback.print_exc())

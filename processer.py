@@ -53,23 +53,30 @@ class Processer(Consumer):
 		# Far eseguire il file come se fosse eseguito da terminale
 		os.system("rosrun startup_package horizontal_line.py &")
 		os.system("rosrun startup_package ParticleFilter.py &")
+		os.system("rosrun startup_package PidControl.py &")
 
 		self.subscribe("HorizontalLine", "horizontal_line")
 		self.subscribe("StreetLane", "street_lines")
+		self.subscribe("PidControlValues", "velocity_steer")
 		#rospy.Subscriber("HorizontalLine", String, self.HorizontalCheck)
 
 
-		while(True):
+		while not rospy.is_shutdown():
 			#cv.imshow("Processer", cam.getImage())
 			#cv.waitKey(1)
-			speed = 0
+			speed = 0.18
 			steering = 0
 			self.car.drive(speed, steering)
 			sleep(0.1)
 			#print("Sending move with speed "+ str(speed) + " , steering " + str(steering))
 			if("street_lines" in self.data):
 				lines = json.loads(self.data["street_lines"])
-
+				#print(lines[0][0])
+			if("velocity_steer" in self.data):
+				velocity_steer = json.loads(self.data["velocity_steer"])
+				steering = -velocity_steer["steer"]
+			self.car.drive(speed, steering)
+			sleep(0.1)
 
 
 		rospy.spin()
@@ -93,4 +100,5 @@ if __name__ == '__main__':
 
 		#	horizonLine.rate.sleep()
 	except Exception as e:
+		print("Error in processer.py")
 		print(e)

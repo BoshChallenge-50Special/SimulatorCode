@@ -15,7 +15,7 @@ from LineTracking.horizontal_line import HorizontalLine
 
 from Localization import GraphMap
 from LineTracking.utils import Utils
-import PID
+import Control.PID
 import time
 
 

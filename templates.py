@@ -1,18 +1,7 @@
+#!/usr/bin/env python2
+
 import rospy
 from std_msgs.msg import String
-
-class Producer(object):
-    def __init__(self, node_name):
-        #super(Producer, self).__init__()
-		rospy.init_node(node_name, anonymous=True)
-		#self.rate = rospy.Rate(10) # 10hz
-
-    def set_publisher(self, pub_name):
-        ### Possibilities to implement multiple publishers
-
-        #About queue_size http://wiki.ros.org/rospy/Overview/Publishers%20and%20Subscribers
-        self.pub = rospy.Publisher(pub_name, String, queue_size=10)
-		#self.pub = pub
 
 class Consumer(object):
     def __init__(self):
@@ -35,6 +24,21 @@ class Consumer(object):
         #print("callback "+str(data)+"  "+ str(args))
         self.data[args] = data.data
 
+class Producer(object):
+    def __init__(self, node_name):
+        super(Producer, self).__init__()
+        rospy.init_node(node_name, anonymous=True)
+        #self.rate = rospy.Rate(10) # 10hz
+
+    def set_publisher(self, pub_name):
+        ### Possibilities to implement multiple publishers
+
+        #About queue_size http://wiki.ros.org/rospy/Overview/Publishers%20and%20Subscribers
+        self.pub = rospy.Publisher(pub_name, String, queue_size=10)
+		#self.pub = pub
+
 #class Producer_and_Consumer(Producer, Consumer):
-#    def __init__(self):
-#        super(Producer_and_Consumer, self).__init__()
+#    def __init__(self, node_name):
+#        super(Producer_and_Consumer, self).__init__(node_name)
+
+#pc= Producer_and_Consumer("aa")
