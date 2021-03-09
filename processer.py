@@ -30,7 +30,8 @@ from time import sleep
 import rospy
 
 from SimulatorCode.templates import Consumer
-
+from SimulatorCode.StateMachine.stateMachineSteer import StateMachineSteer
+from SimulatorCode.StateMachine.StateMachineVelocity import StateMachineVelocity
 
 
 class Processer(Consumer):
@@ -60,26 +61,73 @@ class Processer(Consumer):
 		self.subscribe("PidControlValues", "velocity_steer")
 		#rospy.Subscriber("HorizontalLine", String, self.HorizontalCheck)
 
+		state_machine=true
+
+		stateMachineSteer = StateMachineSteer()
+		stateMachineVelocity = StateMachineVelocity()
+
+		speed = 0.22
+		steering = 0
+		current_speed = 0.22   # For incrementing or decrementing to reach a target
 
 		while not rospy.is_shutdown():
-			#cv.imshow("Processer", cam.getImage())
-			#cv.waitKey(1)
-			speed = 0.18
-			steering = 0
-			self.car.drive(speed, steering)
-			sleep(0.1)
-			#print("Sending move with speed "+ str(speed) + " , steering " + str(steering))
-			if("street_lines" in self.data):
-				lines = json.loads(self.data["street_lines"])
-				#print(lines[0][0])
-			if("velocity_steer" in self.data):
-				velocity_steer = json.loads(self.data["velocity_steer"])
-				steering = -velocity_steer["steer"]
+			if(state_machine):
+				data_state_machine={}
+
+				data_state_machine["moving"] = True
+				data_state_machine["horizontal_line"] = True
+				data_state_machine["turning"] = True
+				data_state_machine["stop_signal"] = False
+				data_state_machine["pedestrian"] = True
+				data_state_machine["pedestrian_line"] = True
+				data_state_machine["state_steer"] = True
+
+				state_steer=stateMachineSteer.runOneStep(data_state_machine)
+				if(state_steer=="Steady"):
+					steering = 0
+				elif(state_steer=="OnLane"):
+					velocity_steer = json.loads(self.data["velocity_steer"])
+					steering = -velocity_steer["steer"]
+				elif(state_steer=="NearCrossroad"):
+					velocity_steer = json.loads(self.data["velocity_steer"])
+					steering = -velocity_steer["steer"]
+				elif(state_steer=="OnCrossroad"):
+					steering = turn_right()	# RIGHT
+					steering = 0			# STRAIGHT
+					steering = turn_left()	# LEFT
+
+				state_velocity=stateMachineVelocity.runOneStep(data_state_machine)
+				if(state_velocity=="OnSteady"):
+					speed = 0
+				elif(state_velocity=="Slow"):
+					if(current_speed > 0.2):
+						speed = min(0.2, current_speed-0.1)
+					else:
+						speed = max(0.2, current_speed+0.1)
+				elif(state_velocity=="Fast"):
+					if(current_speed > 0.8):
+						speed = min(0.8, current_speed-0.1)
+					else:
+						speed = max(0.8, current_speed+0.1)
+				current_speed = speed
+			else:
+				#cv.imshow("Processer", cam.getImage())
+				#cv.waitKey(1)
+
+				#print("Sending move with speed "+ str(speed) + " , steering " + str(steering))
+				if("street_lines" in self.data):
+					lines = json.loads(self.data["street_lines"])
+					#print(lines[0][0])
+				if("velocity_steer" in self.data):
+					velocity_steer = json.loads(self.data["velocity_steer"])
+					steering = -velocity_steer["steer"]
+				self.car.drive(speed, steering)
+
 			self.car.drive(speed, steering)
 			sleep(0.1)
 
 
-		rospy.spin()
+		#rospy.spin()
 
 	#def HorizontalCheck(self, data):
 	#	print("HorizontalCheck")
