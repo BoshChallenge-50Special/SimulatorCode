@@ -4,6 +4,7 @@ import numpy as np
 import cv2
 import os
 from matplotlib import pyplot as plt
+import math
 from math import sqrt
 from os import listdir
 import argparse
@@ -11,7 +12,7 @@ import time
 # local modules
 from common import mosaic
 from classification import training, getLabel
-
+import pickle
 
 
 #Parameter
@@ -30,7 +31,6 @@ SIGNS = ["ERROR",
         "ROUNDABOUT",
         "NO-ENTRY",
         "OTHER"]
-
 
 # Clean all previous file
 def clean_images():
@@ -89,6 +89,7 @@ class SignDetector():
         self.gammaCorrection = 1
         self.nlevels = 64
         self.signedGradients = True
+        self.current_sign_type = 0
         # This is used.
         self.hog = cv2.HOGDescriptor(self.winSize, self.blockSize, self.blockStride, self.cellSize, self.nbins,
                                     self.derivAperture, self.winSigma, self.histogramNormType,
@@ -194,6 +195,11 @@ class SignDetector():
 
 
     def detectSign(self, img, watch, centers,model):
+        coordinates = []
+        termination = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 1)
+        roiBox = None
+        roiHist = None
+        position = []
         for c, points in enumerate(centers):
 
             x1 = int(points.pt[0]) - 35
@@ -208,7 +214,7 @@ class SignDetector():
                 #The window to check using the HOG.
                 roi = img[y1+disp:y2+disp, x1:x2]
                 sign = cv2.resize(roi, (40, 40), interpolation=cv2.INTER_AREA)
-                cv2.imshow("roi "+str(c), sign)
+                #cv2.imshow("roi "+str(c), sign)
 
                 #If the SVM gives a positive response (i.e. it is a sign) we show the image and draw a rectangle around the sign
                 #we further process it with the classifier.
@@ -221,45 +227,47 @@ class SignDetector():
                     sign_type = sign_type if sign_type <= 11 else 11
                     text = SIGNS[sign_type]
                     cv2.rectangle(watch, (x1, y1 + disp), (x2, y2 + disp), (255, 255, 255), 2)
+                    coordinate = (x1, y1+disp),(x2, y2+disp)
+
                     # Uncomment to save images for dataset
                     #cv2.imwrite(str(self.count)+'_'+text+'.png', sign)
-                    print(text)
+                    if sign_type != 0:
+                        print(self.count, text)
 
                 if sign_type > 0 and sign_type != self.current_sign_type:
+                    font = cv2.FONT_HERSHEY_PLAIN
                     cv2.rectangle(watch, (x1, y1 + disp), (x2, y2 + disp), (0, 0, 255), 2)
-                    cv2.putText(original_image,text,(x1, x2 -15), font, 1,(0,0,255),2,cv2.LINE_4)
+                    cv2.putText(watch,text,(x1, x2 -15), font, 1,(0,0,255),2,cv2.LINE_4)
 
-                if sign_type > 0 and (not self.current_sign or sign_type != current_sign):
+                if sign_type > 0 and (not self.current_sign or sign_type != self.current_sign):
                     self.current_sign = sign_type
                     self.current_text = text
+
                     top = int(coordinate[0][1]*1.05)
                     left = int(coordinate[0][0]*1.05)
                     bottom = int(coordinate[1][1]*0.95)
                     right = int(coordinate[1][0]*0.95)
 
-                    position = [count, sign_type if sign_type <= 8 else 8, coordinate[0][0], coordinate[0][1], coordinate[1][0], coordinate[1][1]]
+                    position = [self.count, sign_type if sign_type <= 8 else 8, coordinate[0][0], coordinate[0][1], coordinate[1][0], coordinate[1][1]]
                     cv2.rectangle(img, coordinate[0],coordinate[1], (0, 255, 0), 1)
                     font = cv2.FONT_HERSHEY_PLAIN
                     cv2.putText(img,text,(coordinate[0][0], coordinate[0][1] -15), font, 1,(0,0,255),2,cv2.LINE_4)
 
                     tl = [left, top]
                     br = [right,bottom]
-                    print(tl, br)
                     self.current_size = math.sqrt(math.pow((tl[0]-br[0]),2) + math.pow((tl[1]-br[1]),2))
                     # grab the ROI for the bounding box and convert it
                     # to the HSV color space
-                    roi = frame[tl[1]:br[1], tl[0]:br[0]]
+                    roi = watch[tl[1]:br[1], tl[0]:br[0]]
                     roi = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
                     #roi = cv2.cvtColor(roi, cv2.COLOR_BGR2LAB)
-
                     # compute a HSV histogram for the ROI and store the
                     # bounding box
                     roiHist = cv2.calcHist([roi], [0], None, [16], [0, 180])
                     roiHist = cv2.normalize(roiHist, roiHist, 0, 255, cv2.NORM_MINMAX)
                     roiBox = (tl[0], tl[1], br[0], br[1])
-
-                elif self.current_sign:
-                    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+                elif ((self.current_sign != None) and (roiHist is not None)):
+                    hsv = cv2.cvtColor(watch, cv2.COLOR_BGR2HSV)
                     backProj = cv2.calcBackProject([hsv], [0], roiHist, [0, 180], 1)
 
                     # apply cam shift to the back projection, convert the
@@ -270,9 +278,8 @@ class SignDetector():
                     tl = pts[np.argmin(s)]
                     br = pts[np.argmax(s)]
                     size = math.sqrt(pow((tl[0]-br[0]),2) +pow((tl[1]-br[1]),2))
-                    print(size)
 
-                    if  self.current_size < 1 or size < 1 or size / current_size > 30 or math.fabs((tl[0]-br[0])/(tl[1]-br[1])) > 2 or math.fabs((tl[0]-br[0])/(tl[1]-br[1])) < 0.5:
+                    if  self.current_size < 1 or size < 1 or size / self.current_size > 30 or math.fabs((tl[0]-br[0])/(tl[1]-br[1])) > 2 or math.fabs((tl[0]-br[0])/(tl[1]-br[1])) < 0.5:
                         self.current_sign = None
                         print("Stop tracking")
                     else:
@@ -284,12 +291,13 @@ class SignDetector():
                         bottom = int(coordinate[1][1])
                         right = int(coordinate[1][0])
 
-                        position = [count, sign_type if sign_type <= 8 else 8, left, top, right, bottom]
+                        position = [self.count, sign_type if sign_type <= 8 else 8, left, top, right, bottom]
                         cv2.rectangle(img, coordinate[0],coordinate[1], (0, 255, 0), 1)
                         font = cv2.FONT_HERSHEY_PLAIN
                         cv2.putText(img,text,(coordinate[0][0], coordinate[0][1] -15), font, 1,(0,0,255),2,cv2.LINE_4)
                     elif self.current_sign:
-                        position = [count, sign_type if sign_type <= 8 else 8, tl[0], tl[1], br[0], br[1]]
+                        position = [self.count, sign_type if sign_type <= 8 else 8, tl[0], tl[1], br[0], br[1]]
+                        print("rectangle")
                         cv2.rectangle(img, (tl[0], tl[1]),(br[0], br[1]), (0, 255, 0), 1)
                         font = cv2.FONT_HERSHEY_PLAIN
                         cv2.putText(img,self.current_text,(tl[0], tl[1] -15), font, 1,(0,0,255),2,cv2.LINE_4)
@@ -298,8 +306,7 @@ class SignDetector():
                     self.sign_count += 1
                     coordinates.append(position)
 
-                #cv2.imshow('Result detectSign', img)
-                self.count = self.count + 1
+                cv2.imshow('Result detectSign', img)
                 #Write to video
                 #out.write(img)
                 if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -338,7 +345,8 @@ class SignDetector():
             centers - the centers of the regions of interest
             '''
             # Uncomment one when Eisa:
-            #watch = cv2.imread("/home/ebllaei/Downloads/dataset/0816.png")
+            watch = cv2.imread("/home/ebllaei/Downloads/dataset/0973.png") #0816 1723
+            #watch = cv2.imread("/home/ebllaei/dataset_bosch/4/img_159.png")
             # Uncomment when simulator:
             # watch = self.get_image_function()
             #victim = watch[0:(int)(watch.shape[0]/2), (int)(watch.shape[1]/2):watch.shape[1]]
@@ -355,6 +363,7 @@ class SignDetector():
             centers = self.detectColorAndCenters(watch)
             # Detect and classify the signs.
             self.detectSign(victim, watch, centers,model)
+            self.count = self.count + 1
             #cv2.imshow("Input image to detection sign", watch)
             #self.outP.send(0)
             #print(0)
@@ -376,5 +385,11 @@ class SignDetector():
 
 if __name__ == '__main__':
     sg = SignDetector(None,None,None,None)
+        
+    # load the model from disk
+    #model = pickle.load(open('finalized_model.dat', 'rb'))
+    # Now create a new SVM & load the model: 
+    #model = joblib.load("finalized_model.sav")
+
     model = training()
     sg.run()

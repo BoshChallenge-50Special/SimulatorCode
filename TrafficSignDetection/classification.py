@@ -4,6 +4,7 @@ from matplotlib import pyplot as plt
 from os import listdir
 # local modules
 from common import clock, mosaic
+import pickle 
 
 #Parameter
 SIZE = 32
@@ -141,6 +142,9 @@ def training():
 
     print('Saving SVM model ...')
     model.save('data_svm.dat')
+    # save the model to disk
+    #pickle.dump(model, open('finalized_model.dat', 'wb'))
+  
     return model
 
 def getLabel(model, data):
