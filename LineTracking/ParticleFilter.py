@@ -486,7 +486,7 @@ def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None
 
         lines_json = json.dumps(result)
         producer.pub.publish(lines_json)
-        if(True):
+        if(Images_print):
             image_color  = cv.cvtColor(pdf, cv.COLOR_GRAY2RGB)  # Image with color
 
             # Print single filter image (right or left image size)
@@ -530,7 +530,7 @@ if __name__ == '__main__':
             Interpolation_points  = 20  #25  # Interpolation points used for the spline
             order                 = 2        # Spline order
             N_c                   = 3       # Number of spline control points
-            verbose = True
+            verbose = False
 
             sleep(0.1)
             filter_usage_BOSH(N_Particles=N_particles,
@@ -542,7 +542,7 @@ if __name__ == '__main__':
     							get_image_function=cam.getImage,
                                 stop_function=rospy.is_shutdown,
                                 producer=producer)
-    	except Exception as e:
-		print("Error in ParticleFilter")
-		print(e)
-        print(traceback.print_exc())
+        except Exception as e:
+            print("Error in ParticleFilter")
+            print(e)
+            print(traceback.print_exc())

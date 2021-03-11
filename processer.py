@@ -31,7 +31,7 @@ import rospy
 
 from SimulatorCode.templates import Consumer
 from SimulatorCode.StateMachine.stateMachineSteer import StateMachineSteer
-from SimulatorCode.StateMachine.StateMachineVelocity import StateMachineVelocity
+from SimulatorCode.StateMachine.stateMachineVelocity import StateMachineVelocity
 
 
 class Processer(Consumer):
@@ -55,13 +55,14 @@ class Processer(Consumer):
 		os.system("rosrun startup_package horizontal_line.py &")
 		os.system("rosrun startup_package ParticleFilter.py &")
 		os.system("rosrun startup_package PidControl.py &")
+		os.system("rosrun startup_package traffic.py &")
 
 		self.subscribe("HorizontalLine", "horizontal_line")
 		self.subscribe("StreetLane", "street_lines")
 		self.subscribe("PidControlValues", "velocity_steer")
-		#rospy.Subscriber("HorizontalLine", String, self.HorizontalCheck)
+		self.subscribe("Sign", "sign")
 
-		state_machine=true
+		state_machine=False
 
 		stateMachineSteer = StateMachineSteer()
 		stateMachineVelocity = StateMachineVelocity()
@@ -118,6 +119,9 @@ class Processer(Consumer):
 				if("street_lines" in self.data):
 					lines = json.loads(self.data["street_lines"])
 					#print(lines[0][0])
+				#if("sign" in self.data):
+				#	# lines = json.loads(self.data["sign"])
+				#	#print("FROM PROCESSER" + self.data["sign"])
 				if("velocity_steer" in self.data):
 					velocity_steer = json.loads(self.data["velocity_steer"])
 					steering = -velocity_steer["steer"]
