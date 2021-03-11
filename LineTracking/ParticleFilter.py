@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python2
+
 import cv2 as cv
 import numpy as np
 from random import seed
@@ -11,10 +12,22 @@ import sys
 import time
 import timeit
 import csv
-
+import json
+from time import sleep
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
+import sys
+sys.settrace
+import traceback
+sys.path.insert(0, './src/startup_package/src/')
+from bfmclib.gps_s import Gps
+from bfmclib.bno055_s import BNO055
+from bfmclib.camera_s import CameraHandler
+from bfmclib.controller_p import Controller
+from bfmclib.trafficlight_s import TLColor, TLLabel, TrafficLight
+import rospy
+from std_msgs.msg import String
 '''
 Image progessing library import:
 - Read from camera
@@ -35,6 +48,8 @@ Utils:
 from image_processing import ImageProcessing
 from particle import Particle
 from utils import Utils
+
+from SimulatorCode.templates import Producer
 
 class ParticleFilter(object):
 
@@ -85,7 +100,7 @@ class ParticleFilter(object):
             p = Particle(self.N_points, self.Interpolation_points, self.order)
 
             # Points distribution, prom the bottom to the top, all the picture is covered
-            # Alto mu alto perchè gira, con il giro della ruota possiamo aumentare il mu quando gira
+            # IMPROVEMET: Higher mu because is turning
             for j in range(self.N_points):
 
                 random_numbers = np.random.normal(mu, sigma, 1).astype(int)
@@ -149,7 +164,7 @@ class ParticleFilter(object):
             p.generateSpline()
 
             for point_s in p.spline:
-                # Each spline point is taken to be weighted
+                # Each spline point is taken to be weighted
                 x, y = int(point_s[0]),int(point_s[1])
                 w   += np.sum(pdf_n[y-1:y+2 , x-1:x+2]) # Square around spline point for comparing the numbers
 
@@ -199,7 +214,7 @@ class ParticleFilter(object):
         self.particles=new_particles
         self.doApproximation()
         # print(str(self.approximation.w_original) +"    <"+ str(0.2*self.Interpolation_points*(9*255)))
-        if(self.approximation.w_original < 0.1*self.Interpolation_points*(9*255)): # Line weight < 20% of max weights - 255 max value for the pixel
+        if(self.approximation.w_original < 0.1*self.Interpolation_points*(9*255)): #Line weight < 20% of max weights - 255 max value for the pixel
             self.failing_count+=1
             self.approximation_to_show =False
             if(self.failing_count >= self.threshold_reset):
@@ -239,9 +254,9 @@ class ParticleFilter(object):
 
 
 """
-def filter_usage(N_Particles, Interpolation_points, order=2, N_points=3, dataset_number=1, Images_print=False, blur=7, threshold_reset=4, pts=[]):
+    def filter_usage(N_Particles, Interpolation_points, order=2, N_points=3, dataset_number=1, Images_print=False, blur=7, threshold_reset=4, pts=[]):
 
-    # pts = np.array([(0, 120), (600, 86), (-148, 278), (780, 279)]) # Up-left - - -
+    #pts = np.array([(0, 120), (600, 86), (-148, 278), (780, 279)]) # Up-left - - -
 
     # Function used for creating and running the particle filter
 
@@ -358,10 +373,11 @@ def filter_usage(N_Particles, Interpolation_points, order=2, N_points=3, dataset
                 cv.imwrite('../outputs/result_output/img' + str(step) + '.png', res_1)
 
     return approximationPF1, approximationPF2, N_STEP
-"""
-def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None, order=1, N_points=2, Images_print=True, blur=7, threshold_reset=7, pts=[], data_queue=None):
-    # Function used for creating and running the particle filter
+    """
 
+def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None, order=1, N_points=2, Images_print=True, blur=7, threshold_reset=7, pts=[], data_queue=None, stop_function=None, producer=None):
+    # Function used for creating and running the particle filter
+    print("Starting PARTICLE FILTER")
     utils = Utils()
 
     #path = "../datasets/dataset_"+str(dataset_number)+"/"
@@ -409,7 +425,7 @@ def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None
     pf1.initialization()
     pf2.initialization()
 
-    while(1):
+    while(not stop_function()):
         pf1.sampling()
         pf2.sampling()
 
@@ -425,17 +441,21 @@ def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None
         #approximationPF1.append(pf1.approximation)
         #approximationPF2.append(pf2.approximation)
 
-        best_particles, offset_Approximation, lines = [], [], [None, None]
+        best_particles, offset_Approximation, lines, result = [], [], [None, None], [None, None]
+
 
         if(pf1.approximation_to_show):
             best_particles.append(pf1.approximation)
             offset_Approximation.append(0)
             lines[0]=pf1.approximation
+            result[0] = lines[0].spline
 
         if(pf2.approximation_to_show):
             best_particles.append(pf2.approximation)
             offset_Approximation.append(int(image.shape[1]/2 ))
             lines[1]=pf2.approximation
+            result[1] = lines[1].spline
+
         ##########  TO AVOID THE MERGE OF 2 LINES
         if(pf1.approximation_to_show & pf2.approximation_to_show):
             too_near = False
@@ -444,21 +464,28 @@ def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None
                 #print(abs(dist[0][i])+abs(dist[1][i]))
                 #acc_dist = acc_dist + abs(lines[1].spline[i][0] - lines[0].spline[i][0])
                 #image1.shape[0] is for adding offset since the image start in the "middle"
-                print(image1.shape[0]  + lines[1].points[i][0] - lines[0].points[i][0])
+                #print(image1.shape[0]  + lines[1].points[i][0] - lines[0].points[i][0])
                 if(image1.shape[0]  +  lines[1].points[i][0] - lines[0].points[i][0] <20):
                     too_near=True
                 #print(abs(lines[1].spline[i][0] - lines[0].spline[i][0]))
             #too_near = acc_dist/len(lines[0].spline) < 640/6
+
             if(too_near):
                 print("too near")
                 if(pf1.steps_good_approximation > pf2.steps_good_approximation):
                     pf2.initialization()
                     lines[1] = None
+                    result[1] = None
                 else:
                     pf1.initialization()
                     lines[0] = None
+                    result[0] = None
 
-        data_queue.put(lines)
+        #data_queue.put(lines)
+        # convert to string
+
+        lines_json = json.dumps(result)
+        producer.pub.publish(lines_json)
         if(Images_print):
             image_color  = cv.cvtColor(pdf, cv.COLOR_GRAY2RGB)  # Image with color
 
@@ -480,15 +507,42 @@ def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None
 
 
 if __name__ == '__main__':
+    producer=Producer("ParticleFilterLines")
+    producer.set_publisher("StreetLane")
 
-    N_particles           = 50  #100 # Particles used in the filter
-    Interpolation_points  = 17  #25  # Interpolation points used for the spline
-    order                 = 2        # Spline order
-    N_c                   = 3        # Number of spline control points
-    dataset_number        = 2        # Dataset number -> available 1/2/3/4
+    test = False
+    if(test):
+        N_particles           = 50  #100 # Particles used in the filter
+        Interpolation_points  = 17  #25  # Interpolation points used for the spline
+        order                 = 2        # Spline order
+        N_c                   = 3        # Number of spline control points
+        dataset_number        = 2        # Dataset number -> available 1/2/3/4
 
-    # Dataset one has a different camera orientation with respect the others. Thus for this reason the points chosen for the IPM changes
+        #Dataset one has a different camera orientation with respect the others. Thus for this reason the points chosen for the IPM changes
 
-    # pts = np.array([(0, 176-70), (500+100, 186-100), (-148, 345), (639+148, 350)])
+        # pts = np.array([(0, 176-70), (500+100, 186-100), (-148, 345), (639+148, 350)])
 
-    approximationPF1, approximationPF2, N_frame      = filter_usage(N_particles, Interpolation_points, order, N_c, dataset_number, Images_print=True)
+        approximationPF1, approximationPF2, N_frame      = filter_usage(N_particles, Interpolation_points, order, N_c, dataset_number, Images_print=True)
+    else:
+    	try:
+            cam = CameraHandler()
+            N_particles           = 60  #100 # Particles used in the filter
+            Interpolation_points  = 20  #25  # Interpolation points used for the spline
+            order                 = 2        # Spline order
+            N_c                   = 3       # Number of spline control points
+            verbose = False
+
+            sleep(0.1)
+            filter_usage_BOSH(N_Particles=N_particles,
+    							Interpolation_points=Interpolation_points,
+    							order=order,
+    							N_points=N_c,
+    							Images_print=verbose,
+    							threshold_reset=5,
+    							get_image_function=cam.getImage,
+                                stop_function=rospy.is_shutdown,
+                                producer=producer)
+        except Exception as e:
+            print("Error in ParticleFilter")
+            print(e)
+            print(traceback.print_exc())

@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from threading import Thread
 
 import numpy as np
@@ -10,13 +12,21 @@ from os import listdir
 import argparse
 import time
 # local modules
-from common import mosaic
 from classification import training, getLabel, load_model
-import pickle
-import joblib
 import sys
-import traceback
 sys.settrace
+import traceback
+sys.path.insert(0, './src/startup_package/src/')
+from bfmclib.gps_s import Gps
+from bfmclib.bno055_s import BNO055
+from bfmclib.camera_s import CameraHandler
+from bfmclib.controller_p import Controller
+from bfmclib.trafficlight_s import TLColor, TLLabel, TrafficLight
+import rospy
+from std_msgs.msg import String
+from SimulatorCode.templates import Producer
+
+IS_TEST_ENVIRONMENT = False
 
 #Parameter
 SIZE = 32
@@ -70,15 +80,14 @@ def deskew(img):
     img = cv2.warpAffine(img, M, (SIZE, SIZE), flags=cv2.WARP_INVERSE_MAP | cv2.INTER_LINEAR)
     return img
 
-class SignDetector():
+class SignDetector(Producer):
 
-    def __init__(self, inP, outP, data_queue, get_image_function):
+    def __init__(self, get_image_function):
+        super(SignDetector, self).__init__("SignDetector")
         '''
         :)
         '''
-        #super(SignDetector, self).__init__()
-        self.inP = inP
-        self.outP = outP
+        self.set_publisher("Sign")
 
         self.winSize = (40, 40)
         self.blockSize = (10, 10)
@@ -114,8 +123,6 @@ class SignDetector():
         self.params.filterByInertia = False
         # As is this.
         self.detector = cv2.SimpleBlobDetector_create(self.params)
-
-        self.data_queue = data_queue
 
         if(get_image_function != None):
             self.get_image_function = get_image_function
@@ -224,7 +231,7 @@ class SignDetector():
                 sign_type = -1
                 i = 0
                 #continue
-               
+
                 if sign is not None:
                     sign_type = getLabel(model, sign)
                     sign_type = sign_type if sign_type <= 11 else 11
@@ -334,13 +341,13 @@ class SignDetector():
         #Training phase
 
         #model = training()
-        #model = cv2.ml.SVM_load('data_svm.dat')
-      
+        model = cv2.ml.SVM_load('./src/startup_package/src/SimulatorCode/TrafficSignDetection/data_svm.dat')
+
         #while success:
         # Uncomment elisa
 
         # uncomment simulator:
-        while(True):
+        while not rospy.is_shutdown():
             #print("TRAFFIC")
             '''
             victim - the image I actually do the processing on
@@ -351,7 +358,7 @@ class SignDetector():
             watch = cv2.imread("/home/ebllaei/Downloads/dataset/0973.png") #0816 1723
             #watch = cv2.imread("/home/ebllaei/dataset_bosch/4/img_159.png")
             # Uncomment when simulator:
-            # watch = self.get_image_function()
+            watch = self.get_image_function()
             #victim = watch[0:(int)(watch.shape[0]/2), (int)(watch.shape[1]/2):watch.shape[1]]
             victim = cv2.copyMakeBorder(watch, 0, 0, 0, 32, cv2.BORDER_REPLICATE)
 
@@ -370,6 +377,7 @@ class SignDetector():
             #cv2.imshow("Input image to detection sign", watch)
             #self.outP.send(0)
             #print(0)
+            self.pub.publish("ERROR")
             time.sleep(0.5)
             #success,watch = vidcap.read()
             if cv2.waitKey(1) == 27:
@@ -387,19 +395,17 @@ class SignDetector():
         return cv2.imread(os.path.join(folder,filename))
 
 if __name__ == '__main__':
-    sg = SignDetector(None,None,None,None)
-        
-    # load the model from disk
-    #model = pickle.load(open('finalized_model.dat', 'rb'))
-    # Now create a new SVM & load the model: 
-    #model = joblib.load("finalized_model.sav")
-    #model = cv2.ml.SVM_create()
     try:
         model = load_model('data_svm.dat')
-        #model = cv2.ml.SVM_load('data_svm.dat')
         #model = training()
-        print(model)
+        sg = None
+        if(IS_TEST_ENVIRONMENT):
+            sg = SignDetector(None)
+        else:
+            cam = CameraHandler()
+            sg = SignDetector(cam.getImage)
         sg.run()
     except Exception as e:
+        print("Error in ParticleFilter")
         print(e)
         print(traceback.print_exc())
