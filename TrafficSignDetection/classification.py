@@ -28,6 +28,11 @@ def load_traffic_dataset():
                 labels.append(sign_type)
     return np.array(dataset), np.array(labels)
 
+def load_model(path):
+    model = SVM()
+    model.model = cv2.ml.SVM_load(path)
+    return model
+
 def deskew(img):
     m = cv2.moments(img)
     if abs(m['mu02']) < 1e-2:
@@ -143,7 +148,7 @@ def training():
     print('Saving SVM model ...')
     model.save('data_svm.dat')
     # save the model to disk
-    #pickle.dump(model, open('finalized_model.dat', 'wb'))
+    #pickle.dump(model, open('finalized_model.sav', 'wb'))
   
     return model
 

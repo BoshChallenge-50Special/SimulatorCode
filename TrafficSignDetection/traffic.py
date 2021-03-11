@@ -11,9 +11,12 @@ import argparse
 import time
 # local modules
 from common import mosaic
-from classification import training, getLabel
+from classification import training, getLabel, load_model
 import pickle
-
+import joblib
+import sys
+import traceback
+sys.settrace
 
 #Parameter
 SIZE = 32
@@ -390,6 +393,13 @@ if __name__ == '__main__':
     #model = pickle.load(open('finalized_model.dat', 'rb'))
     # Now create a new SVM & load the model: 
     #model = joblib.load("finalized_model.sav")
-
-    model = training()
-    sg.run()
+    #model = cv2.ml.SVM_create()
+    try:
+        model = load_model('data_svm.dat')
+        #model = cv2.ml.SVM_load('data_svm.dat')
+        #model = training()
+        print(model)
+        sg.run()
+    except Exception as e:
+        print(e)
+        print(traceback.print_exc())
