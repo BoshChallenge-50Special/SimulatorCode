@@ -4,6 +4,7 @@ from matplotlib import pyplot as plt
 from os import listdir
 # local modules
 from common import clock, mosaic
+import pickle 
 
 #Parameter
 SIZE = 32
@@ -26,6 +27,11 @@ def load_traffic_dataset():
                 dataset.append(img)
                 labels.append(sign_type)
     return np.array(dataset), np.array(labels)
+
+def load_model(path):
+    model = SVM()
+    model.model = cv2.ml.SVM_load(path)
+    return model
 
 def deskew(img):
     m = cv2.moments(img)
@@ -141,6 +147,9 @@ def training():
 
     print('Saving SVM model ...')
     model.save('data_svm.dat')
+    # save the model to disk
+    #pickle.dump(model, open('finalized_model.sav', 'wb'))
+  
     return model
 
 def getLabel(model, data):
