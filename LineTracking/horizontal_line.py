@@ -23,7 +23,6 @@ import rospy
 from std_msgs.msg import String
 
 import rospy
-import cv2
 
 from time import sleep
 
@@ -40,6 +39,8 @@ class HorizontalLine(Producer):
 		#self.rate = rospy.Rate(10) # 10hz
 		#self.pub = pub
 		self.set_publisher("HorizontalLine")
+		self.status = "Safe"
+		self.count = 0
 
 	def check_horizontal (self, image):
 		#Loading test images
@@ -63,7 +64,7 @@ class HorizontalLine(Producer):
 
 		# Defining Region of Interest
 		imshape = image.shape
-		vertices = np.array([[(300,240),(imshape[1]-300, 240), (imshape[1]-150, imshape[0]-20), (150,imshape[0]-20)]], dtype=np.int32)
+		vertices = np.array([[(310,240),(imshape[1]-310, 240), (imshape[1]-200, imshape[0]-30), (200,imshape[0]-30)]], dtype=np.int32)
 		cv.fillPoly(mask, vertices, ignore_mask_color)
 		masked_edges = cv.bitwise_and(edges, mask)
 
@@ -72,7 +73,7 @@ class HorizontalLine(Producer):
 		rho = 2 # distance resolution in pixels of the Hough grid
 		theta = np.pi/180 # angular resolution in radians of the Hough grid
 		threshold = 15     # minimum number of votes (intersections in Hough grid cell)
-		min_line_length = 40 #minimum number of pixels making up a line
+		min_line_length = 30 #minimum number of pixels making up a line
 		max_line_gap = 30    # maximum gap in pixels between connectable line segments
 		line_image = np.copy(image)*0 # creating a blank to draw lines on
 
@@ -82,6 +83,7 @@ class HorizontalLine(Producer):
 									min_line_length, max_line_gap)
 
 		horizontal = 0
+		horizontal_vec = []
 		if str(lines) != "None":
 			# Iterate over the output "lines" and draw lines on a blank image
 			for line in lines:
@@ -91,46 +93,71 @@ class HorizontalLine(Producer):
 					delta_y = y2 - y1
 					theta_radians = math.atan2(delta_y, delta_x)
 					if((theta_radians/math.pi*180 > 175 and theta_radians/math.pi*180 < 185) or (theta_radians/math.pi*180 < 5 and theta_radians/math.pi*180 > -5)):
+						horizontal_vec.append(line) # Store horizontal line for later checks
+
 						horizontal = horizontal + 1
-
 						cv.line(line_image,(x1,y1),(x2,y2),(255,0,0),10)
-			#print(str(horizontal) +"\t"+str(len(lines[0])))
+
 			if(horizontal == 2 and horizontal == len(lines)):
-				message = "Stop"
-				#print(message)
-				#rospy.loginfo(message)
-				self.pub.publish(message)
-				#data_queue.put("HorizontalLine: Found a STOP line")
+				if(self.status == "Stop"):
+					self.count += 1
+				else:
+					self.count = 0
+				self.status = "Stop"
+
+				# Draw the horizontal lines on the original image
+				image = cv.addWeighted(image, 0.8, line_image, 1, 0)
+
+			elif(horizontal >= 2 and horizontal <= len(lines)):
+
+				count = 0
+				val_thres = 5
+				for i in range(0 , len(horizontal_vec)):
+					b = False
+					for j in range(i + 1 , len(horizontal_vec)):
+						if( ( abs ( horizontal_vec[i][0][1] - horizontal_vec[j][0][1] ) < val_thres ) ):
+							b = True # They are on the same level
+					if (b): # If two lines are at the same level, then the horizontal line detected are more than the actual horizontal ones
+						horizontal -= 1
+
+				if(horizontal == 2): # If there are 2 horizontal lines then it's just a stop
+					if(self.status == "Stop"):
+						self.count += 1
+					else:
+						self.count = 0
+					self.status = "Stop"
+				elif(horizontal > 2): # If there are more than 3 horizontal lines then it's a pedestrian thing
+					if(self.status == "Pedestrians"):
+						self.count += 1
+					else:
+						self.count = 0
+					self.status = "Pedestrians"
 
 				# Draw the lines on the original image
-				lines_edges = cv.addWeighted(image, 0.8, line_image, 1, 0)
-				#data_queue.put(lines_edges)
+				image = cv.addWeighted(image, 0.8, line_image, 1, 0)
+				
+			else: # Otherwise if there are not enough horizontal lines it is safe
+				if(self.status == "Safe"):
+					self.count += 1
+				else:
+					self.count = 0
+				self.status = "Safe"
+			
+		else: # Otherwise if there are no horizontal lines it is safe
+			if(self.status == "Safe"):
+				self.count += 1
+			else:
+				self.count = 0
+			self.status = "Safe"
 
-				cv.imshow("HorizontalLine", lines_edges)
-				cv2.waitKey(1)
-				return
-
-			elif(horizontal >= 2 and horizontal < len(lines)):
-				message = "Stop and be aware of pedestrians"
-				#print(message)
-				#rospy.loginfo(message)
-				self.pub.publish(message)
-
-				#data_queue.put("HorizontalLine: Found a STOP line with Pedestrians")
-
-				# Draw the lines on the original image
-				lines_edges = cv.addWeighted(image, 0.8, line_image, 1, 0)
-				#data_queue.put(lines_edges)
-
-				cv.imshow("HorizontalLine", lines_edges)
-				cv2.waitKey(1)
-
-				return
-
+		# Show the lines in the image
 		cv.imshow("HorizontalLine", image)
-		cv2.waitKey(1)
-		message = "Safe"
-		self.pub.publish(message)
+		cv.waitKey(1)
+
+		# Publish the status only after 3 consequent equal status
+		if(self.count == 3): 
+			self.pub.publish(self.status)
+			print(self.status)
 
 
 if __name__ == '__main__':
@@ -143,8 +170,8 @@ if __name__ == '__main__':
 		while not rospy.is_shutdown():
 			img = cam.getImage()
 			horizonLine.check_horizontal(img)
-			sleep(0.1)
+			# Slow down the process of checking images to have better performances
+			sleep(0.2) 
 			#horizonLine.rate.sleep()
 	except Exception as e:
-		print("hey")
 		print(e)
