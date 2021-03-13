@@ -28,6 +28,6 @@ class StateMachine:
         if newState.upper() in self.endStates:
             print("reached end state", newState)
         else:
-            print("State: ", newState)
+            #print("State: ", newState)
             self.handler = self.handlers[newState.upper()]
         return newState

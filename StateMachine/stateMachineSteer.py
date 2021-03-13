@@ -22,11 +22,11 @@ class StateMachineSteer:
         result=False
         for i,key in enumerate(names):
             if(op==">"):
-                result=result or abs(data[key])>values[i]
+                result=result or data[key]>values[i]
             elif(op == "=="):
-                result=result or abs(data[key])==values[i]
+                result=result or data[key]==values[i]
             else:
-                result=result or abs(data[key])<values[i]
+                result=result or data[key]<values[i]
         return result
 
     #method for evaluating the AND of a list of variables
@@ -35,11 +35,11 @@ class StateMachineSteer:
         result=True
         for i,key in enumerate(names):
             if(op==">"):
-                result=result and abs(data[key])>values[i]
+                result=result and data[key]>values[i]
             elif(op == "=="):
-                result=result and abs(data[key])==values[i]
+                result=result and data[key]==values[i]
             else:
-                result=result and abs(data[key])<values[i]
+                result=result and data[key]<values[i]
         return result
 
     #Declaration of the transition from the Steady_transitions to the other possible states
@@ -52,7 +52,7 @@ class StateMachineSteer:
 
     #Declaration of the transition from the StateB to the other possible states
     def OnLane_transitions(self, data):
-        if self.conditionAnd("==", data, ["horizontal_line"], [True]):
+        if self.conditionAnd("==", data, ["horizontal_line"], ["Stop"]):
             newState = "NearCrossroad"
         elif self.conditionAnd("==", data, ["moving"], [False]):
             newState = "Steady"
@@ -62,8 +62,10 @@ class StateMachineSteer:
 
     #Declaration of the transition from the StateC to the other possible states
     def NearCrossroad_transitions(self, data):
-        if self.conditionAnd("==", data, ["horizontal_line"], [False]):
+        if self.conditionAnd("==", data, ["horizontal_line"], ["Safe"]):
             newState = "OnCrossroad"
+        elif self.conditionAnd("==", data, ["horizontal_line"], ["Pedestrians"]):
+            newState = "OnLane"
         else:
             newState = "NearCrossroad"
         return newState

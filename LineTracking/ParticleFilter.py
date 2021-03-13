@@ -458,6 +458,7 @@ def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None
 
         ##########  TO AVOID THE MERGE OF 2 LINES
         if(pf1.approximation_to_show & pf2.approximation_to_show):
+
             too_near = False
             acc_dist=0
             for i in range(1, len(lines[0].points)-1):
@@ -471,7 +472,8 @@ def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None
             #too_near = acc_dist/len(lines[0].spline) < 640/6
 
             if(too_near):
-                print("too near")
+                if(Images_print):
+                    print("too near")
                 if(pf1.steps_good_approximation > pf2.steps_good_approximation):
                     pf2.initialization()
                     lines[1] = None
