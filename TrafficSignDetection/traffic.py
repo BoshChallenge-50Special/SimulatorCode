@@ -12,7 +12,7 @@ from os import listdir
 import argparse
 import time
 # local modules
-from classification import training, getLabel, load_model
+from classification_sk import training, getLabel, load_model
 import sys
 sys.settrace
 import traceback
@@ -26,6 +26,8 @@ import rospy
 from std_msgs.msg import String
 from SimulatorCode.templates import Producer
 
+import sift
+
 IS_TEST_ENVIRONMENT = False
 
 #Parameter
@@ -33,17 +35,17 @@ SIZE = 32
 CLASS_NUMBER = 11
 
 
-SIGNS = ["ERROR",
-        "STOP",
-        "PARKING",
-        "PRIORITY",
-        "CROSSWALK SIGN",
-        "HIGHWAY ENTRANCE",
-        "ONE WAY",
-        "HIGHWAY EXIT",
-        "ROUNDABOUT",
-        "NO-ENTRY",
-        "OTHER"]
+SIGNS = ["ERROR",           #0
+        "STOP",             #1
+        "PARKING",          #2
+        "PRIORITY",         #3
+        "CROSSWALK SIGN",   #4
+        "HIGHWAY ENTRANCE", #5
+        "ONE WAY",          #6
+        "HIGHWAY EXIT",     #7
+        "ROUNDABOUT",       #8
+        "NO-ENTRY",         #9
+        "OTHER"]            #10
 
 # Clean all previous file
 def clean_images():
@@ -198,7 +200,7 @@ class SignDetector(Producer):
         keypoints_all = keypoints_red + keypoints_yellow + keypoints_blue + keypoints_green
 
         cv2.drawKeypoints( finalImage, keypoints_all, finalImage, (0, 0, 255))
-        cv2.imshow("finalImage + IMAGE plus keypoints", finalImage)
+        #cv2.imshow("finalImage + IMAGE plus keypoints", finalImage)
 
         return (keypoints_all)
     # ===================================================================================
@@ -210,6 +212,7 @@ class SignDetector(Producer):
         roiBox = None
         roiHist = None
         position = []
+        coordinate=None
         for c, points in enumerate(centers):
 
             x1 = int(points.pt[0]) - 35
@@ -233,16 +236,18 @@ class SignDetector(Producer):
                 #continue
 
                 if sign is not None:
+                    #sign_type =sift.get_label_sift(sign)
                     sign_type = getLabel(model, sign)
                     sign_type = sign_type if sign_type <= 11 else 11
                     text = SIGNS[sign_type]
                     cv2.rectangle(watch, (x1, y1 + disp), (x2, y2 + disp), (255, 255, 255), 2)
+                    coordinate=None
                     coordinate = (x1, y1+disp),(x2, y2+disp)
 
                     # Uncomment to save images for dataset
                     #cv2.imwrite(str(self.count)+'_'+text+'.png', sign)
-                    if sign_type != 0:
-                        print(self.count, text)
+                    #if sign_type != 0:
+                    #    print(self.count, text)
 
                 if sign_type > 0 and sign_type != self.current_sign_type:
                     font = cv2.FONT_HERSHEY_PLAIN
@@ -316,21 +321,21 @@ class SignDetector(Producer):
                     self.sign_count += 1
                     coordinates.append(position)
 
-                cv2.imshow('Result detectSign', img)
-                #Write to video
-                #out.write(img)
-                if cv2.waitKey(1) & 0xFF == ord('q'):
-                    break
+        cv2.imshow('Result detectSign', img)
+        #Write to video
+        #out.write(img)
+        #if cv2.waitKey(1) & 0xFF == ord('q'):
+        #    break
 
-                #if self.clf02.predict(pca_values) == 1:
-                    '''
-                    Succesive detections imeplemented on the receiving end, maybe?
-                    '''
+        #if self.clf02.predict(pca_values) == 1:
+        '''
+        Succesive detections imeplemented on the receiving end, maybe?
+        '''
 
 
     #====================================================================================
 
-    def run(self):
+    def run(self, model):
         self.current_sign = None
         self.current_text = ""
         self.current_size = 0
@@ -341,7 +346,7 @@ class SignDetector(Producer):
         #Training phase
 
         #model = training()
-        model = cv2.ml.SVM_load('./src/startup_package/src/SimulatorCode/TrafficSignDetection/data_svm.dat')
+        #model = cv2.ml.SVM_load('./src/startup_package/src/SimulatorCode/TrafficSignDetection/data_svm.dat')
 
         #while success:
         # Uncomment elisa
@@ -355,7 +360,8 @@ class SignDetector(Producer):
             centers - the centers of the regions of interest
             '''
             # Uncomment one when Eisa:
-            watch = cv2.imread("/home/ebllaei/Downloads/dataset/0973.png") #0816 1723
+            #watch = cv2.imread("/home/ebllaei/Downloads/dataset/0973.png") #0816 1723
+            #watch = cv2.imread("/home/morettini18/Downloads/Image_2.png")
             #watch = cv2.imread("/home/ebllaei/dataset_bosch/4/img_159.png")
             # Uncomment when simulator:
             watch = self.get_image_function()
@@ -372,13 +378,13 @@ class SignDetector(Producer):
             # Get the centers.
             centers = self.detectColorAndCenters(watch)
             # Detect and classify the signs.
-            self.detectSign(victim, watch, centers,model)
+            self.detectSign(victim, watch, centers, model)
             self.count = self.count + 1
             #cv2.imshow("Input image to detection sign", watch)
             #self.outP.send(0)
             #print(0)
             self.pub.publish("ERROR")
-            time.sleep(0.5)
+            time.sleep(0.1)
             #success,watch = vidcap.read()
             if cv2.waitKey(1) == 27:
                 break
@@ -396,16 +402,22 @@ class SignDetector(Producer):
 
 if __name__ == '__main__':
     try:
-        model = load_model('data_svm.dat')
+        model = None
         #model = training()
+        #model.save("default")
         sg = None
         if(IS_TEST_ENVIRONMENT):
+            model = load_model('data_svm.dat')
             sg = SignDetector(None)
         else:
             cam = CameraHandler()
+
+            model=load_model("default")
+            #model = load_model('./src/startup_package/src/SimulatorCode/TrafficSignDetection/data_svm.dat')
             sg = SignDetector(cam.getImage)
-        sg.run()
+        print(cv2.__version__)
+        sg.run(model)
     except Exception as e:
-        print("Error in ParticleFilter")
+        print("Error in TrafficSignDetection")
         print(e)
         print(traceback.print_exc())
