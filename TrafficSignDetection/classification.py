@@ -4,7 +4,8 @@ from matplotlib import pyplot as plt
 from os import listdir
 # local modules
 from common import clock, mosaic
-import pickle 
+import pickle
+
 
 #Parameter
 SIZE = 32
@@ -16,10 +17,10 @@ def load_traffic_dataset():
     labels = []
     for sign_type in range(CLASS_NUMBER):
         print(sign_type)
-        sign_list = listdir("/home/ebllaei/dataset_bosch/{}".format(sign_type))
+        sign_list = listdir("/home/morettini18/dataset_bosch/{}".format(sign_type))
         for sign_file in sign_list:
             if '.png' in sign_file:
-                path = "/home/ebllaei/dataset_bosch/{}/{}".format(sign_type,sign_file)
+                path = "/home/morettini18/dataset_bosch/{}/{}".format(sign_type,sign_file)
                 print(path)
                 img = cv2.imread(path,0)
                 img = cv2.resize(img, (SIZE, SIZE))
@@ -81,7 +82,7 @@ def evaluate_model(model, data, samples, labels):
         img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
         if not flag:
             img[...,:2] = 0
-        
+
         vis.append(img)
     return mosaic(16, vis)
 
@@ -89,7 +90,7 @@ def preprocess_simple(data):
     return np.float32(data).reshape(-1, SIZE*SIZE) / 255.0
 
 
-def get_hog() : 
+def get_hog() :
     winSize = (20,20)
     blockSize = (10,10)
     blockStride = (5,5)
@@ -120,10 +121,10 @@ def training():
     rand = np.random.RandomState(10)
     shuffle = rand.permutation(len(data))
     data, labels = data[shuffle], labels[shuffle]
-    
+
     print('Deskew images ... ')
     data_deskewed = list(map(deskew, data))
-    
+
     print('Defining HoG parameters ...')
     # HoG feature descriptor
     hog = get_hog()
@@ -139,17 +140,17 @@ def training():
     data_train, data_test = np.split(data_deskewed, [train_n])
     hog_descriptors_train, hog_descriptors_test = np.split(hog_descriptors, [train_n])
     labels_train, labels_test = np.split(labels, [train_n])
-    
-    
+
+
     print('Training SVM model ...')
     model = SVM()
     model.train(hog_descriptors_train, labels_train)
 
     print('Saving SVM model ...')
-    model.save('data_svm.dat')
+    model.save('./src/startup_package/src/SimulatorCode/TrafficSignDetection/data_svm.dat')
     # save the model to disk
     #pickle.dump(model, open('finalized_model.sav', 'wb'))
-  
+
     return model
 
 def getLabel(model, data):
@@ -161,4 +162,3 @@ def getLabel(model, data):
     hog_descriptors = np.array([hog.compute(img_deskewed[0])])
     hog_descriptors = np.reshape(hog_descriptors, [-1, hog_descriptors.shape[1]])
     return int(model.predict(hog_descriptors)[0])
-

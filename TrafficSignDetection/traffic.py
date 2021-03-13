@@ -91,6 +91,7 @@ class SignDetector(Producer):
         '''
         self.set_publisher("Sign")
         self.model_classification = model_classification
+        self.verbose=verbose
 
         self.winSize = (40, 40)
         self.blockSize = (10, 10)
