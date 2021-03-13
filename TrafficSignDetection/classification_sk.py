@@ -53,13 +53,13 @@ class StatModel(object):
         #self.model.load(fn)  # Known bug: https://github.com/opencv/opencv/issues/4969
         # load
         print("Loading model from model.pkl")
-        self.model = joblib.load("model.pkl")
+        self.model = joblib.load(fn)
 
     def save(self, fn):
         #self.model.save(fn)
         # save
         print("Saving model to model.pkl")
-        joblib.dump(self.model, "model.pkl")
+        joblib.dump(self.model, fn)
 
 class SVM(StatModel):
     def __init__(self, C = 12.5, gamma = 0.50625):

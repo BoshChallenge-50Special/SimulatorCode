@@ -84,12 +84,13 @@ def deskew(img):
 
 class SignDetector(Producer):
 
-    def __init__(self, get_image_function):
+    def __init__(self, get_image_function, model_classification, verbose=False):
         super(SignDetector, self).__init__("SignDetector")
         '''
         :)
         '''
         self.set_publisher("Sign")
+        self.model_classification = model_classification
 
         self.winSize = (40, 40)
         self.blockSize = (10, 10)
@@ -196,17 +197,19 @@ class SignDetector(Producer):
                                      cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
         finalImage = red_image + yellow_image + blue_image + green_image
-        #cv2.imshow("Image after applied the masks", finalImage)
+        if(self.verbose):
+            cv2.imshow("Image after applied the masks", finalImage)
         keypoints_all = keypoints_red + keypoints_yellow + keypoints_blue + keypoints_green
 
         cv2.drawKeypoints( finalImage, keypoints_all, finalImage, (0, 0, 255))
-        #cv2.imshow("finalImage + IMAGE plus keypoints", finalImage)
+        if(self.verbose):
+            cv2.imshow("finalImage + IMAGE plus keypoints", finalImage)
 
         return (keypoints_all)
     # ===================================================================================
 
 
-    def detectSign(self, img, watch, centers,model):
+    def detectSign(self, img, watch, centers):
         coordinates = []
         termination = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 1)
         roiBox = None
@@ -227,7 +230,8 @@ class SignDetector(Producer):
                 #The window to check using the HOG.
                 roi = img[y1+disp:y2+disp, x1:x2]
                 sign = cv2.resize(roi, (40, 40), interpolation=cv2.INTER_AREA)
-                #cv2.imshow("roi "+str(c), sign)
+                if(self.verbose):
+                    cv2.imshow("roi "+str(c), sign)
 
                 #If the SVM gives a positive response (i.e. it is a sign) we show the image and draw a rectangle around the sign
                 #we further process it with the classifier.
@@ -237,7 +241,7 @@ class SignDetector(Producer):
 
                 if sign is not None:
                     #sign_type =sift.get_label_sift(sign)
-                    sign_type = getLabel(model, sign)
+                    sign_type = getLabel(self.model_classification, sign)
                     sign_type = sign_type if sign_type <= 11 else 11
                     text = SIGNS[sign_type]
                     cv2.rectangle(watch, (x1, y1 + disp), (x2, y2 + disp), (255, 255, 255), 2)
@@ -296,7 +300,7 @@ class SignDetector(Producer):
 
                     if  self.current_size < 1 or size < 1 or size / self.current_size > 30 or math.fabs((tl[0]-br[0])/(tl[1]-br[1])) > 2 or math.fabs((tl[0]-br[0])/(tl[1]-br[1])) < 0.5:
                         self.current_sign = None
-                        print("Stop tracking")
+                        #print("Stop tracking")
                     else:
                         self.current_size = size
 
@@ -335,7 +339,7 @@ class SignDetector(Producer):
 
     #====================================================================================
 
-    def run(self, model):
+    def run(self):
         self.current_sign = None
         self.current_text = ""
         self.current_size = 0
@@ -344,9 +348,6 @@ class SignDetector(Producer):
         #Clean previous image
         #clean_images()
         #Training phase
-
-        #model = training()
-        #model = cv2.ml.SVM_load('./src/startup_package/src/SimulatorCode/TrafficSignDetection/data_svm.dat')
 
         #while success:
         # Uncomment elisa
@@ -378,7 +379,7 @@ class SignDetector(Producer):
             # Get the centers.
             centers = self.detectColorAndCenters(watch)
             # Detect and classify the signs.
-            self.detectSign(victim, watch, centers, model)
+            self.detectSign(victim, watch, centers)
             self.count = self.count + 1
             #cv2.imshow("Input image to detection sign", watch)
             #self.outP.send(0)
@@ -404,19 +405,17 @@ if __name__ == '__main__':
     try:
         model = None
         #model = training()
-        #model.save("default")
+        #model.save('./src/startup_package/src/SimulatorCode/TrafficSignDetection/model_svm.plk')
         sg = None
         if(IS_TEST_ENVIRONMENT):
-            model = load_model('data_svm.dat')
-            sg = SignDetector(None)
+            model = load_model('./src/startup_package/src/SimulatorCode/TrafficSignDetection/model_svm.plk')
+            sg = SignDetector(None, model, verbose=False)
         else:
             cam = CameraHandler()
-
-            model=load_model("default")
-            #model = load_model('./src/startup_package/src/SimulatorCode/TrafficSignDetection/data_svm.dat')
-            sg = SignDetector(cam.getImage)
-        print(cv2.__version__)
-        sg.run(model)
+            model=load_model('./src/startup_package/src/SimulatorCode/TrafficSignDetection/model_svm.plk')
+            sg = SignDetector(cam.getImage, model, verbose=False)
+        #print(cv2.__version__)
+        sg.run()
     except Exception as e:
         print("Error in TrafficSignDetection")
         print(e)
