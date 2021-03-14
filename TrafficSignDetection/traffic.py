@@ -26,7 +26,7 @@ import rospy
 from std_msgs.msg import String
 from SimulatorCode.templates import Producer
 
-import sift
+#import sift
 
 IS_TEST_ENVIRONMENT = False
 

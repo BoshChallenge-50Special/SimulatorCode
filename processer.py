@@ -53,6 +53,8 @@ class Processer(Consumer):
         self.steering = 0
         self.state = "Straight"
 
+        self.directions=[ "left"]
+
 
     def start(self):
         # Far eseguire il file come se fosse eseguito da terminale
@@ -78,14 +80,15 @@ class Processer(Consumer):
         self.steering = 0
         current_speed = 0.22   # For incrementing or decrementing to reach a target
 
-        # Wait 2 seconds for the processes to actually start
-        sleep(2)
+        # Wait 3 seconds for the processes to actually start
+        sleep(3)
 
         while not rospy.is_shutdown():
             if(state_machine):
                 data_state_machine={}
 
                 data_state_machine["moving"] = True
+                data_state_machine["horizontal_line"] = "" # Fix it as safe, otherwise there might be a problem if it's missing
                 if ("horizontal_line" in self.data):
                     data_state_machine["horizontal_line"] = self.data["horizontal_line"]
                 data_state_machine["turning"] = False
@@ -95,20 +98,19 @@ class Processer(Consumer):
                 if(state_steer=="Steady"):
                     self.steering = 0
                 elif(state_steer=="OnLane"):
-                    velocity_steer = json.loads(self.data["velocity_steer"])
-                    self.steering = -velocity_steer["steer"]
+                    if("velocity_steer" in self.data):
+                        velocity_steer = json.loads(self.data["velocity_steer"])
+                        self.steering = -velocity_steer["steer"]
                 elif(state_steer=="NearCrossroad"):
-                    velocity_steer = json.loads(self.data["velocity_steer"])
-                    self.steering = -velocity_steer["steer"]
+                    if("velocity_steer" in self.data):
+                        velocity_steer = json.loads(self.data["velocity_steer"])
+                        self.steering = -velocity_steer["steer"]
                 elif(state_steer=="OnCrossroad"):
                     print(state_velocity + "  " + state_steer )## Repeated here becayuse turn take the full control
                     turning = True
                     #self.steering = self.turn('right')
-                    self.turn('right')
+                    self.turn()
                     turning = False
-                    #self.steering = turn_right()    # RIGHT
-                    #self.steering = 0            # STRAIGHT
-                    #self.steering = turn_left()    # LEFT
 
                 data_state_machine["state_steer"] = state_steer
                 state_velocity=stateMachineVelocity.runOneStep(data_state_machine)
@@ -148,46 +150,52 @@ class Processer(Consumer):
 
             self.car.drive(self.speed, self.steering)
             if(old_state_steer != state_steer or old_state_velocity != state_velocity):
-				print(state_velocity + "  " + state_steer )
-				old_state_steer = state_steer
-				old_state_velocity = state_velocity
+                print(state_velocity + "  " + state_steer )
+                old_state_steer = state_steer
+                old_state_velocity = state_velocity
             sleep(0.1)
 
         #rospy.spin()
 
     # TODO Fix the time for the sleep in the manuevres
-    def turn(self, direction):
+    def turn(self):
+        
         # Define that you want to turn
         self.state = "Turn"
-        #print("Turn " + direction)
-
-        self.car.drive(0.2, self.steering) # Slow down to be more sure about the time to be waited
-
-        # Wait for the stop signal to be surpassed
-        while(self.data["horizontal_line"] != "Safe"):
-            sleep(0.1)
-
+        print("Turn " + self.directions[0])	
+        
+        # Make sure to STOP at STOP	
+        self.car.drive(0, 0)
+        sleep(2)
+        self.car.drive(0.2, 0) # Slow down to be more sure about the time to be waited
+        
         # Act based on the decision you want
-        if(direction == 'right'):
-            sleep(2)
-            curve_radius = 66.6 # curve_radius = 66.5 # most common radius in the circuit
-            ipotenusa    = math.sqrt(2 * (curve_radius ** 2) )
-            steer        = 90 - math.acos(curve_radius/ipotenusa)
-        elif(direction == 'left'):
-            sleep(3.75)
-            curve_radius = 103.6
-            ipotenusa    = math.sqrt(2 * (curve_radius ** 2) )
-            steer        = - ( 90 - math.acos(curve_radius/ipotenusa) )
+        if(self.directions[0] == 'right'):
+            sleep(9)
+            #curve_radius = 66.6 # curve_radius = 66.5 # most common radius in the circuit
+            #ipotenusa    = math.sqrt(2 * (curve_radius ** 2) )
+            #steer        = 90 - math.acos(curve_radius/ipotenusa)
+            steer = 25
+            manuevre = 12.5
+        elif(self.directions[0] == 'left'):
+            sleep(14)
+            #curve_radius = 103.6 
+            #ipotenusa    = math.sqrt(2 * (curve_radius ** 2) )
+            #steer        = - ( 90 - math.acos(curve_radius/ipotenusa) )
+            steer = -20
+            manuevre = 17.5
         else:
             steer = 0
+            manuevre = 20
 
         # Steer the car accordingly
-        #self.car.drive(self.speed, self.steering + steer)
-        self.car.drive(0.2, self.steering + steer) # Set a known velocity for the manuevre
+        self.car.drive(0.2, steer ) # Set a known velocity for the manuevre
         # Wait for the manuevre to end
-        sleep(3.2)
-        self.state == "Straight"
-
+        sleep(manuevre)
+        # Update direction
+        dir = self.directions.pop(0)
+        self.directions.append(dir)
+        self.state = "Straight"
 
 
 if __name__ == '__main__':
