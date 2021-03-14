@@ -27,7 +27,7 @@ from std_msgs.msg import String
 from SimulatorCode.templates import Producer
 from SimulatorCode.LineTracking.image_processing import ImageProcessing
 
-import sift
+#import sift
 
 IS_TEST_ENVIRONMENT = False
 
