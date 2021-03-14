@@ -25,11 +25,13 @@ from bfmclib.trafficlight_s import TLColor, TLLabel, TrafficLight
 import rospy
 from std_msgs.msg import String
 from SimulatorCode.templates import Producer
+from SimulatorCode.LineTracking.image_processing import ImageProcessing
 
 import sift
 
 IS_TEST_ENVIRONMENT = False
 
+import random
 #Parameter
 SIZE = 32
 CLASS_NUMBER = 11
@@ -54,33 +56,6 @@ def clean_images():
 		if '.png' in file_name:
 			os.remove(file_name)
 
-def get_hog() :
-    winSize = (20,20)
-    blockSize = (10,10)
-    blockStride = (5,5)
-    cellSize = (10,10)
-    nbins = 9
-    derivAperture = 1
-    winSigma = -1.
-    histogramNormType = 0
-    L2HysThreshold = 0.2
-    gammaCorrection = 1
-    nlevels = 64
-    signedGradient = True
-
-    hog = cv2.HOGDescriptor(winSize,blockSize,blockStride,cellSize,nbins,derivAperture,winSigma,histogramNormType,L2HysThreshold,gammaCorrection,nlevels, signedGradient)
-
-    return hog
-    affine_flags = cv2.WARP_INVERSE_MAP|cv2.INTER_LINEAR
-
-def deskew(img):
-    m = cv2.moments(img)
-    if abs(m['mu02']) < 1e-2:
-        return img.copy()
-    skew = m['mu11']/m['mu02']
-    M = np.float32([[1, skew, -0.5*SIZE*skew], [0, 1, 0]])
-    img = cv2.warpAffine(img, M, (SIZE, SIZE), flags=cv2.WARP_INVERSE_MAP | cv2.INTER_LINEAR)
-    return img
 
 class SignDetector(Producer):
 
@@ -178,10 +153,12 @@ class SignDetector(Producer):
 
         # Bitwise-AND mask and original image
         ##### ATTENZIONE----> res non sembra mai utilizzato#################################################
-        res = cv2.bitwise_and(imgHSV,imgHSV, mask= (red_det))
+        #res = cv2.bitwise_and(imgHSV,imgHSV, mask= (red_det))
         #cv2.imshow('res',res)
         #==============================================================================
         #==============================================================================
+
+        #other_keypoints = cv2.bitwise_and(imgHSV,imgHSV, mask= (red_det))
 
         keypoints_red = self.detector.detect(red_det)
         keypoints_yellow = self.detector.detect(yellow_det)
@@ -197,6 +174,9 @@ class SignDetector(Producer):
         green_image = cv2.drawKeypoints(green_det, keypoints_green, np.array([]), (0, 128, 0),
                                      cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
+        #print("***********************************")
+        #print(" X : ", keypoints_red[0].pt[0], " Y : ", keypoints_red[0].pt[1], " SIZE : ", keypoints_red[0].size)
+        #print(red_det)
         finalImage = red_image + yellow_image + blue_image + green_image
         if(self.verbose):
             cv2.imshow("Image after applied the masks", finalImage)
@@ -210,20 +190,24 @@ class SignDetector(Producer):
     # ===================================================================================
 
 
-    def detectSign(self, img, watch, centers):
+    def detectSign(self, img, watch, keypoints):
+        # img used for detection
+        # watch used for showing the results
         coordinates = []
         termination = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 1)
         roiBox = None
         roiHist = None
         position = []
         coordinate=None
-        for c, points in enumerate(centers):
+        for c, point in enumerate(keypoints):
 
-            x1 = int(points.pt[0]) - 35
-            y1 = int(points.pt[1]) - 35
-            x2 = int(points.pt[0]) + 35
-            y2 = int(points.pt[1]) + 35
-            for disp in (0, 4):
+            radiusOfsign = int(point.size/2) + 4
+
+            x1 = int(point.pt[0]) - radiusOfsign #- 35
+            y1 = int(point.pt[1]) - radiusOfsign #- 35
+            x2 = int(point.pt[0]) + radiusOfsign #+ 35
+            y2 = int(point.pt[1]) + radiusOfsign #+ 35
+            for disp in (0,):#, 4):
                 if (not self.withinBoundsX(x1, img) or  not self.withinBoundsY(y1+disp, img) or not self.withinBoundsX(x2, img) or not self.withinBoundsY(y2+disp, img)):
 
                     break
@@ -249,17 +233,18 @@ class SignDetector(Producer):
                     coordinate=None
                     coordinate = (x1, y1+disp),(x2, y2+disp)
 
+
                     # Uncomment to save images for dataset
-                    #cv2.imwrite(str(self.count)+'_'+text+'.png', sign)
+                    #cv2.imwrite(str(self.count)+'_'+str(random.randint(0,20))+'.png', sign)
                     #if sign_type != 0:
-                    #    print(self.count, text)
+                    #   print(self.count, text)
 
                 if sign_type > 0 and sign_type != self.current_sign_type:
                     font = cv2.FONT_HERSHEY_PLAIN
+                    cv2.putText(watch, text,(x1, y1), font, 1,(0,0,255),2, cv2.LINE_4)
                     cv2.rectangle(watch, (x1, y1 + disp), (x2, y2 + disp), (0, 0, 255), 2)
-                    cv2.putText(watch,text,(x1, x2 -15), font, 1,(0,0,255),2,cv2.LINE_4)
 
-                if sign_type > 0 and (not self.current_sign or sign_type != self.current_sign):
+                if False and sign_type > 0 and (not self.current_sign or sign_type != self.current_sign):
                     self.current_sign = sign_type
                     self.current_text = text
 
@@ -286,7 +271,7 @@ class SignDetector(Producer):
                     roiHist = cv2.calcHist([roi], [0], None, [16], [0, 180])
                     roiHist = cv2.normalize(roiHist, roiHist, 0, 255, cv2.NORM_MINMAX)
                     roiBox = (tl[0], tl[1], br[0], br[1])
-                elif ((self.current_sign != None) and (roiHist is not None)):
+                elif False and((self.current_sign != None) and (roiHist is not None)):
                     hsv = cv2.cvtColor(watch, cv2.COLOR_BGR2HSV)
                     backProj = cv2.calcBackProject([hsv], [0], roiHist, [0, 180], 1)
 
@@ -312,21 +297,21 @@ class SignDetector(Producer):
                         right = int(coordinate[1][0])
 
                         position = [self.count, sign_type if sign_type <= 8 else 8, left, top, right, bottom]
-                        cv2.rectangle(img, coordinate[0],coordinate[1], (0, 255, 0), 1)
+                        cv2.rectangle(watch, coordinate[0],coordinate[1], (0, 255, 0), 1)
                         font = cv2.FONT_HERSHEY_PLAIN
-                        cv2.putText(img,text,(coordinate[0][0], coordinate[0][1] -15), font, 1,(0,0,255),2,cv2.LINE_4)
+                        cv2.putText(watch,text,(coordinate[0][0], coordinate[0][1] -15), font, 1,(0,0,255),2,cv2.LINE_4)
                     elif self.current_sign:
                         position = [self.count, sign_type if sign_type <= 8 else 8, tl[0], tl[1], br[0], br[1]]
                         print("rectangle")
-                        cv2.rectangle(img, (tl[0], tl[1]),(br[0], br[1]), (0, 255, 0), 1)
+                        cv2.rectangle(watch, (tl[0], tl[1]),(br[0], br[1]), (0, 255, 0), 1)
                         font = cv2.FONT_HERSHEY_PLAIN
-                        cv2.putText(img,self.current_text,(tl[0], tl[1] -15), font, 1,(0,0,255),2,cv2.LINE_4)
+                        cv2.putText(watch,self.current_text,(tl[0], tl[1] -15), font, 1,(0,0,255),2,cv2.LINE_4)
 
                 if self.current_sign:
                     self.sign_count += 1
                     coordinates.append(position)
 
-        cv2.imshow('Result detectSign', img)
+        cv2.imshow('Result detectSign', watch)
         #Write to video
         #out.write(img)
         #if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -346,6 +331,7 @@ class SignDetector(Producer):
         self.current_size = 0
         self.sign_count = 0
         self.count = 0
+        imageUtility = ImageProcessing()
         #Clean previous image
         #clean_images()
         #Training phase
@@ -359,7 +345,7 @@ class SignDetector(Producer):
             '''
             victim - the image I actually do the processing on
             watch - this is where I draw the rectangles and whatnot so it can be tested in practice
-            centers - the centers of the regions of interest
+            keypoints - the keypoints of the regions of interest
             '''
             # Uncomment one when Eisa:
             #watch = cv2.imread("/home/ebllaei/Downloads/dataset/0973.png") #0816 1723
@@ -367,8 +353,10 @@ class SignDetector(Producer):
             #watch = cv2.imread("/home/ebllaei/dataset_bosch/4/img_159.png")
             # Uncomment when simulator:
             watch = self.get_image_function()
+            watch =  imageUtility.crop_image(watch, 0, 80, 640, 240)  # x_top_left, y_top_left, x_bottom_right, y_bottom_right
             #victim = watch[0:(int)(watch.shape[0]/2), (int)(watch.shape[1]/2):watch.shape[1]]
-            victim = cv2.copyMakeBorder(watch, 0, 0, 0, 32, cv2.BORDER_REPLICATE)
+            #victim = cv2.copyMakeBorder(watch, 0, 0, 0, 32, cv2.BORDER_REPLICATE)
+            #victim = cv2.copyMakeBorder(watch, 0, 0, 0, 0, cv2.BORDER_REPLICATE)
 
             img = np.int16(watch)
             contrast = 10
@@ -377,10 +365,13 @@ class SignDetector(Producer):
             img = np.clip(img, 0, 255)
             watch = np.uint8(img)
 
-            # Get the centers.
-            centers = self.detectColorAndCenters(watch)
+            victim = np.copy(watch)
+            # Get the keypoints.
+            keypoints = self.detectColorAndCenters(victim)
             # Detect and classify the signs.
-            self.detectSign(victim, watch, centers)
+            self.detectSign(victim, watch, keypoints)
+            #self.detectSign(watch, watch, keypoints)
+
             self.count = self.count + 1
             #cv2.imshow("Input image to detection sign", watch)
             #self.outP.send(0)
@@ -405,8 +396,8 @@ class SignDetector(Producer):
 if __name__ == '__main__':
     try:
         model = None
-        #model = training()
-        #model.save('./src/startup_package/src/SimulatorCode/TrafficSignDetection/model_svm.plk')
+        model = training()
+        model.save('./src/startup_package/src/SimulatorCode/TrafficSignDetection/model_svm.plk')
         sg = None
         if(IS_TEST_ENVIRONMENT):
             model = load_model('./src/startup_package/src/SimulatorCode/TrafficSignDetection/model_svm.plk')
@@ -414,7 +405,7 @@ if __name__ == '__main__':
         else:
             cam = CameraHandler()
             model=load_model('./src/startup_package/src/SimulatorCode/TrafficSignDetection/model_svm.plk')
-            sg = SignDetector(cam.getImage, model, verbose=False)
+            sg = SignDetector(cam.getImage, model, verbose=True)
         #print(cv2.__version__)
         sg.run()
     except Exception as e:
