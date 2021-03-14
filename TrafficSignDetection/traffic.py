@@ -396,8 +396,8 @@ class SignDetector(Producer):
 if __name__ == '__main__':
     try:
         model = None
-        model = training()
-        model.save('./src/startup_package/src/SimulatorCode/TrafficSignDetection/model_svm.plk')
+        #model = training()
+        #model.save('./src/startup_package/src/SimulatorCode/TrafficSignDetection/model_svm.plk')
         sg = None
         if(IS_TEST_ENVIRONMENT):
             model = load_model('./src/startup_package/src/SimulatorCode/TrafficSignDetection/model_svm.plk')
