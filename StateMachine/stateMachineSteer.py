@@ -14,6 +14,7 @@ class StateMachineSteer:
         self.m.add_state("OnLane", self.OnLane_transitions)
         self.m.add_state("NearCrossroad", self.NearCrossroad_transitions)
         self.m.add_state("OnCrossroad", self.OnCrossroad_transitions)
+        self.m.add_state("OnCrosswalk", self.OnCrosswalk_transitions)
         self.m.set_start("Steady")
 
     #method for evaluating the OR of a list of variables
@@ -56,6 +57,8 @@ class StateMachineSteer:
             newState = "NearCrossroad"
         elif self.conditionAnd("==", data, ["moving"], [False]):
             newState = "Steady"
+        elif self.conditionAnd("==", data, ["pedestrian_signal"], [True]):
+            newState = "OnCrosswalk"
         else:
             newState = "OnLane"
         return newState
@@ -64,11 +67,19 @@ class StateMachineSteer:
     def NearCrossroad_transitions(self, data):
         if self.conditionAnd("==", data, ["horizontal_line"], ["Safe"]):
             newState = "OnCrossroad"
-        elif self.conditionAnd("==", data, ["horizontal_line"], ["Pedestrians"]):
-            newState = "OnLane"
+        elif self.conditionOr("==", data, ["horizontal_line", "pedestrian_signal"], ["Pedestrians", True]):
+            newState = "OnCrosswalk"
         else:
             newState = "NearCrossroad"
         return newState
+
+    #Declaration of the transition from the StateC to the other possible states
+    def OnCrosswalk_transitions(self, data):
+      if self.conditionAnd("==", data, ["horizontal_line", "pedestrian_signal"], ["Safe", False]):
+          newState = "OnLane"
+      else:
+          newState = "OnCrosswalk"
+      return newState
 
     #Declaration of the transition from the StateC to the other possible states
     def OnCrossroad_transitions(self, data):

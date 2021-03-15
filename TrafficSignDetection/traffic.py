@@ -11,6 +11,7 @@ from math import sqrt
 from os import listdir
 import argparse
 import time
+import json
 # local modules
 from classification_sk import training, getLabel, load_model
 import sys
@@ -199,6 +200,7 @@ class SignDetector(Producer):
         roiHist = None
         position = []
         coordinate=None
+        signsFound=[]
         for c, point in enumerate(keypoints):
 
             radiusOfsign = int(point.size/2) + 4
@@ -243,6 +245,7 @@ class SignDetector(Producer):
                     font = cv2.FONT_HERSHEY_PLAIN
                     cv2.putText(watch, text,(x1, y1), font, 1,(0,0,255),2, cv2.LINE_4)
                     cv2.rectangle(watch, (x1, y1 + disp), (x2, y2 + disp), (0, 0, 255), 2)
+                    signsFound.append(SIGNS[sign_type])
 
                 if False and sign_type > 0 and (not self.current_sign or sign_type != self.current_sign):
                     self.current_sign = sign_type
@@ -312,6 +315,7 @@ class SignDetector(Producer):
                     coordinates.append(position)
 
         cv2.imshow('Result detectSign', watch)
+        return signsFound
         #Write to video
         #out.write(img)
         #if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -369,14 +373,15 @@ class SignDetector(Producer):
             # Get the keypoints.
             keypoints = self.detectColorAndCenters(victim)
             # Detect and classify the signs.
-            self.detectSign(victim, watch, keypoints)
+            signs = self.detectSign(victim, watch, keypoints)
             #self.detectSign(watch, watch, keypoints)
 
             self.count = self.count + 1
             #cv2.imshow("Input image to detection sign", watch)
             #self.outP.send(0)
             #print(0)
-            self.pub.publish("ERROR")
+            signs_json = json.dumps(signs)
+            self.pub.publish(signs_json)
             time.sleep(0.1)
             #success,watch = vidcap.read()
             if cv2.waitKey(1) == 27:

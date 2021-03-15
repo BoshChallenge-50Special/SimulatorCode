@@ -53,7 +53,7 @@ class Processer(Consumer):
         self.steering = 0
         self.state = "Straight"
 
-        self.directions=[ "left"]
+        self.directions=[ "left", "right", "left", "left", "straight", "left", "straight", "left"]
 
 
     def start(self):
@@ -92,12 +92,18 @@ class Processer(Consumer):
                 if ("horizontal_line" in self.data):
                     data_state_machine["horizontal_line"] = self.data["horizontal_line"]
                 data_state_machine["turning"] = False
-                data_state_machine["stop_signal"] = False
+                if("sign" in self.data):
+                    signs = json.loads(self.data["sign"])
+                    data_state_machine["stop_signal"] = "STOP" in signs
+                    data_state_machine["pedestrian_signal"] = "CROSSWALK SIGN" in signs
+                else:
+                    data_state_machine["stop_signal"] = False
+                    data_state_machine["pedestrian_signal"] = False
 
                 state_steer=stateMachineSteer.runOneStep(data_state_machine)
                 if(state_steer=="Steady"):
                     self.steering = 0
-                elif(state_steer=="OnLane"):
+                elif(state_steer=="OnLane" or state_steer=="OnCrosswalk"):
                     if("velocity_steer" in self.data):
                         velocity_steer = json.loads(self.data["velocity_steer"])
                         self.steering = -velocity_steer["steer"]
