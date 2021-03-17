@@ -80,6 +80,7 @@ class Processer(Consumer):
         self.steering = 0
         current_speed = 0.22   # For incrementing or decrementing to reach a target
 
+        print_msg = ""
         # Wait 3 seconds for the processes to actually start
         sleep(3)
 
@@ -91,7 +92,9 @@ class Processer(Consumer):
                 data_state_machine["horizontal_line"] = "" # Fix it as safe, otherwise there might be a problem if it's missing
                 if ("horizontal_line" in self.data):
                     data_state_machine["horizontal_line"] = self.data["horizontal_line"]
+                    
                 data_state_machine["turning"] = False
+                
                 if("sign" in self.data):
                     signs = json.loads(self.data["sign"])
                     data_state_machine["stop_signal"] = "STOP" in signs
@@ -112,7 +115,19 @@ class Processer(Consumer):
                         velocity_steer = json.loads(self.data["velocity_steer"])
                         self.steering = -velocity_steer["steer"]
                 elif(state_steer=="OnCrossroad"):
-                    print(state_velocity + "  " + state_steer )## Repeated here becayuse turn take the full control
+                    if state_velocity == 'OnSteady':
+                        print_msg = 'The car is still.'
+                    else: 
+                        if state_steer == 'OnLane':
+                            print_msg =  'Car is KEEPING THE LANE'
+                        elif state_steer == 'OnCrossroad':
+                            print_msg = 'Car is NAVIGATING AN INTERSECTION'
+                        elif state_steer == 'NearCrossroad':
+                            print_msg = 'Car is approaching an intersection'
+                        elif state_steer == 'OnCrosswalk':
+                            print_msg = 'Car is over a CROSSWALK'
+                    print(print_msg + "  and it is going  " + state_velocity)  # Repeated here becayuse turn take the full control
+                
                     turning = True
                     #self.steering = self.turn('right')
                     self.turn()
@@ -156,7 +171,19 @@ class Processer(Consumer):
 
             self.car.drive(self.speed, self.steering)
             if(old_state_steer != state_steer or old_state_velocity != state_velocity):
-                print(state_velocity + "  " + state_steer )
+                if state_velocity == 'OnSteady':
+                    print_msg = 'The car is still.'
+                else: 
+                    if state_steer == 'OnLane':
+                        print_msg =  'Car is KEEPING THE LANE'
+                    elif state_steer == 'OnCrossroad':
+                        print_msg = 'Car is NAVIGATING AN INTERSECTION'
+                    elif state_steer == 'NearCrossroad':
+                        print_msg = 'Car is approaching an intersection'
+                    elif state_steer == 'OnCrosswalk':
+                        print_msg = 'Car is over a CROSSWALK'
+                print(print_msg + "  and it is going  " + state_velocity) 
+                
                 old_state_steer = state_steer
                 old_state_velocity = state_velocity
             sleep(0.1)
@@ -168,7 +195,7 @@ class Processer(Consumer):
         
         # Define that you want to turn
         self.state = "Turn"
-        print("Turn " + self.directions[0])	
+        print("Going " + self.directions[0])	
         
         # Make sure to STOP at STOP	
         self.car.drive(0, 0)
