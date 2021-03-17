@@ -69,7 +69,7 @@ class SignDetector(Producer):
         self.model_classification = model_classification
         self.verbose=verbose
 
-        self.winSize = (40, 40)
+        self.winSize = (50, 50)
         self.blockSize = (10, 10)
         self.blockStride = (5, 5)
         self.cellSize = (5, 5)
@@ -94,10 +94,10 @@ class SignDetector(Producer):
         self.params.thresholdStep = 1
 
         self.params.filterByArea = True
-        self.params.minArea = 300
+        self.params.minArea = 400
         self.params.maxArea = 3500
 
-        self.params.filterByCircularity = False
+        self.params.filterByCircularity = True
         self.params.filterByConvexity = False
         self.params.filterByColor = False
         self.params.filterByInertia = False
@@ -181,17 +181,26 @@ class SignDetector(Producer):
         finalImage = red_image + yellow_image + blue_image + green_image
         if(self.verbose):
             cv2.imshow("Image after applied the masks", finalImage)
+        for point in keypoints_yellow:
+            point.size = point.size + 30  #TO find the precedence
+
         keypoints_all = keypoints_red + keypoints_yellow + keypoints_blue + keypoints_green
 
-        cv2.drawKeypoints( finalImage, keypoints_all, finalImage, (0, 0, 255))
+        new_keypoints=[]
+        for p in range(0,len(keypoints_all)):
+            if keypoints_all[p].size > 30:
+                new_keypoints.append(keypoints_all[p])
+            #point.size = point.size + 30  #TO find the precedence
+
+        cv2.drawKeypoints( finalImage, new_keypoints, finalImage, (0, 0, 255))
         if(self.verbose):
             cv2.imshow("finalImage + IMAGE plus keypoints", finalImage)
 
-        return (keypoints_all)
+        return (new_keypoints)
     # ===================================================================================
 
 
-    def detectSign(self, img, watch, keypoints):
+    def detectSign(self, img, watch, keypoints, y_offset=0):
         # img used for detection
         # watch used for showing the results
         coordinates = []
@@ -216,7 +225,7 @@ class SignDetector(Producer):
 
                 #The window to check using the HOG.
                 roi = img[y1+disp:y2+disp, x1:x2]
-                sign = cv2.resize(roi, (40, 40), interpolation=cv2.INTER_AREA)
+                sign = roi#cv2.resize(roi, (40, 40), interpolation=cv2.INTER_AREA)
                 if(self.verbose):
                     cv2.imshow("roi "+str(c), sign)
 
@@ -231,7 +240,7 @@ class SignDetector(Producer):
                     sign_type = getLabel(self.model_classification, sign)
                     sign_type = sign_type if sign_type <= 11 else 11
                     text = SIGNS[sign_type]
-                    cv2.rectangle(watch, (x1, y1 + disp), (x2, y2 + disp), (255, 255, 255), 2)
+                    cv2.rectangle(watch, (x1, y1 + disp+y_offset), (x2, y2 + disp+y_offset), (255, 255, 255), 2)
                     coordinate=None
                     coordinate = (x1, y1+disp),(x2, y2+disp)
 
@@ -243,8 +252,8 @@ class SignDetector(Producer):
 
                 if sign_type > 0 and sign_type != self.current_sign_type:
                     font = cv2.FONT_HERSHEY_PLAIN
-                    cv2.putText(watch, text,(x1, y1), font, 1,(0,0,255),2, cv2.LINE_4)
-                    cv2.rectangle(watch, (x1, y1 + disp), (x2, y2 + disp), (0, 0, 255), 2)
+                    cv2.putText(watch, text,(x1, y1+y_offset), font, 1,(0,0,255),2, cv2.LINE_4)
+                    cv2.rectangle(watch, (x1, y1 + disp+y_offset), (x2, y2 + disp+y_offset), (0, 0, 255), 2)
                     signsFound.append(SIGNS[sign_type])
 
                 if False and sign_type > 0 and (not self.current_sign or sign_type != self.current_sign):
@@ -357,23 +366,26 @@ class SignDetector(Producer):
             #watch = cv2.imread("/home/ebllaei/dataset_bosch/4/img_159.png")
             # Uncomment when simulator:
             watch = self.get_image_function()
-            watch =  imageUtility.crop_image(watch, 0, 80, 640, 240)  # x_top_left, y_top_left, x_bottom_right, y_bottom_right
+            cut_top=80
+            watch = np.copy(watch)
+            watch_copy = np.copy(watch)
+            victim =  imageUtility.crop_image(watch_copy, 0, cut_top, 640, 240)  # x_top_left, y_top_left, x_bottom_right, y_bottom_right
             #victim = watch[0:(int)(watch.shape[0]/2), (int)(watch.shape[1]/2):watch.shape[1]]
             #victim = cv2.copyMakeBorder(watch, 0, 0, 0, 32, cv2.BORDER_REPLICATE)
             #victim = cv2.copyMakeBorder(watch, 0, 0, 0, 0, cv2.BORDER_REPLICATE)
 
-            img = np.int16(watch)
+            img = np.int16(victim)
             contrast = 10
             brightness = 50
             img = img * (contrast/127+1) - contrast + brightness
             img = np.clip(img, 0, 255)
-            watch = np.uint8(img)
+            victim = np.uint8(img)
 
-            victim = np.copy(watch)
+            #victim = np.copy(watch)
             # Get the keypoints.
             keypoints = self.detectColorAndCenters(victim)
             # Detect and classify the signs.
-            signs = self.detectSign(victim, watch, keypoints)
+            signs = self.detectSign(victim, watch, keypoints, y_offset=cut_top)
             #self.detectSign(watch, watch, keypoints)
 
             self.count = self.count + 1
@@ -410,7 +422,7 @@ if __name__ == '__main__':
         else:
             cam = CameraHandler()
             model=load_model('./src/startup_package/src/SimulatorCode/TrafficSignDetection/model_svm.plk')
-            sg = SignDetector(cam.getImage, model, verbose=True)
+            sg = SignDetector(cam.getImage, model, verbose=False)
         #print(cv2.__version__)
         sg.run()
     except Exception as e:
