@@ -99,6 +99,15 @@ class Processer(Consumer):
                     signs = json.loads(self.data["sign"])
                     data_state_machine["stop_signal"] = "STOP" in signs
                     data_state_machine["pedestrian_signal"] = "CROSSWALK SIGN" in signs
+                    if self.data["sign"] == "STOP":
+                        print(self.data["sign"] + ' SIGN detected, checking horizontal line presence.')
+                    elif self.data["sign"] == "CROSSWALK SIGN":
+                        print( self.data["sign"] + ' detected, checking zebra crossing presence.')
+                    elif self.data["sign"] == "PARKING":
+                        print( self.data["sign"] + 'SIGN detected, slowing down.')
+                    elif self.data["sign"] == "PRIORITY":
+                        print( self.data["sign"] + 'SIGN detected, going fast.')
+
                 else:
                     data_state_machine["stop_signal"] = False
                     data_state_machine["pedestrian_signal"] = False
@@ -117,6 +126,7 @@ class Processer(Consumer):
                 elif(state_steer=="OnCrossroad"):
                     if state_velocity == 'OnSteady':
                         print_msg = 'The car is still.'
+                        print(print_msg)
                     else: 
                         if state_steer == 'OnLane':
                             print_msg =  'Car is KEEPING THE LANE'
@@ -126,7 +136,7 @@ class Processer(Consumer):
                             print_msg = 'Car is approaching an intersection'
                         elif state_steer == 'OnCrosswalk':
                             print_msg = 'Car is over a CROSSWALK'
-                    print(print_msg + "  and it is going  " + state_velocity)  # Repeated here becayuse turn take the full control
+                        print(print_msg + " and it is going " + state_velocity)  # Repeated here becayuse turn take the full control
                 
                     turning = True
                     #self.steering = self.turn('right')
@@ -173,6 +183,7 @@ class Processer(Consumer):
             if(old_state_steer != state_steer or old_state_velocity != state_velocity):
                 if state_velocity == 'OnSteady':
                     print_msg = 'The car is still.'
+                    print(print_msg)
                 else: 
                     if state_steer == 'OnLane':
                         print_msg =  'Car is KEEPING THE LANE'
@@ -182,7 +193,7 @@ class Processer(Consumer):
                         print_msg = 'Car is approaching an intersection'
                     elif state_steer == 'OnCrosswalk':
                         print_msg = 'Car is over a CROSSWALK'
-                print(print_msg + "  and it is going  " + state_velocity) 
+                    print(print_msg + " and it is going " + state_velocity) 
                 
                 old_state_steer = state_steer
                 old_state_velocity = state_velocity
