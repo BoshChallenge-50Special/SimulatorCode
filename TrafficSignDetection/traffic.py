@@ -104,11 +104,14 @@ class SignDetector(Producer):
         # As is this.
         self.detector = cv2.SimpleBlobDetector_create(self.params)
 
+        self.old_state = "ERROR"
+        self.reset = 0
         if(get_image_function != None):
             self.get_image_function = get_image_function
         else:
             self.get_image_function_test_load()
             self.get_image_function = self.get_image_function_test
+
 
     #====================================================================
     def withinBoundsX(self, coord, img):
@@ -392,7 +395,16 @@ class SignDetector(Producer):
             #cv2.imshow("Input image to detection sign", watch)
             #self.outP.send(0)
             #print(0)
+
+
             signs_json = json.dumps(signs)
+
+            if(len(signs)!=0):
+                self.old_state = signs_json
+                self.reset=5
+            elif(self.reset>0):
+                self.reset=self.reset-1
+                signs_json=self.old_state
             self.pub.publish(signs_json)
             time.sleep(0.1)
             #success,watch = vidcap.read()
@@ -400,6 +412,7 @@ class SignDetector(Producer):
                 break
 
         cv2.destroyAllWindows()
+
 
     def get_image_function_test_load(self):
         folder = '/home/ebllaei/Downloads/dataset'

@@ -68,6 +68,12 @@ class Processer(Consumer):
         self.subscribe("PidControlValues", "velocity_steer")
         self.subscribe("Sign", "sign")
 
+        ########  TO REMOVE ##################
+        pub = rospy.Publisher("REMAIN_LEFT", String, queue_size=10)
+        pub.publish("Normal")
+
+        ########  TO REMOVE ##################
+
         state_machine=True
 
         stateMachineSteer = StateMachineSteer()
@@ -75,6 +81,7 @@ class Processer(Consumer):
 
         old_state_steer    = "None"
         old_state_velocity = "None"
+        old_state_sign = "None"
 
         self.speed = 0.22
         self.steering = 0
@@ -84,23 +91,36 @@ class Processer(Consumer):
         # Wait 20 seconds for the processes to actually start
         sleep(10)
 
+        data_state_machine={}
         while not rospy.is_shutdown():
             if(state_machine):
-                data_state_machine={}
-
+                state_steer="Steady"
                 data_state_machine["moving"] = True
                 data_state_machine["horizontal_line"] = "" # Fix it as safe, otherwise there might be a problem if it's missing
                 if ("horizontal_line" in self.data):
                     data_state_machine["horizontal_line"] = self.data["horizontal_line"]
-                    
+
                 data_state_machine["turning"] = False
-                
+
                 if("sign" in self.data):
-                    signs = json.loads(self.data["sign"])
-                    data_state_machine["stop_signal"] = "STOP" in signs
-                    data_state_machine["pedestrian_signal"] = "CROSSWALK SIGN" in signs
+                    if(old_state_sign!=self.data["sign"]):
+                        old_state_sign=self.data["sign"]
+                        signs = json.loads(self.data["sign"])
+                        data_state_machine["stop_signal"] = "STOP" in signs
+                        data_state_machine["parking_signal"] = "PARKING" in signs
+                        data_state_machine["pedestrian_signal"] = "CROSSWALK SIGN" in signs
+                        print(signs)
+                        if "STOP" in self.data["sign"]:
+                            print(signs[0] + ' SIGN detected, checking horizontal line presence.')
+                        elif "CROSSWALK SIGN" in self.data["sign"] and  state_steer != 'OnCrosswalk' :
+                            print( signs[0] + ' detected, checking zebra crossing presence.')
+                        #elif self.data["sign"] == "PARKING":
+                        #    print( self.data["sign"] + 'SIGN detected, slowing down.')
+                        elif "PRIORITY" in self.data["sign"] :
+                            print( signs[0] + 'SIGN detected, going fast.')
                 else:
                     data_state_machine["stop_signal"] = False
+                    data_state_machine["parking_signal"] = False
                     data_state_machine["pedestrian_signal"] = False
 
                 state_steer=stateMachineSteer.runOneStep(data_state_machine)
@@ -115,19 +135,24 @@ class Processer(Consumer):
                         velocity_steer = json.loads(self.data["velocity_steer"])
                         self.steering = -velocity_steer["steer"]
                 elif(state_steer=="OnCrossroad"):
-                    if state_velocity == 'OnSteady':
-                        print_msg = 'The car is still.'
-                    else: 
-                        if state_steer == 'OnLane':
-                            print_msg =  'Car is KEEPING THE LANE'
-                        elif state_steer == 'OnCrossroad':
-                            print_msg = 'Car is NAVIGATING AN INTERSECTION'
-                        elif state_steer == 'NearCrossroad':
-                            print_msg = 'Car is approaching an intersection'
-                        elif state_steer == 'OnCrosswalk':
-                            print_msg = 'Car is over a CROSSWALK'
-                    print(print_msg + "  and it is going  " + state_velocity)  # Repeated here becayuse turn take the full control
-                
+                    pub.publish("LEFT")
+                    #if state_velocity == 'OnSteady':
+                    #    print_msg = 'The car is still.'
+                    #    print(print_msg)
+                    #elif state_velocity=="Parking":
+                    #    print("PARKING SIGN detected, going slow")
+                    #else:
+                    #if state_steer == 'OnLane':
+                    #    print_msg =  'Car is KEEPING THE LANE'
+                    #if state_steer == 'OnCrossroad':
+                    #    print_msg = 'Car is NAVIGATING AN INTERSECTION'
+                    #elif state_steer == 'NearCrossroad':
+                    #    print_msg = 'Car is approaching an intersection'
+                    #elif state_steer == 'OnCrosswalk':
+                    #    print_msg = 'Car is over a CROSSWALK'
+                    #print(print_msg + " and it is going " + state_velocity + ".")  # Repeated here becayuse turn take the full control
+
+
                     #self.steering = self.turn('right')
                     if(len(self.directions)):
                         self.turn()
@@ -135,12 +160,13 @@ class Processer(Consumer):
                         self.speed = 0 
                         data_state_machine["moving"] = "False"
                         print("End of Simulation Round")
+                #pritn(state_steer +"     " +state_velocity)
 
                 data_state_machine["state_steer"] = state_steer
                 state_velocity=stateMachineVelocity.runOneStep(data_state_machine)
                 if(state_velocity=="OnSteady"):
                     self.speed = 0
-                elif(state_velocity=="Slow"):
+                elif(state_velocity=="Slow" or state_velocity=="Parking"):
                     if(current_speed > 0.2):
                         self.speed = min(0.1, current_speed-0.1)
                     else:
@@ -175,18 +201,20 @@ class Processer(Consumer):
             self.car.drive(self.speed, self.steering)
             if(old_state_steer != state_steer or old_state_velocity != state_velocity):
                 if state_velocity == 'OnSteady':
-                    print_msg = 'The car is still.'
-                else: 
+                    print('The car is still.')
+                elif state_velocity=="Parking":
+                    print("PARKING SIGN detected, going slow")
+                else:
                     if state_steer == 'OnLane':
                         print_msg =  'Car is KEEPING THE LANE'
-                    elif state_steer == 'OnCrossroad':
-                        print_msg = 'Car is NAVIGATING AN INTERSECTION'
-                    elif state_steer == 'NearCrossroad':
-                        print_msg = 'Car is approaching an intersection'
+                    #elif state_steer == 'OnCrossroad':
+                    #    print_msg = 'Car is NAVIGATING AN INTERSECTION'
+                    #elif state_steer == 'NearCrossroad':
+                    #    print_msg = 'Car is approaching an intersection'
                     elif state_steer == 'OnCrosswalk':
-                        print_msg = 'Car is over a CROSSWALK'
-                print(print_msg + "  and it is going  " + state_velocity) 
-                
+                        print_msg = 'Car is near a CROSSWALK'
+                    print(print_msg + " and it is going " + state_velocity + ".")
+
                 old_state_steer = state_steer
                 old_state_velocity = state_velocity
             sleep(0.1)
@@ -195,16 +223,16 @@ class Processer(Consumer):
 
     # TODO Fix the time for the sleep in the manuevres
     def turn(self):
-        
+
         # Define that you want to turn
         self.state = "Turn"
-        print("Going " + self.directions[0])	
-        
-        # Make sure to STOP at STOP	
+        print("Going " + self.directions[0])
+
+        # Make sure to STOP at STOP
         self.car.drive(0, 0)
         sleep(5)
         self.car.drive(0.2, 0) # Slow down to be more sure about the time to be waited
-        
+
         # Act based on the decision you want
         if(self.directions[0] == 'right'):
             sleep(9)
