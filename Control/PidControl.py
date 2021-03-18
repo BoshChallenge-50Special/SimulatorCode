@@ -30,7 +30,7 @@ class PidControl(Producer, Consumer):
 		self.distance_from_base = 0.6       #it's a percentage
 		self.pid = PID.PID(P, I, D)
 		self.size = 640 ###### TODO --> PUT IT IN A CONFIG FILE
-		self.targetT = 50
+		self.targetT = 100
 		self.verbose = False
 
 		self.REMAIN_LEFT = "NORMAL"
