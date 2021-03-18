@@ -1,5 +1,7 @@
 from statemachine import StateMachine
 
+import time, threading
+
 class StateMachineVelocity:
     '''
     Implementation of the specific StateMachine following the need of our project
@@ -12,8 +14,10 @@ class StateMachineVelocity:
         #Declaration of all the states
         self.m.add_state("OnSteady", self.OnSteady_transitions)
         self.m.add_state("Slow", self.Slow_transitions)
+        self.m.add_state("Parking", self.Parking_transitions)
         self.m.add_state("Fast", self.Fast_transitions)
         self.m.set_start("OnSteady")
+        self.go_back=False
 
     #method for evaluating the OR of a list of variables
     @staticmethod
@@ -55,6 +59,9 @@ class StateMachineVelocity:
             newState = "OnSteady"
         elif self.conditionAnd("==", data, ["horizontal_line", "state_steer"], ["Safe", "OnLane"]):
             newState = "Fast"
+        elif self.conditionAnd("==", data, ["parking_signal"], [True]):
+            newState = "Parking"
+            threading.Timer(15, self.remove_parking).start()
         else:
             newState = "Slow"
         return newState
@@ -63,13 +70,26 @@ class StateMachineVelocity:
     def Fast_transitions(self, data):
         if self.conditionOr("==", data, ["horizontal_line", "horizontal_line"], ["Stop", "Pedestrians"]):
             newState = "Slow"
+        elif self.conditionAnd("==", data, ["parking_signal"], [True]):
+            newState = "Parking"
+            threading.Timer(5, self.remove_parking).start()
         else:
             newState = "Fast"
+        return newState
+
+    def Parking_transitions(self, data):
+        if(self.go_back):
+            newState = "Fast"
+        else:
+            newState = "Parking"
         return newState
 
     def runOneStep(self,data):
         return self.m.runOneStep(data)
 
+    def remove_parking(self):
+        print("remove_parking")
+        self.go_back=True
 #Code for testing the state machine
 #
 #if __name__== "__main__":

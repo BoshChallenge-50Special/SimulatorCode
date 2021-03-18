@@ -30,15 +30,32 @@ class PidControl(Producer, Consumer):
 		self.distance_from_base = 0.6       #it's a percentage
 		self.pid = PID.PID(P, I, D)
 		self.size = 640 ###### TODO --> PUT IT IN A CONFIG FILE
-		self.targetT = 20
+		self.targetT = 50
 		self.verbose = False
+
+		self.REMAIN_LEFT = "NORMAL"
+
+		############################## TO REMOVE###############################
+		self.offset=0
+		rospy.Subscriber("REMAIN_LEFT", String, self.callback_tmp)
+		############################## TO REMOVE###############################
 
 		self.subscribe("StreetLane", "street_lines")
 
+	def callback_tmp(self, var):
+		self.REMAIN_LEFT = var
+
+
 	def get_current_trajectory_point(self, lines):
 		dist = []
+		if(self.offset>1):
+			self.offset = self.offset-3
+
+		if(self.REMAIN_LEFT):
+			self.offset=80
+
 		if(lines[0] != None):
-			dist.append([lines[0][i][0] for i in range(0, len(lines[0]))])
+			dist.append([lines[0][i][0]+self.offset for i in range(0, len(lines[0]))])
 		if(lines[1] != None):
 			dist.append([lines[1][i][0]-self.size/2 for i in range(0, len(lines[1]))])
 

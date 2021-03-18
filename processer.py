@@ -53,7 +53,7 @@ class Processer(Consumer):
         self.steering = 0
         self.state = "Straight"
 
-        self.directions=[ "left", "right", "left", "left", "straight", "left", "straight", "left"]
+        self.directions=["straight", "left", "right", "left", "straight"]
 
 
     def start(self):
@@ -67,6 +67,12 @@ class Processer(Consumer):
         self.subscribe("StreetLane", "street_lines")
         self.subscribe("PidControlValues", "velocity_steer")
         self.subscribe("Sign", "sign")
+
+        ########  TO REMOVE ##################
+        pub = rospy.Publisher("REMAIN_LEFT", String, queue_size=10)
+        pub.publish("Normal")
+
+        ########  TO REMOVE ##################
 
         state_machine=True
 
@@ -92,15 +98,17 @@ class Processer(Consumer):
                 data_state_machine["horizontal_line"] = "" # Fix it as safe, otherwise there might be a problem if it's missing
                 if ("horizontal_line" in self.data):
                     data_state_machine["horizontal_line"] = self.data["horizontal_line"]
-                    
+
                 data_state_machine["turning"] = False
-                
+
                 if("sign" in self.data):
                     signs = json.loads(self.data["sign"])
                     data_state_machine["stop_signal"] = "STOP" in signs
+                    data_state_machine["parking_signal"] = "PARKING" in signs
                     data_state_machine["pedestrian_signal"] = "CROSSWALK SIGN" in signs
                 else:
                     data_state_machine["stop_signal"] = False
+                    data_state_machine["parking_signal"] = False
                     data_state_machine["pedestrian_signal"] = False
 
                 state_steer=stateMachineSteer.runOneStep(data_state_machine)
@@ -115,9 +123,10 @@ class Processer(Consumer):
                         velocity_steer = json.loads(self.data["velocity_steer"])
                         self.steering = -velocity_steer["steer"]
                 elif(state_steer=="OnCrossroad"):
+                    pub.publish("LEFT")
                     if state_velocity == 'OnSteady':
                         print_msg = 'The car is still.'
-                    else: 
+                    else:
                         if state_steer == 'OnLane':
                             print_msg =  'Car is KEEPING THE LANE'
                         elif state_steer == 'OnCrossroad':

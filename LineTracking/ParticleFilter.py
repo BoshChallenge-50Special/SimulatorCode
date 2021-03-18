@@ -472,8 +472,8 @@ def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None
             #too_near = acc_dist/len(lines[0].spline) < 640/6
 
             if(too_near):
-                if(Images_print):
-                    print("too near")
+                #if(Images_print):
+                #    print("too near")
                 if(pf1.steps_good_approximation > pf2.steps_good_approximation):
                     pf2.initialization()
                     lines[1] = None
@@ -532,7 +532,7 @@ if __name__ == '__main__':
             Interpolation_points  = 20  #25  # Interpolation points used for the spline
             order                 = 2        # Spline order
             N_c                   = 3       # Number of spline control points
-            verbose = False
+            verbose = True
 
             sleep(0.1)
             filter_usage_BOSH(N_Particles=N_particles,
