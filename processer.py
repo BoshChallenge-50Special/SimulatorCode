@@ -136,7 +136,7 @@ class Processer(Consumer):
                             print_msg = 'Car is approaching an intersection'
                         elif state_steer == 'OnCrosswalk':
                             print_msg = 'Car is over a CROSSWALK'
-                        print(print_msg + " and it is going " + state_velocity)  # Repeated here becayuse turn take the full control
+                        print(print_msg + " and it is going " + state_velocity + ".")  # Repeated here becayuse turn take the full control
                 
                     turning = True
                     #self.steering = self.turn('right')
@@ -193,7 +193,7 @@ class Processer(Consumer):
                         print_msg = 'Car is approaching an intersection'
                     elif state_steer == 'OnCrosswalk':
                         print_msg = 'Car is over a CROSSWALK'
-                    print(print_msg + " and it is going " + state_velocity) 
+                    print(print_msg + " and it is going " + state_velocity + ".") 
                 
                 old_state_steer = state_steer
                 old_state_velocity = state_velocity
