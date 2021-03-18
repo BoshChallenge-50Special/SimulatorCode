@@ -136,6 +136,8 @@ class ImageProcessing(object):
         if(img==None):
             img  = self.acquire_frame(False)
 
+        #image = np.copy(img) # For printing purposes (not used)
+
         img  = self.crop_image(img, self.crop_points[0], self.crop_points[1], self.crop_points[2], self.crop_points[3], False)
 
         if(len(self.pts)!=0):

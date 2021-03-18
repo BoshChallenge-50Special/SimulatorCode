@@ -13,7 +13,7 @@ class Consumer(object):
     def subscribe(self, publisher_name, variable_name):
         #rospy.Subscriber("HorizontalLine", String, self.callback, variable_name)
         rospy.Subscriber(publisher_name, String, self.callback, variable_name)
-        print("subscribe")
+        #print("subscribe")
 
     #def HorizontalCheck(self, data):
     #if(data.data != self.HorizontalState):

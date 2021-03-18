@@ -49,7 +49,11 @@ from image_processing import ImageProcessing
 from particle import Particle
 from utils import Utils
 
-from SimulatorCode.templates import Producer
+from SimulatorCode.templates import Producer#, Consumer
+
+#import rospy
+#from std_msgs.msg import String
+#import json
 
 class ParticleFilter(object):
 
@@ -375,7 +379,7 @@ class ParticleFilter(object):
     return approximationPF1, approximationPF2, N_STEP
     """
 
-def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None, order=1, N_points=2, Images_print=True, blur=7, threshold_reset=7, pts=[], data_queue=None, stop_function=None, producer=None):
+def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None, order=1, N_points=2, Images_print=True, blur=7, threshold_reset=7, pts=[], data_queue=None, stop_function=None, producer=None): #, consumer = None):
     # Function used for creating and running the particle filter
     print("Starting PARTICLE FILTER")
     utils = Utils()
@@ -499,7 +503,16 @@ def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None
 
             # Print total image
             res_1 = utils.draw_particles(image, [], "Resampling", best_particles, offset=[0]*len(pf1.particles)+[int(image.shape[1]/2 )]*len(pf2.particles), offsetApproximation=offset_Approximation)
-            res_2 = utils.draw_particles(image_color, pf1.particles + pf2.particles, "Resampling_PDF", best_particles, offset=[0]*len(pf1.particles)+[int(image.shape[1]/2 )]*len(pf2.particles), offsetApproximation=offset_Approximation)
+            #res_2 = utils.draw_particles(image_color, pf1.particles + pf2.particles, "Resampling_PDF", best_particles, offset=[0]*len(pf1.particles)+[int(image.shape[1]/2 )]*len(pf2.particles), offsetApproximation=offset_Approximation)
+            #res_1 = utils.draw_particles(image, [], "Result", lines, start_coo=[[0, 300], [320, 300]])
+            #res_1 = utils.draw_particles(image, [], "Result", best_particles, start_coo=[[0, 300], [320, 300]])
+            
+            # Get the data from the String obtained by the consumer of the Horizontal Line
+            #horizontal_lines = json.loads(consumer.data["HorizontalLinesShow"])
+            #for horizontal_line in horizontal_lines:
+            #    for x1,y1,x2,y2 in horizontal_line:
+            #        cv.line(res_1,(x1,y1),(x2,y2),(255,0,0),3)
+
 
             if(save_images ):
                 cv.imwrite('../outputs/particles_output/img_' + str(step) + '.png', res_2)
@@ -511,6 +524,10 @@ def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None
 if __name__ == '__main__':
     producer=Producer("ParticleFilterLines")
     producer.set_publisher("StreetLane")
+
+    #consumer = Consumer()
+    #consumer.subscribe("HorizontalLinesShow", "HorizontalLinesShow")
+
 
     test = False
     if(test):
@@ -532,7 +549,7 @@ if __name__ == '__main__':
             Interpolation_points  = 20  #25  # Interpolation points used for the spline
             order                 = 2        # Spline order
             N_c                   = 3       # Number of spline control points
-            verbose = False
+            verbose = True
 
             sleep(0.1)
             filter_usage_BOSH(N_Particles=N_particles,
@@ -543,7 +560,8 @@ if __name__ == '__main__':
     							threshold_reset=5,
     							get_image_function=cam.getImage,
                                 stop_function=rospy.is_shutdown,
-                                producer=producer)
+                                producer=producer#,consumer=consumer
+                                )
         except Exception as e:
             print("Error in ParticleFilter")
             print(e)

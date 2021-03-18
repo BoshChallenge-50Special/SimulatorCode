@@ -29,6 +29,7 @@ from time import sleep
 import numpy as np
 import math
 
+#import json
 
 class HorizontalLine(Producer):
 
@@ -41,6 +42,8 @@ class HorizontalLine(Producer):
 		self.set_publisher("HorizontalLine")
 		self.status = "Safe"
 		self.count = 0
+
+		#self.pub_lines = rospy.Publisher("HorizontalLinesShow", String, queue_size=10)
 
 	def check_horizontal (self, image):
 		#Loading test images
@@ -64,7 +67,7 @@ class HorizontalLine(Producer):
 
 		# Defining Region of Interest
 		imshape = image.shape
-		vertices = np.array([[(310,240),(imshape[1]-310, 240), (imshape[1]-200, imshape[0]-30), (200,imshape[0]-30)]], dtype=np.int32)
+		vertices = np.array([[(310,240),(imshape[1]-310, 240), (imshape[1]-200, imshape[0]-66), (200,imshape[0]-66)]], dtype=np.int32)
 		cv.fillPoly(mask, vertices, ignore_mask_color)
 		masked_edges = cv.bitwise_and(edges, mask)
 
@@ -86,6 +89,7 @@ class HorizontalLine(Producer):
 		horizontal_vec = []
 		if str(lines) != "None":
 			# Iterate over the output "lines" and draw lines on a blank image
+			
 			for line in lines:
 				for x1,y1,x2,y2 in line:
 
@@ -97,8 +101,8 @@ class HorizontalLine(Producer):
 
 						horizontal = horizontal + 1
 						cv.line(line_image,(x1,y1),(x2,y2),(255,0,0),10)
-
-			if(horizontal == 2 and horizontal == len(lines)):
+			
+			if(horizontal == 2 and horizontal == len(lines[0])):
 				if(self.status == "Stop"):
 					self.count += 1
 				else:
@@ -108,9 +112,8 @@ class HorizontalLine(Producer):
 				# Draw the horizontal lines on the original image
 				image = cv.addWeighted(image, 0.8, line_image, 1, 0)
 
-			elif(horizontal >= 2 and horizontal <= len(lines)):
+			elif(horizontal >= 2 and horizontal <= len(lines[0])):
 
-				count = 0
 				val_thres = 5
 				for i in range(0 , len(horizontal_vec)):
 					b = False
@@ -154,10 +157,11 @@ class HorizontalLine(Producer):
 		cv.imshow("HorizontalLine", image)
 		cv.waitKey(1)
 
+		#self.pub_lines.publish(json.dumps(horizontal_vec)) # Not working, to set line.tolist() when added to horizontal_vec
 		# Publish the status only after 3 consequent equal status
 		if(self.count == 3): 
 			self.pub.publish(self.status)
-			print(self.status)
+			#print(self.status)
 
 
 if __name__ == '__main__':

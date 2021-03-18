@@ -53,7 +53,7 @@ class Processer(Consumer):
         self.steering = 0
         self.state = "Straight"
 
-        self.directions=[ "left", "right", "left", "left", "straight", "left", "straight", "left"]
+        self.directions=["straight", "left", "right", "left", "straight"]
 
 
     def start(self):
@@ -81,8 +81,8 @@ class Processer(Consumer):
         current_speed = 0.22   # For incrementing or decrementing to reach a target
 
         print_msg = ""
-        # Wait 3 seconds for the processes to actually start
-        sleep(3)
+        # Wait 20 seconds for the processes to actually start
+        sleep(10)
 
         while not rospy.is_shutdown():
             if(state_machine):
@@ -128,10 +128,13 @@ class Processer(Consumer):
                             print_msg = 'Car is over a CROSSWALK'
                     print(print_msg + "  and it is going  " + state_velocity)  # Repeated here becayuse turn take the full control
                 
-                    turning = True
                     #self.steering = self.turn('right')
-                    self.turn()
-                    turning = False
+                    if(len(self.directions)):
+                        self.turn()
+                    else:
+                        self.speed = 0 
+                        data_state_machine["moving"] = "False"
+                        print("End of Simulation Round")
 
                 data_state_machine["state_steer"] = state_steer
                 state_velocity=stateMachineVelocity.runOneStep(data_state_machine)
@@ -199,7 +202,7 @@ class Processer(Consumer):
         
         # Make sure to STOP at STOP	
         self.car.drive(0, 0)
-        sleep(2)
+        sleep(5)
         self.car.drive(0.2, 0) # Slow down to be more sure about the time to be waited
         
         # Act based on the decision you want
@@ -208,15 +211,15 @@ class Processer(Consumer):
             #curve_radius = 66.6 # curve_radius = 66.5 # most common radius in the circuit
             #ipotenusa    = math.sqrt(2 * (curve_radius ** 2) )
             #steer        = 90 - math.acos(curve_radius/ipotenusa)
-            steer = 25
-            manuevre = 12.5
+            steer = 22.5
+            manuevre = 11.5
         elif(self.directions[0] == 'left'):
-            sleep(14)
+            sleep(13)
             #curve_radius = 103.6 
             #ipotenusa    = math.sqrt(2 * (curve_radius ** 2) )
             #steer        = - ( 90 - math.acos(curve_radius/ipotenusa) )
-            steer = -20
-            manuevre = 17.5
+            steer = -17.5
+            manuevre = 16
         else:
             steer = 0
             manuevre = 20
@@ -227,7 +230,7 @@ class Processer(Consumer):
         sleep(manuevre)
         # Update direction
         dir = self.directions.pop(0)
-        self.directions.append(dir)
+        #self.directions.append(dir) # Removed to end the simulation when the directions are finished
         self.state = "Straight"
 
 
