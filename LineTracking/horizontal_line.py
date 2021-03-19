@@ -102,7 +102,7 @@ class HorizontalLine(Producer):
 						horizontal = horizontal + 1
 						cv.line(line_image,(x1,y1),(x2,y2),(255,0,0),10)
 			
-			if(horizontal == 2 and horizontal == len(lines[0])):
+			if(horizontal == 2 and horizontal == len(lines)):
 				if(self.status == "Stop"):
 					self.count += 1
 				else:
@@ -112,7 +112,7 @@ class HorizontalLine(Producer):
 				# Draw the horizontal lines on the original image
 				image = cv.addWeighted(image, 0.8, line_image, 1, 0)
 
-			elif(horizontal >= 2 and horizontal <= len(lines[0])):
+			elif(horizontal >= 2 and horizontal <= len(lines)):
 
 				val_thres = 5
 				for i in range(0 , len(horizontal_vec)):

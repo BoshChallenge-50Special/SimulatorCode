@@ -55,9 +55,9 @@ class StateMachineVelocity:
 
     #Declaration of the transition from the StateB to the other possible states
     def Slow_transitions(self, data):
-        #if self.conditionOr("==", data, ["stop_signal"], [True]):
-        #    newState = "OnSteady"
-        if self.conditionAnd("==", data, ["horizontal_line", "state_steer"], ["Safe", "OnLane"]):
+        if self.conditionOr("==", data, ["moving"], [False]):
+            newState = "OnSteady"
+        elif self.conditionAnd("==", data, ["horizontal_line", "state_steer"], ["Safe", "OnLane"]):
             newState = "Fast"
         elif self.conditionAnd("==", data, ["parking_signal"], [True]):
             newState = "Parking"
@@ -68,7 +68,9 @@ class StateMachineVelocity:
 
     #Declaration of the transition from the StateC to the other possible states
     def Fast_transitions(self, data):
-        if self.conditionOr("==", data, ["horizontal_line", "horizontal_line", "state_steer"], ["Stop", "Pedestrians", "OnCrosswalk"]):
+        if self.conditionOr("==", data, ["moving"], [False]):
+            newState = "OnSteady"
+        elif self.conditionOr("==", data, ["horizontal_line", "horizontal_line", "state_steer"], ["Stop", "Pedestrians", "OnCrosswalk"]):
             newState = "Slow"
         elif self.conditionAnd("==", data, ["parking_signal"], [True]):
             newState = "Parking"
@@ -88,7 +90,6 @@ class StateMachineVelocity:
         return self.m.runOneStep(data)
 
     def remove_parking(self):
-        print("remove_parking")
         self.go_back=True
 #Code for testing the state machine
 #
