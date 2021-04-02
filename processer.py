@@ -53,7 +53,7 @@ class Processer(Consumer):
         self.steering = 0
         self.state = "Straight"
 
-        self.directions=["STRAIGHT", "LEFT", "RIGHT", "LEFT", "STRAIGHT"]
+        self.directions=[ "RIGHT", "STRAIGHT", "LEFT", "LEFT", "STRAIGHT"]
         self.check_stop=[True, True, True, True, False]
         self.index_turning = 0
 
@@ -64,6 +64,7 @@ class Processer(Consumer):
         os.system("rosrun startup_package ParticleFilter.py &")
         os.system("rosrun startup_package PidControl.py &")
         os.system("rosrun startup_package traffic.py &")
+        os.system("rosrun startup_package kalman.py &")
 
         self.subscribe("HorizontalLine", "horizontal_line")
         self.subscribe("StreetLane", "street_lines")
