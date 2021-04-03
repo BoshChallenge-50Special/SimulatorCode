@@ -53,7 +53,9 @@ class Processer(Consumer):
         self.steering = 0
         self.state = "Straight"
 
-        self.directions=["straight", "left", "right", "left", "straight"]
+        self.directions=[ "RIGHT", "STRAIGHT", "LEFT", "LEFT", "STRAIGHT"]
+        self.check_stop=[True, True, True, True, False]
+        self.index_turning = 0
 
 
     def start(self):
@@ -62,6 +64,7 @@ class Processer(Consumer):
         os.system("rosrun startup_package ParticleFilter.py &")
         os.system("rosrun startup_package PidControl.py &")
         os.system("rosrun startup_package traffic.py &")
+        os.system("rosrun startup_package kalman.py &")
 
         self.subscribe("HorizontalLine", "horizontal_line")
         self.subscribe("StreetLane", "street_lines")
@@ -69,8 +72,8 @@ class Processer(Consumer):
         self.subscribe("Sign", "sign")
 
         ########  TO REMOVE ##################
-        pub = rospy.Publisher("REMAIN_LEFT", String, queue_size=10)
-        pub.publish("Normal")
+        self.pub_lane = rospy.Publisher("REMAIN_LEFT", String, queue_size=10)
+        self.pub_lane.publish("Normal")
 
         ########  TO REMOVE ##################
 
@@ -88,8 +91,8 @@ class Processer(Consumer):
         current_speed = 0.22   # For incrementing or decrementing to reach a target
 
         print_msg = ""
-        # Wait 20 seconds for the processes to actually start
-        sleep(10)
+        # Wait 25 seconds for the processes to actually start
+        sleep(25)
 
         data_state_machine={}
         while not rospy.is_shutdown():
@@ -109,7 +112,6 @@ class Processer(Consumer):
                         data_state_machine["stop_signal"] = "STOP" in signs
                         data_state_machine["parking_signal"] = "PARKING" in signs
                         data_state_machine["pedestrian_signal"] = "CROSSWALK SIGN" in signs
-                        print(signs)
                         if "STOP" in self.data["sign"]:
                             print(signs[0] + ' SIGN detected, checking horizontal line presence.')
                         elif "CROSSWALK SIGN" in self.data["sign"] and  state_steer != 'OnCrosswalk' :
@@ -117,7 +119,7 @@ class Processer(Consumer):
                         #elif self.data["sign"] == "PARKING":
                         #    print( self.data["sign"] + 'SIGN detected, slowing down.')
                         elif "PRIORITY" in self.data["sign"] :
-                            print( signs[0] + 'SIGN detected, going fast.')
+                            print( signs[0] + 'SIGN detected, not stopping')# and going fast.')
                 else:
                     data_state_machine["stop_signal"] = False
                     data_state_machine["parking_signal"] = False
@@ -135,7 +137,6 @@ class Processer(Consumer):
                         velocity_steer = json.loads(self.data["velocity_steer"])
                         self.steering = -velocity_steer["steer"]
                 elif(state_steer=="OnCrossroad"):
-                    pub.publish("LEFT")
                     #if state_velocity == 'OnSteady':
                     #    print_msg = 'The car is still.'
                     #    print(print_msg)
@@ -157,8 +158,7 @@ class Processer(Consumer):
                     if(len(self.directions)):
                         self.turn()
                     else:
-                        self.speed = 0 
-                        data_state_machine["moving"] = "False"
+                        data_state_machine["moving"] = False
                         print("End of Simulation Round")
                 #pritn(state_steer +"     " +state_velocity)
 
@@ -226,38 +226,56 @@ class Processer(Consumer):
 
         # Define that you want to turn
         self.state = "Turn"
-        print("Going " + self.directions[0])
+        if(self.check_stop[0]):
+            print("Car is STOPPING AT INTERSECTION")
 
-        # Make sure to STOP at STOP
-        self.car.drive(0, 0)
-        sleep(5)
+            # Make sure to STOP at STOP
+            self.car.drive(0, 0)
+            sleep(5)
+        
+        print("Car is GOING " + self.directions[0] + " at the intersection")
         self.car.drive(0.2, 0) # Slow down to be more sure about the time to be waited
 
         # Act based on the decision you want
-        if(self.directions[0] == 'right'):
+        if(self.directions[0] == 'RIGHT'):
             sleep(9)
             #curve_radius = 66.6 # curve_radius = 66.5 # most common radius in the circuit
             #ipotenusa    = math.sqrt(2 * (curve_radius ** 2) )
             #steer        = 90 - math.acos(curve_radius/ipotenusa)
             steer = 22.5
+            vel = 0.2
             manuevre = 11.5
-        elif(self.directions[0] == 'left'):
+        elif(self.directions[0] == 'LEFT'):
             sleep(13)
             #curve_radius = 103.6 
             #ipotenusa    = math.sqrt(2 * (curve_radius ** 2) )
             #steer        = - ( 90 - math.acos(curve_radius/ipotenusa) )
             steer = -17.5
+            vel = 0.2
             manuevre = 16
         else:
             steer = 0
-            manuevre = 20
+            vel = 0.5
+            manuevre = 10
 
         # Steer the car accordingly
-        self.car.drive(0.2, steer ) # Set a known velocity for the manuevre
+        self.car.drive(vel, steer ) # Set a known velocity for the manuevre
+
+        # To improve the lane following
+        self.pub_lane.publish("LEFT")
+        self.index_turning += 1 
+
+        if( self.index_turning == 5 ):
+            self.pub_lane.publish("LEFT")
+
         # Wait for the manuevre to end
         sleep(manuevre)
+
+        print("Car has GONE THROUGH THE INTERSECTION")
+        
         # Update direction
         dir = self.directions.pop(0)
+        stop = self.check_stop.pop(0)
         #self.directions.append(dir) # Removed to end the simulation when the directions are finished
         self.state = "Straight"
 

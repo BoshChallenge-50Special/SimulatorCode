@@ -502,7 +502,7 @@ def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None
             #utils.draw_particles(image_color2, [], "Reampling_PDF2", [pf2.approximation])
 
             # Print total image
-            res_1 = utils.draw_particles(image, [], "Resampling", best_particles, offset=[0]*len(pf1.particles)+[int(image.shape[1]/2 )]*len(pf2.particles), offsetApproximation=offset_Approximation)
+            res_1 = utils.draw_particles(image, [], "Lane Magic", best_particles, offset=[0]*len(pf1.particles)+[int(image.shape[1]/2 )]*len(pf2.particles), offsetApproximation=offset_Approximation)
             #res_2 = utils.draw_particles(image_color, pf1.particles + pf2.particles, "Resampling_PDF", best_particles, offset=[0]*len(pf1.particles)+[int(image.shape[1]/2 )]*len(pf2.particles), offsetApproximation=offset_Approximation)
             #res_1 = utils.draw_particles(image, [], "Result", lines, start_coo=[[0, 300], [320, 300]])
             #res_1 = utils.draw_particles(image, [], "Result", best_particles, start_coo=[[0, 300], [320, 300]])
