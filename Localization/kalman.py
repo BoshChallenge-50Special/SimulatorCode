@@ -26,7 +26,6 @@ from nav_msgs.msg import Odometry
 
 import math
 
-import matplotlib.pyplot as plt
 import numpy as np
 from scipy.spatial.transform import Rotation as Rot
 
@@ -35,7 +34,7 @@ from scipy.spatial.transform import Rotation as Rot
 import random
 
 class Kalman:
-    
+
     def __init__(self, gps, bno, car):
         print("Initialising Kalman")
         # Define name of the Node
@@ -54,7 +53,7 @@ class Kalman:
 
         self.gps = gps
         self.gps_measure = False
-        self.gps_state = 0 
+        self.gps_state = 0
 
         self.kalman_pub = rospy.Publisher('Kalman', Vector3, queue_size=20)
 
@@ -192,7 +191,7 @@ class Kalman:
 
         # next, we'll publish the pose message over ROS
         position = Vector3(self.X_t[0], self.X_t[1], self.X_t[2])
-
+        
         # publish the message
         self.kalman_pub.publish(position)
 
@@ -216,10 +215,10 @@ class Kalman:
 
         self.Z = np.append(self.Z, np.array([x_vel, y_vel, yaw]))
         self.R = np.append(self.R, np.array([1,1,1]))
-    
+
         self.H = np.column_stack([self.H, np.array([0,0,0,1,0,0]), np.array([0,0,0,0,1,0]), np.array([0,0,0,0,0,1])])
         self.J_H = np.column_stack([self.J_H, np.array([0,0,0,1,0,0]), np.array([0,0,0,0,1,0]), np.array([0,0,0,0,0,1])])
-    
+
         self.control_measure = True
 
 
@@ -264,7 +263,7 @@ class Kalman:
 
             self.H = np.column_stack([self.H, np.array([1,0,0,0,0,0]), np.array([0,1,0,0,0,0]), np.array([0,0,1,0,0,0])])
             self.J_H = np.column_stack([self.J_H, np.array([1,0,0,0,0,0]), np.array([0,1,0,0,0,0]), np.array([0,0,1,0,0,0])])
-            
+
 
 if __name__ == '__main__':
 
@@ -278,9 +277,9 @@ if __name__ == '__main__':
         car = Controller()
         print("Controller loaded")
 
-        
+
         kalman = Kalman(gps, bno, car)
-        
+
         rate = rospy.Rate(10) # Hz
         start = rospy.get_time()
         end = start
@@ -309,6 +308,6 @@ if __name__ == '__main__':
             # Sleep before next iteration
             rate.sleep()
 
-            
+
     except Exception as e:
         print(e)

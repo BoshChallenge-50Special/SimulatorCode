@@ -10,19 +10,18 @@ class Consumer(object):
         #self.__vehicle = 'this is vehicle'
         self.data={}
 
-    def subscribe(self, publisher_name, variable_name):
-        #rospy.Subscriber("HorizontalLine", String, self.callback, variable_name)
-        rospy.Subscriber(publisher_name, String, self.callback, variable_name)
-        #print("subscribe")
+    def subscribe(self, publisher_name, variable_name, variable_type=None):
+        if(variable_type==None):
+            variable_type=String
 
-    #def HorizontalCheck(self, data):
-    #if(data.data != self.HorizontalState):
-    #		self.HorizontalState = data.data
-    #		rospy.loginfo('Horizontal: %s', data.data)
+        rospy.Subscriber(publisher_name, variable_type, self.callback, [variable_name, variable_type])
 
     def callback(self, data, args):
         #print("callback "+str(data)+"  "+ str(args))
-        self.data[args] = data.data
+        if(args[1]==String):
+            self.data[args[0]] = data.data
+        else:
+            self.data[args[0]] = data
 
 class Producer(object):
     def __init__(self, node_name):

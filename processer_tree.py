@@ -8,6 +8,7 @@ be able to communicate with the Gazebo simulator
 # Necessari per ROS
 import rospy
 from std_msgs.msg import String # Ne esistono di molti altri tipi di messaggi che si possono usare
+from geometry_msgs.msg import Vector3
 import json
 import sys
 sys.settrace
@@ -37,7 +38,6 @@ from SimulatorCode.templates import Consumer
 #from SimulatorCode.StateMachine.stateMachineSteer import StateMachineSteer
 #from SimulatorCode.StateMachine.stateMachineVelocity import StateMachineVelocity
 
-
 class Processer(Consumer):
 
     def __init__(self):#, cam, car, sem, gps, bno):
@@ -62,6 +62,10 @@ class Processer(Consumer):
 
     def create_root(self):
         def drive(self):
+            #Evaluating trajectory with
+            if(len(self.blackboard.lane)>0):
+                actual_trajectory= get_current_trajectory_point(self.blackboard.lane)
+
             self.car.drive(self.blackboard.speed, self.blackboard.steering)
             return py_trees.common.Status.SUCCESS
 
@@ -70,10 +74,7 @@ class Processer(Consumer):
             return py_trees.common.Status.RUNNING
 
         def gather_data(self):
-            #blackboard = py_trees.blackboard#.Client(name="Blackboard")
-            #print(self.blackboard)
-            #print(self.blackboard)
-            #print(self.blackboard.dude)
+
             if("velocity_steer" in self.data):
                 velocity_steer = json.loads(self.data["velocity_steer"])
                 self.blackboard.steering = -velocity_steer["steer"]
@@ -84,7 +85,7 @@ class Processer(Consumer):
 
             if("sign" in self.data):
                  signs = json.loads(self.data["sign"])
-                 print(signs)
+
                  self.blackboard.signal.stop = "STOP" in signs
                  self.blackboard.signal.parking = "PARKING" in signs
                  self.blackboard.signal.priority = "PRIORITY" in signs
@@ -97,6 +98,17 @@ class Processer(Consumer):
 
             if ("horizontal_line" in self.data):
                  self.blackboard.signal.horizontal.type = self.data["horizontal_line"] #Safe,Stop,Pedestrians
+
+            if("position" in self.data):
+                self.blackboard.position.x = self.data["position"].x
+                self.blackboard.position.y = self.data["position"].y
+                self.blackboard.position.z = self.data["position"].z
+
+            if("street_lines" in self.data):
+                self.blackboard.lane = json.loads(self.data["street_lines"])
+            else:
+                self.blackboard.lane = []
+            #print(self.blackboard)
 
             return py_trees.common.Status.SUCCESS
 
@@ -120,6 +132,10 @@ class Processer(Consumer):
         gather_data_behaviour.blackboard.register_key(key="/signal/roundabout", access=py_trees.common.Access.WRITE)
         gather_data_behaviour.blackboard.register_key(key="/signal/no_entry", access=py_trees.common.Access.WRITE)
         gather_data_behaviour.blackboard.register_key(key="/signal/horizontal/type", access=py_trees.common.Access.WRITE)
+        gather_data_behaviour.blackboard.register_key(key="/position/x", access=py_trees.common.Access.WRITE)
+        gather_data_behaviour.blackboard.register_key(key="/position/y", access=py_trees.common.Access.WRITE)
+        gather_data_behaviour.blackboard.register_key(key="/position/z", access=py_trees.common.Access.WRITE)
+        gather_data_behaviour.blackboard.register_key(key="lane", access=py_trees.common.Access.WRITE)
 
         crosswalk_sequence = py_trees.composites.Sequence("Sequence - Crosswalk")
         check_crosswalk_sign = py_trees.behaviours.CheckBlackboardVariableValue(
@@ -151,6 +167,7 @@ class Processer(Consumer):
         drive_behaviour.blackboard = py_trees.blackboard.Client(name="Client drive")
         drive_behaviour.blackboard.register_key(key="steering", access=py_trees.common.Access.READ)
         drive_behaviour.blackboard.register_key(key="speed", access=py_trees.common.Access.READ)
+        drive_behaviour.blackboard.register_key(key="lane", access=py_trees.common.Access.READ)
         drive_behaviour.car=self.car
         #self.root.add_child(drive_behaviour)
         low_level_selector = py_trees.composites.Selector("Selector - LowLevelStreet")
@@ -174,11 +191,13 @@ class Processer(Consumer):
         os.system("rosrun startup_package ParticleFilter.py &")
         os.system("rosrun startup_package PidControl.py &")
         os.system("rosrun startup_package traffic.py &")
+        os.system("rosrun startup_package kalman.py &")
 
         self.subscribe("HorizontalLine", "horizontal_line")
         self.subscribe("StreetLane", "street_lines")
         self.subscribe("PidControlValues", "velocity_steer")
         self.subscribe("Sign", "sign")
+        self.subscribe("Kalman", "position", Vector3)
 
         ########  TO REMOVE ##################
         #pub = rospy.Publisher("REMAIN_LEFT", String, queue_size=10)
@@ -369,6 +388,26 @@ class Processer(Consumer):
     #     #self.directions.append(dir) # Removed to end the simulation when the directions are finished
     #     self.state = "Straight"
 
+def get_current_trajectory_point(lines):
+	distance_from_base = 0.6       #it's a percentage
+	size = 640 ###### TODO --> PUT IT IN A CONFIG FILE
+	dist = []
+
+	if(lines[0] != None):
+		dist.append([lines[0][i][0] for i in range(0, len(lines[0]))])
+	if(lines[1] != None):
+		dist.append([lines[1][i][0]- size/2 for i in range(0, len(lines[1]))])
+
+	if(len(dist)==0):
+		return None
+	elif(len(dist)==1):
+		index = int(distance_from_base * len(dist[0]))
+		return dist[0][index]
+	else:
+		too_near=False
+		dist_avg = [(dist[0][i] + dist[1][i])/2 for i in range(0, len(dist[0])) ]
+		index = int(distance_from_base * len(dist[0]))
+		return dist_avg[index]
 
 if __name__ == '__main__':
     try:
