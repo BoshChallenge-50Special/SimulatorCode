@@ -34,13 +34,8 @@ from scipy.spatial.transform import Rotation as Rot
 import random
 
 class Kalman:
-<<<<<<< HEAD
     
     def __init__(self, gps, bno):
-=======
-
-    def __init__(self, gps, bno, car):
->>>>>>> f66a78e12cb7ee139be88a8033ac91d25aa59ab3
         print("Initialising Kalman")
         # Define name of the Node
         rospy.init_node("Kalman", anonymous=True)
