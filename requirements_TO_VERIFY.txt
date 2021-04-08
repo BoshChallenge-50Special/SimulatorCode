@@ -2,3 +2,8 @@ opencv-python == 3.2.0.8
 numpy
 matplotlib
 scipy
+
+
+
+####FOR PYTHON 3(pip3)
+######numpy, scipy

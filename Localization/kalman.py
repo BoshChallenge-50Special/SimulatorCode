@@ -26,7 +26,6 @@ from nav_msgs.msg import Odometry
 
 import math
 
-import matplotlib.pyplot as plt
 import numpy as np
 from scipy.spatial.transform import Rotation as Rot
 
@@ -35,8 +34,13 @@ from scipy.spatial.transform import Rotation as Rot
 import random
 
 class Kalman:
+<<<<<<< HEAD
     
     def __init__(self, gps, bno):
+=======
+
+    def __init__(self, gps, bno, car):
+>>>>>>> f66a78e12cb7ee139be88a8033ac91d25aa59ab3
         print("Initialising Kalman")
         # Define name of the Node
         rospy.init_node("Kalman", anonymous=True)
@@ -55,7 +59,7 @@ class Kalman:
 
         self.gps = gps
         self.gps_measure = False
-        self.gps_state = 0 
+        self.gps_state = 0
 
         self.kalman_pub = rospy.Publisher('Kalman', Vector3, queue_size=20)
 
@@ -195,7 +199,7 @@ class Kalman:
 
         # next, we'll publish the pose message over ROS
         position = Vector3(self.X_t[0], self.X_t[1], self.X_t[2])
-
+        
         # publish the message
         self.kalman_pub.publish(position)
 
@@ -303,6 +307,6 @@ if __name__ == '__main__':
             # Sleep before next iteration
             rate.sleep()
 
-            
+
     except Exception as e:
         print(e)
