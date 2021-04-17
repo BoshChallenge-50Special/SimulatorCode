@@ -45,7 +45,6 @@ class Kalman:
 
         # Create subscriber node
         rospy.Subscriber("/rcCar/Command", Command, self.Control)
-        self.control_measure = False
         self.control_state = [0.0,0.0]
 
         self.bno = bno
@@ -90,7 +89,7 @@ class Kalman:
         # State-Transition Matrix
         A = np.array([  [1.0, 0.0, 0.0, dt*math.cos(self.X_t[2]), 0.0],
                         [0.0, 1.0, 0.0, -dt*math.sin(self.X_t[2]), 0.0],
-                        [0.0, 0.0, 1.0, 0.0,  dt],
+                        [0.0, 0.0, 1.0, 0.0, dt],
                         [0.0, 0.0, 0.0, 1.0, 0.0],
                         [0.0, 0.0, 0.0, 0.0, 1.0]])
 
@@ -107,7 +106,7 @@ class Kalman:
         # Jacobian of Transition Matrix
         J_A = np.array([[1.0, 0.0, 0.0, dt*(-math.sin(self.X_t[2])), 0.0],
                         [0.0, 1.0, 0.0, -dt*math.cos(self.X_t[2]), 0.0],
-                        [0.0, 0.0, 1.0, 0.0,  dt],
+                        [0.0, 0.0, 1.0, 0.0, dt],
                         [0.0, 0.0, 0.0, 1.0, 0.0],
                         [0.0, 0.0, 0.0, 0.0, 1.0]])
 
@@ -118,9 +117,18 @@ class Kalman:
                         [0.0, 0.0, 0.0, sigma_noise/10, 0.0],
                         [0.0, 0.0, 0.0, 0.0, sigma_noise/100]])
 
+        # Check control difference
+        u = np.array([  0.0,
+                        0.0,
+                        0.0,
+                        self.control_state[0] - self.X_t[3],
+                        self.control_state[1] - self.X_t[4]])
+
+        steps = 1
+        B = np.diag(np.array([0,0,0,1/steps,1/steps]))
 
         # Prediction State
-        self.X_Pred = A @ self.X_t + W
+        self.X_Pred = A @ self.X_t + B @ u+ W
 
         #print("Predict" + str(self.X_Pred) )
 
@@ -143,17 +151,11 @@ class Kalman:
 
         #print("Update")
         # Check if there are more updates
-        if(self.control_measure or self.bno_measure or self.gps_measure):
+        if(self.bno_measure or self.gps_measure):
             # Reset Measurements check
-            self.control_measure = self.bno_measure = self.gps_measure = False
+            self.bno_measure = self.gps_measure = False
 
-            # Always take into account the control in the measurements
-            self.Z = np.append(self.Z, np.array([self.control_state[0], self.control_state[1]]))
-            self.R = np.append(self.R, np.array([0.1,0.1]))
-        
-            self.H = np.column_stack([self.H, np.array([0,0,0,1,0]), np.array([0,0,0,0,1])])
-            self.J_H = np.column_stack([self.J_H, np.array([0,0,0,1,0]), np.array([0,0,0,0,1])])
-
+            
             # Transpose matrices after their creation
             self.H = self.H.T
             self.J_H = self.J_H.T
@@ -215,7 +217,6 @@ class Kalman:
         v = speed 
         omega = angle / 180 * math.pi
     
-        self.control_measure = True
         self.control_state = [float(v), float(omega)]
         
         #print(str(self.control_state))
@@ -233,7 +234,7 @@ class Kalman:
             self.bno_measure = True
 
             self.Z = np.append(self.Z, np.array([yaw]))
-            self.R = np.append(self.R, np.array([0.001]))
+            self.R = np.append(self.R, np.array([0.0001]))
 
             self.H = np.column_stack([self.H, np.array([0,0,1,0,0])])
             self.J_H = np.column_stack([self.J_H, np.array([0,0,1,0,0])])
@@ -257,7 +258,7 @@ class Kalman:
             #print("GPS - " + str(x) + " - " + str(y) + " - " + str(yaw) )
 
             self.Z = np.append(self.Z, np.array([x,y,yaw]))
-            self.R = np.append(self.R, np.array([0.15,0.15,0.1]))
+            self.R = np.append(self.R, np.array([0.15,0.15,0.01]))
 
             self.H = np.column_stack([self.H, np.array([1,0,0,0,0]), np.array([0,1,0,0,0]), np.array([0,0,1,0,0])])
             self.J_H = np.column_stack([self.J_H, np.array([1,0,0,0,0]), np.array([0,1,0,0,0]), np.array([0,0,1,0,0])])
