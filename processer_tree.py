@@ -35,6 +35,8 @@ import rospy
 import math
 
 from SimulatorCode.templates import Consumer
+from Control.PidControl import PidControl
+import Control.CarModel as car_model
 #from SimulatorCode.StateMachine.stateMachineSteer import StateMachineSteer
 #from SimulatorCode.StateMachine.stateMachineVelocity import StateMachineVelocity
 
@@ -54,6 +56,8 @@ class Processer(Consumer):
         self.speed = 0
         self.steering = 0
         self.state = "Straight"
+
+        self.pid_control=PidControl(verbose=True)
         #self.index_turning = 0
 
         #self.directions=["straight", "left", "right", "left", "straight"]
@@ -63,8 +67,38 @@ class Processer(Consumer):
     def create_root(self):
         def drive(self):
             #Evaluating trajectory with
-            if(len(self.blackboard.lane)>0):
-                actual_trajectory= get_current_trajectory_point(self.blackboard.lane)
+            #if(len(self.blackboard.lane)>0 and self.blackboard.exists("position.x")):
+            """"actual_trajectory= get_current_trajectory_point(self.blackboard.lane)
+                dist_camera_view_point_center = 0.2/math.sin(0.2617) #ipotenusa, 0.2 is the high of the camera on the street
+                dist_car_view_point_center =  math.cos(0.2617)*dist_camera_view_point
+
+                vertical_fov= 1.085594795*480/640
+                dist_camera_view_point_center = 0.2/math.sin(0.2617) #ipotenusa, 0.2 is the high of the camera on the street
+                dist_car_view_point_center =  math.cos(0.2617)*dist_camera_view_point
+
+
+                print(self.blackboard)
+                print("Error from Lane:" + str(actual_trajectory))
+                trajectory_point_in_world = car_model.car_to_world(self.blackboard.position.x,
+                                                         self.blackboard.position.y,
+                                                         self.blackboard.position.z,
+                                                         [distance_point_of_interest, actual_trajectory])
+                #Fixed
+                objective_point_world = car_model.car_to_world(self.blackboard.position.x,
+                                                         self.blackboard.position.y,
+                                                         self.blackboard.position.z,
+                                                         [distance_point_of_interest, 0])
+
+
+                #(x_car+cos(angolo_car)*distanza_visiva, y_car+sin(angolo_car)*distanza_visiva)
+                #trajectory.append()
+                car_position_array=[self.blackboard.position.x,self.blackboard.position.y,self.blackboard.position.z]
+            """
+                #self.pid_control.trajectory.append(trajectory_point_in_world)
+                #self.pid_control.trajectory=[trajectory_point_in_world]
+                #self.pid_control.run(car_position_array)
+            ##end DENTRO PidControl
+            ##### DENTRO PidControl
 
             self.car.drive(self.blackboard.speed, self.blackboard.steering)
             return py_trees.common.Status.SUCCESS
@@ -168,7 +202,11 @@ class Processer(Consumer):
         drive_behaviour.blackboard.register_key(key="steering", access=py_trees.common.Access.READ)
         drive_behaviour.blackboard.register_key(key="speed", access=py_trees.common.Access.READ)
         drive_behaviour.blackboard.register_key(key="lane", access=py_trees.common.Access.READ)
+        drive_behaviour.blackboard.register_key(key="/position/x", access=py_trees.common.Access.READ)
+        drive_behaviour.blackboard.register_key(key="/position/y", access=py_trees.common.Access.READ)
+        drive_behaviour.blackboard.register_key(key="/position/z", access=py_trees.common.Access.READ)
         drive_behaviour.car=self.car
+        drive_behaviour.pid_control=self.pid_control
         #self.root.add_child(drive_behaviour)
         low_level_selector = py_trees.composites.Selector("Selector - LowLevelStreet")
         low_level_selector.add_children([crosswalk_sequence, drive_behaviour])
@@ -189,13 +227,13 @@ class Processer(Consumer):
         # Far eseguire il file come se fosse eseguito da terminale
         os.system("rosrun startup_package horizontal_line.py &")
         os.system("rosrun startup_package ParticleFilter.py &")
-        os.system("rosrun startup_package PidControl.py &")
+        #os.system("rosrun startup_package PidControl.py &")
         os.system("rosrun startup_package traffic.py &")
         os.system("rosrun startup_package kalman.py &")
 
         self.subscribe("HorizontalLine", "horizontal_line")
         self.subscribe("StreetLane", "street_lines")
-        self.subscribe("PidControlValues", "velocity_steer")
+        #self.subscribe("PidControlValues", "velocity_steer")
         self.subscribe("Sign", "sign")
         self.subscribe("Kalman", "position", Vector3)
 
@@ -408,6 +446,7 @@ def get_current_trajectory_point(lines):
 		dist_avg = [(dist[0][i] + dist[1][i])/2 for i in range(0, len(dist[0])) ]
 		index = int(distance_from_base * len(dist[0]))
 		return dist_avg[index]
+
 
 if __name__ == '__main__':
     try:
