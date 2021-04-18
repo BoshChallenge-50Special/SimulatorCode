@@ -3,7 +3,7 @@
 from time import sleep
 
 import rospy
-
+from car_plugin.msg import Command
 
 import sys
 #sys.path.insert(0, '/home/{YOUR_USERNAME}/Documents/BFMC_Simulator/startup_workspace/src/startup_package/src')
@@ -12,7 +12,7 @@ sys.path.insert(0, './src/startup_package/src/')
 
 from bfmclib.gps_s import Gps
 from bfmclib.bno055_s import BNO055
-from bfmclib.controller_p import Controller
+#from bfmclib.controller_p import Controller
 
 
 
@@ -34,8 +34,8 @@ from scipy.spatial.transform import Rotation as Rot
 import random
 
 class Kalman:
-
-    def __init__(self, gps, bno, car):
+    
+    def __init__(self, gps, bno):
         print("Initialising Kalman")
         # Define name of the Node
         rospy.init_node("Kalman", anonymous=True)
@@ -43,9 +43,9 @@ class Kalman:
         now = rospy.get_time()
         # Define set of topics to subscribe to
 
-        self.car = car
-        self.control_measure = False
-        self.control_state = 0
+        # Create subscriber node
+        rospy.Subscriber("/rcCar/Command", Command, self.Control)
+        self.control_state = [0.0,0.0]
 
         self.bno = bno
         self.bno_measure = False
@@ -61,26 +61,25 @@ class Kalman:
         # Kalman states
         self.x_t = 0.0
         self.y_t = 0.0
-        self.yaw_t = 0.0 # Manually set to follow the GPS
-        self.x_dot_t = 0.0
-        self.y_dot_t = 0.0
-        self.yaw_dot_t = 0.0
+        self.yaw_t = 0.0
+        self.v_t = 0.0
+        self.omega_t = 0.0
 
         # State-Vector
         self.X_t = np.array([self.x_t,      self.y_t,      self.yaw_t,
-                        self.x_dot_t,  self.y_dot_t,  self.yaw_dot_t])
+                        self.v_t,  self.omega_t])
 
         # Filter Covariance Matrix
-        self.P_t = np.eye(6)
+        self.P_t = np.eye(5)
 
         # Initialise Measurements Vector
         self.Z = np.array([])
         # Initialise Measurements Covariance Matrix
         self.R = np.array([])
         # Initialise Measurements Matrix
-        self.H = np.zeros((6,0))
+        self.H = np.zeros((5,0))
         # Initialise Measurements Jacobian Matrix
-        self.J_H = np.zeros((6,0))
+        self.J_H = np.zeros((5,0))
 
 
 
@@ -88,12 +87,11 @@ class Kalman:
     def Predict(self, dt):
 
         # State-Transition Matrix
-        A = np.array([  [1.0, 0.0, 0.0,  dt, 0.0, 0.0],
-                        [0.0, 1.0, 0.0, 0.0,  dt, 0.0],
-                        [0.0, 0.0, 1.0, 0.0, 0.0,  dt],
-                        [0.0, 0.0, 0.0, 1.0, 0.0, 0.0],
-                        [0.0, 0.0, 0.0, 0.0, 1.0, 0.0],
-                        [0.0, 0.0, 0.0, 0.0, 0.0, 1.0]])
+        A = np.array([  [1.0, 0.0, 0.0, dt*math.cos(self.X_t[2]), 0.0],
+                        [0.0, 1.0, 0.0, -dt*math.sin(self.X_t[2]), 0.0],
+                        [0.0, 0.0, 1.0, 0.0, dt],
+                        [0.0, 0.0, 0.0, 1.0, 0.0],
+                        [0.0, 0.0, 0.0, 0.0, 1.0]])
 
         # Noise Variance
         sigma_noise = 0.001
@@ -101,30 +99,36 @@ class Kalman:
         # Noise Matrix
         W = np.array([  random.gauss(mu = 0, sigma = sigma_noise),
                         random.gauss(mu = 0, sigma = sigma_noise),
-                        random.gauss(mu = 0, sigma = sigma_noise),
                         random.gauss(mu = 0, sigma = sigma_noise)/10,
                         random.gauss(mu = 0, sigma = sigma_noise)/10,
-                        random.gauss(mu = 0, sigma = sigma_noise)/10])
+                        random.gauss(mu = 0, sigma = sigma_noise)/100])
 
         # Jacobian of Transition Matrix
-        J_A = np.array([[1.0, 0.0, 0.0,  dt, 0.0, 0.0],
-                        [0.0, 1.0, 0.0, 0.0,  dt, 0.0],
-                        [0.0, 0.0, 1.0, 0.0, 0.0,  dt],
-                        [0.0, 0.0, 0.0, 1.0, 0.0, 0.0],
-                        [0.0, 0.0, 0.0, 0.0, 1.0, 0.0],
-                        [0.0, 0.0, 0.0, 0.0, 0.0, 1.0]])
+        J_A = np.array([[1.0, 0.0, 0.0, dt*(-math.sin(self.X_t[2])), 0.0],
+                        [0.0, 1.0, 0.0, -dt*math.cos(self.X_t[2]), 0.0],
+                        [0.0, 0.0, 1.0, 0.0, dt],
+                        [0.0, 0.0, 0.0, 1.0, 0.0],
+                        [0.0, 0.0, 0.0, 0.0, 1.0]])
 
         # Prediction Covariance
-        Q = np.array([  [sigma_noise, 0.0, 0.0, 0.0, 0.0, 0.0],
-                        [0.0, sigma_noise, 0.0, 0.0, 0.0, 0.0],
-                        [0.0, 0.0, sigma_noise, 0.0, 0.0, 0.0],
-                        [0.0, 0.0, 0.0, sigma_noise/10, 0.0, 0.0],
-                        [0.0, 0.0, 0.0, 0.0, sigma_noise/10, 0.0],
-                        [0.0, 0.0, 0.0, 0.0, 0.0, sigma_noise/10]])
+        Q = np.array([  [sigma_noise, 0.0, 0.0, 0.0, 0.0],
+                        [0.0, sigma_noise, 0.0, 0.0, 0.0],
+                        [0.0, 0.0, sigma_noise/10, 0.0, 0.0],
+                        [0.0, 0.0, 0.0, sigma_noise/10, 0.0],
+                        [0.0, 0.0, 0.0, 0.0, sigma_noise/100]])
 
+        # Check control difference
+        u = np.array([  0.0,
+                        0.0,
+                        0.0,
+                        self.control_state[0] - self.X_t[3],
+                        self.control_state[1] - self.X_t[4]])
+
+        steps = 1
+        B = np.diag(np.array([0,0,0,1/steps,1/steps]))
 
         # Prediction State
-        self.X_Pred = A @ self.X_t + W
+        self.X_Pred = A @ self.X_t + B @ u+ W
 
         #print("Predict" + str(self.X_Pred) )
 
@@ -147,10 +151,11 @@ class Kalman:
 
         #print("Update")
         # Check if there are more updates
-        if(self.control_measure or self.bno_measure or self.gps_measure):
+        if(self.bno_measure or self.gps_measure):
             # Reset Measurements check
-            self.control_measure = self.bno_measure = self.gps_measure = False
+            self.bno_measure = self.gps_measure = False
 
+            
             # Transpose matrices after their creation
             self.H = self.H.T
             self.J_H = self.J_H.T
@@ -166,9 +171,9 @@ class Kalman:
             # State Update
             self.X_t = self.X_Pred + K @ Y
             # Covariance Update
-            self.P_t = (np.eye(6) - K @ self.J_H) @ self.P_Pred
+            self.P_t = (np.eye(5) - K @ self.J_H) @ self.P_Pred
             # Joseph form Covariance Update equation -> Ensure Positive Semi-Definite
-            self.P_t = (np.eye(6) - K @ self.J_H) @ self.P_Pred @ (np.eye(6) - K @ self.J_H).T + K @ self.R @ K.T
+            self.P_t = (np.eye(5) - K @ self.J_H) @ self.P_Pred @ (np.eye(5) - K @ self.J_H).T + K @ self.R @ K.T
             # Ensure P is symmetric
             self.P_t = (self.P_t + self.P_t.T) / 2
 
@@ -179,9 +184,9 @@ class Kalman:
             # Initialise Measurements Covariance Matrix
             self.R = np.array([])
             # Initialise Measurements Matrix
-            self.H = np.zeros((6,0))
+            self.H = np.zeros((5,0))
             # Initialise Measurements Jacobian Matrix
-            self.J_H = np.zeros((6,0))
+            self.J_H = np.zeros((5,0))
 
             #print("Update " + str(self.X_t))
         else:
@@ -195,31 +200,26 @@ class Kalman:
         # publish the message
         self.kalman_pub.publish(position)
 
-    def Control(self):
+    def Control(self, command):
 
-        #print("Control " + str(self.car.msg_command.msg_val))
+        msg = command.msg_val
 
-        if(len(self.car.msg_command.msg_val) == 0 ):
+        if(len(msg) == 0 ):
             speed = 0
             angle = 0
-        elif(len(self.car.msg_command.msg_val) == 1 ):
+        elif(len(msg) == 1 ):
             speed = 0
             angle = 0#self.car.msg_command.msg_val[0]
-        elif(len(self.car.msg_command.msg_val) == 1 ):
-            speed = self.car.msg_command.msg_val[0]
-            angle = self.car.msg_command.msg_val[1]
+        elif(len(msg) > 1 ):
+            speed = msg[0]
+            angle = msg[1]
 
-        x_vel = speed * math.cos(self.X_t[2])
-        y_vel = speed * math.sin(self.X_t[2])
-        yaw = angle / 180 * math.pi
-
-        self.Z = np.append(self.Z, np.array([x_vel, y_vel, yaw]))
-        self.R = np.append(self.R, np.array([1,1,1]))
-
-        self.H = np.column_stack([self.H, np.array([0,0,0,1,0,0]), np.array([0,0,0,0,1,0]), np.array([0,0,0,0,0,1])])
-        self.J_H = np.column_stack([self.J_H, np.array([0,0,0,1,0,0]), np.array([0,0,0,0,1,0]), np.array([0,0,0,0,0,1])])
-
-        self.control_measure = True
+        v = speed 
+        omega = angle / 180 * math.pi
+    
+        self.control_state = [float(v), float(omega)]
+        
+        #print(str(self.control_state))
 
 
     def BNO(self):
@@ -227,7 +227,6 @@ class Kalman:
         yaw = self.bno.getYaw()
 
         if(yaw != None and self.bno_state != yaw):
-            self.imu_measure = True
 
             #print("BNO - " + str(yaw))
 
@@ -235,10 +234,10 @@ class Kalman:
             self.bno_measure = True
 
             self.Z = np.append(self.Z, np.array([yaw]))
-            self.R = np.append(self.R, np.array([1]))
+            self.R = np.append(self.R, np.array([0.0001]))
 
-            self.H = np.column_stack([self.H, np.array([0,0,1,0,0,0])])
-            self.J_H = np.column_stack([self.J_H, np.array([0,0,1,0,0,0])])
+            self.H = np.column_stack([self.H, np.array([0,0,1,0,0])])
+            self.J_H = np.column_stack([self.J_H, np.array([0,0,1,0,0])])
 
 
     def GPS(self):
@@ -259,11 +258,11 @@ class Kalman:
             #print("GPS - " + str(x) + " - " + str(y) + " - " + str(yaw) )
 
             self.Z = np.append(self.Z, np.array([x,y,yaw]))
-            self.R = np.append(self.R, np.array([1,1,1]))
+            self.R = np.append(self.R, np.array([0.15,0.15,0.01]))
 
-            self.H = np.column_stack([self.H, np.array([1,0,0,0,0,0]), np.array([0,1,0,0,0,0]), np.array([0,0,1,0,0,0])])
-            self.J_H = np.column_stack([self.J_H, np.array([1,0,0,0,0,0]), np.array([0,1,0,0,0,0]), np.array([0,0,1,0,0,0])])
-
+            self.H = np.column_stack([self.H, np.array([1,0,0,0,0]), np.array([0,1,0,0,0]), np.array([0,0,1,0,0])])
+            self.J_H = np.column_stack([self.J_H, np.array([1,0,0,0,0]), np.array([0,1,0,0,0]), np.array([0,0,1,0,0])])
+            
 
 if __name__ == '__main__':
 
@@ -273,14 +272,10 @@ if __name__ == '__main__':
 
         bno = BNO055()
         print("BNO055 loaded")
-
-        car = Controller()
-        print("Controller loaded")
-
-
-        kalman = Kalman(gps, bno, car)
-
-        rate = rospy.Rate(10) # Hz
+        
+        kalman = Kalman(gps, bno)
+        
+        rate = rospy.Rate(50) # Hz
         start = rospy.get_time()
         end = start
         while not rospy.is_shutdown():
@@ -296,12 +291,12 @@ if __name__ == '__main__':
             # Get measurements
             kalman.GPS()
             kalman.BNO()
-            kalman.Control()
+            #kalman.Control()
 
             # Execute Update step
             kalman.Update()
 
-            #print("Kalman : " + str(kalman.X_t[0]) + "  -  " + str(kalman.X_t[1]) + "  -  " + str(kalman.X_t[2]))
+            #print("Kalman : " + str(kalman.X_t))
 
             end = start = rospy.get_time()
 
