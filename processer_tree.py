@@ -61,6 +61,14 @@ class Processer(Consumer):
         def drive(self):
             #Evaluating trajectory with
             #if(len(self.blackboard.lane)>0 and self.blackboard.exists("position.x")):
+            if(self.blackboard.exists("/lane")):
+                x, y = get_current_trajectory_point(self.blackboard.lane)
+                if(x!=None):
+                    POV_real_x, POV_real_y = car_model.camera_to_car_ref(x,y)
+                    POV_obj_x, POV_obj_y = car_model.camera_to_car_ref(320,y)
+                    error = POV_real_x-POV_obj_x #Error in reference frame of the car
+                    print("DRIVEEEEE")
+                    print(error)
             """"actual_trajectory= get_current_trajectory_point(self.blackboard.lane)
                 dist_camera_view_point_center = 0.2/math.sin(0.2617) #ipotenusa, 0.2 is the high of the camera on the street
                 dist_car_view_point_center =  math.cos(0.2617)*dist_camera_view_point
@@ -92,26 +100,26 @@ class Processer(Consumer):
             if(self.blackboard.exists("/position/x")):
                 car_position_array=[self.blackboard.position.x,self.blackboard.position.y,self.blackboard.position.z]
                 angle = self.path_follow.run(car_position_array, self.blackboard.path)
-                #TO CHECK IF PATH IS REDUCED OR IT SHOULD BE RETURNED
 
+                #TO CHECK IF PATH IS REDUCED OR IT SHOULD BE RETURNED
                 self.car.drive(self.blackboard.speed, angle)
                 return py_trees.common.Status.SUCCESS
             else:
                 return py_trees.common.Status.FAILURE
 
         def drive_trough_crosswalk(self):
-            self.car.drive(0.05, self.blackboard.steering)
+            if(self.blackboard.exists("/position/x")):
+                car_position_array=[self.blackboard.position.x,self.blackboard.position.y,self.blackboard.position.z]
+                angle = self.path_follow.run(car_position_array, self.blackboard.path)
+
+                #TO CHECK IF PATH IS REDUCED OR IT SHOULD BE RETURNED
+                self.car.drive(0.05, angle)
             return py_trees.common.Status.RUNNING
 
         def gather_data(self):
 
-            if("velocity_steer" in self.data):
-                velocity_steer = json.loads(self.data["velocity_steer"])
-                self.blackboard.steering = -velocity_steer["steer"]
-                self.blackboard.speed = 0.1##velocity_steer["velocity"]
-            else:
-                self.blackboard.steering = 0
-                self.blackboard.speed = 0.1
+            self.blackboard.steering = 0
+            self.blackboard.speed = 0.2
 
             if("sign" in self.data):
                  signs = json.loads(self.data["sign"])
@@ -136,8 +144,7 @@ class Processer(Consumer):
 
             if("street_lines" in self.data):
                 self.blackboard.lane = json.loads(self.data["street_lines"])
-            else:
-                self.blackboard.lane = []
+
             #print(self.blackboard)
 
             return py_trees.common.Status.SUCCESS
@@ -254,28 +261,34 @@ class Processer(Consumer):
                 break
 
             sleep(1)
-"""
+
 def get_current_trajectory_point(lines):
-	distance_from_base = 0.6       #it's a percentage
-	size = 640 ###### TODO --> PUT IT IN A CONFIG FILE
-	dist = []
+    distance_from_base = 0.6       #it's a percentage
+    size = 640 ###### TODO --> PUT IT IN A CONFIG FILE
+    dist = []
+    y=0
 
-	if(lines[0] != None):
-		dist.append([lines[0][i][0] for i in range(0, len(lines[0]))])
-	if(lines[1] != None):
-		dist.append([lines[1][i][0]- size/2 for i in range(0, len(lines[1]))])
+    if(lines[0] != None):
+        dist.append([lines[0][i][0] for i in range(0, len(lines[0]))])
+    if(lines[1] != None):
+        dist.append([lines[1][i][0]- size/2 for i in range(0, len(lines[1]))])
 
-	if(len(dist)==0):
-		return None
-	elif(len(dist)==1):
-		index = int(distance_from_base * len(dist[0]))
-		return dist[0][index]
-	else:
-		too_near=False
-		dist_avg = [(dist[0][i] + dist[1][i])/2 for i in range(0, len(dist[0])) ]
-		index = int(distance_from_base * len(dist[0]))
-		return dist_avg[index]
-"""
+    if(len(dist)==0):
+        return None, None
+    index = int(distance_from_base * len(dist[0]))
+
+    if(lines[0] != None):
+        y=lines[0][index][1]
+    elif(lines[1] != None):
+        y=lines[1][index][1]
+
+    if(len(dist)==1):
+        return dist[0][index], y
+    else:
+        too_near=False
+        dist_avg = [(dist[0][i] + dist[1][i])/2 for i in range(0, len(dist[0])) ]
+        return dist_avg[index], y
+
 
 if __name__ == '__main__':
     try:
