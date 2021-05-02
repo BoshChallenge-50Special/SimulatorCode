@@ -35,7 +35,10 @@ import rospy
 import math
 
 from SimulatorCode.templates import Consumer
-from Control.PidControl import PidControl
+#from Control.PidControl import PidControl
+from Control.Path import PathFollow
+from Localization.GraphMap import GraphMap
+
 import Control.CarModel as car_model
 #from SimulatorCode.StateMachine.stateMachineSteer import StateMachineSteer
 #from SimulatorCode.StateMachine.stateMachineVelocity import StateMachineVelocity
@@ -57,8 +60,9 @@ class Processer(Consumer):
         self.steering = 0
         self.state = "Straight"
 
-        self.pid_control=PidControl(verbose=True)
+        #self.pid_control=PidControl(verbose=True)
         #self.index_turning = 0
+        self.path_follow=PathFollow(vicinity_threshold=0.5, verbose=True)
 
         #self.directions=["straight", "left", "right", "left", "straight"]
 
@@ -100,8 +104,15 @@ class Processer(Consumer):
             ##end DENTRO PidControl
             ##### DENTRO PidControl
 
-            self.car.drive(self.blackboard.speed, self.blackboard.steering)
-            return py_trees.common.Status.SUCCESS
+            if(self.blackboard.exists("/position/x")):
+                car_position_array=[self.blackboard.position.x,self.blackboard.position.y,self.blackboard.position.z]
+                angle = self.path_follow.run(car_position_array, self.blackboard.path)
+                #TO CHECK IF PATH IS REDUCED OR IT SHOULD BE RETURNED
+
+                self.car.drive(self.blackboard.speed, angle)
+                return py_trees.common.Status.SUCCESS
+            else:
+                return py_trees.common.Status.FAILURE
 
         def drive_trough_crosswalk(self):
             self.car.drive(0.05, self.blackboard.steering)
@@ -115,7 +126,7 @@ class Processer(Consumer):
                 self.blackboard.speed = 0.1##velocity_steer["velocity"]
             else:
                 self.blackboard.steering = 0
-                self.blackboard.speed = 0
+                self.blackboard.speed = 0.1
 
             if("sign" in self.data):
                  signs = json.loads(self.data["sign"])
@@ -147,6 +158,10 @@ class Processer(Consumer):
             return py_trees.common.Status.SUCCESS
 
 
+        fileMap = './src/startup_package/src/SimulatorCode/Localization/Competition_track.graphml'
+        Graph = GraphMap(fileMap)
+        path, length = Graph.get_path_coor("561", "540")
+
         #self.root = py_trees.composites.Sequence("Sequence - Root")
         #THIS CHOICE IS TO DISCUSS. Parallel is made so it always gather data also if a task is still running --->Think if is correct
         self.root = py_trees.composites.Parallel(name="Parallel - Root", policy=py_trees.common.ParallelPolicy.SuccessOnOne())
@@ -170,6 +185,8 @@ class Processer(Consumer):
         gather_data_behaviour.blackboard.register_key(key="/position/y", access=py_trees.common.Access.WRITE)
         gather_data_behaviour.blackboard.register_key(key="/position/z", access=py_trees.common.Access.WRITE)
         gather_data_behaviour.blackboard.register_key(key="lane", access=py_trees.common.Access.WRITE)
+        gather_data_behaviour.blackboard.register_key(key="path", access=py_trees.common.Access.WRITE)
+        gather_data_behaviour.blackboard.path = path
 
         crosswalk_sequence = py_trees.composites.Sequence("Sequence - Crosswalk")
         check_crosswalk_sign = py_trees.behaviours.CheckBlackboardVariableValue(
@@ -205,8 +222,10 @@ class Processer(Consumer):
         drive_behaviour.blackboard.register_key(key="/position/x", access=py_trees.common.Access.READ)
         drive_behaviour.blackboard.register_key(key="/position/y", access=py_trees.common.Access.READ)
         drive_behaviour.blackboard.register_key(key="/position/z", access=py_trees.common.Access.READ)
+        drive_behaviour.blackboard.register_key(key="path", access=py_trees.common.Access.READ)
         drive_behaviour.car=self.car
-        drive_behaviour.pid_control=self.pid_control
+        drive_behaviour.path_follow=self.path_follow
+        #drive_behaviour.pid_control=self.pid_control
         #self.root.add_child(drive_behaviour)
         low_level_selector = py_trees.composites.Selector("Selector - LowLevelStreet")
         low_level_selector.add_children([crosswalk_sequence, drive_behaviour])
