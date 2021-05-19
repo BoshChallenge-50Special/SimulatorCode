@@ -48,6 +48,17 @@ class PathFollow():
 
         return math.sqrt((point1[0]-point2[0])**2+(point1[1]-point2[1])**2)
 
+    def get_angle(self, car_position, point):
+        # Get the angle for the next point
+        angle = math.atan2(car_position[1] - point[1], car_position[0] - point[0])
+        # Remove the orientation angle
+        angle = angle + car_position[2]
+        # UnWrap the angle after orientation
+        angle = ((angle ) % (2*math.pi) ) - math.pi
+        # Scale the angle
+        angle = angle / math.pi * 180
+
+        return angle
 
     def run(self, car_position, next_points):
         # Check for closest points inside the vicinity threshold
@@ -56,16 +67,8 @@ class PathFollow():
             self.path_followed.append({'i': len(self.path_followed), 'coor': next_points[0]})
             next_points.pop(0)
 
-        # Get the angle for the next point
-        angle = math.atan2(car_position[1] - next_points[0][1], car_position[0] - next_points[0][0])
-        # Remove the orientation angle
-        angle = angle + car_position[2]
-        # UnWrap the angle after orientation
-        angle = ((angle ) % (2*math.pi) ) - math.pi
-        # Scale the angle
-        angle = angle / math.pi * 180
+        angle = self.get_angle(car_position, next_points[0])
         self.Command[1] = angle
-
 
         if(self.verbose):
             steer_dir=""
@@ -76,7 +79,9 @@ class PathFollow():
             else:
                 steer_dir = "straight"
             print("Steer = "+steer_dir+ " --> " +str(angle) + " Distance : "+str(self.get_distance(car_position, next_points[0])) + " Points : "+str(len(self.path_followed)))
+
         return angle
+
 
 # Current position of the car
 car_position = [ 0.0, 0.0, 0.0]

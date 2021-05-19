@@ -257,128 +257,6 @@ class ParticleFilter(object):
             self.approximation = max(self.particles, key=lambda p: p.w)
 
 
-"""
-    def filter_usage(N_Particles, Interpolation_points, order=2, N_points=3, dataset_number=1, Images_print=False, blur=7, threshold_reset=4, pts=[]):
-
-    #pts = np.array([(0, 120), (600, 86), (-148, 278), (780, 279)]) # Up-left - - -
-
-    # Function used for creating and running the particle filter
-
-    utils = Utils()
-
-    # path = "../datasets/dataset_"+str(dataset_number)+"/"
-    path = "../Dataset/"
-
-    save_images   = False
-    testImageCrop = False
-
-    type_approximation = "max"
-    threshold_reset    = threshold_reset
-
-    crop_points, approximationPF1, approximationPF2 = [], [], []
-
-    # crop_points = [0, 200, 640, 480]
-
-    # First image upload (one frame) in order to find shapes
-    # image.shape[0] -> height
-    # image.shape[1] -> width
-
-    pts = np.array([(190, 30), (0, 280), (490, 30), (640, 280)]) # Total pic: [(0, 0), (0, 280), (640, 0), (640, 280)] -> UL, DL, UR, DR
-
-    N_STEP = len([path+name for name in os.listdir(path) if (os.path.isfile(path+name) and ".png" in name) ])-2
-
-    # crop = 0
-
-    for step in range(0, N_STEP):
-
-        #if(crop == 1 and number < 3):
-        #    crop_points = np.array( ( crop_points[0], crop_points[1]/(3/2), crop_points[2], crop_points[3]) )
-        #    crop_points = crop_points.astype(int)
-        #    pts = np.array([(100, 0), (0, 400 - crop_points[1]), (500, 0), (640, 400 - crop_points[1])])
-        #    print(crop_points)
-        #else:
-        #    pts = np.array([(190, 30), (0, 280), (490, 30), (640, 280)])
-        #    crop_points = [0, 200, 640, 480]
-        #    number = 0
-        #    crop = 0
-
-        if(step == 0 or crop == 1):
-            ip    = ImageProcessing(pts, path=path, crop_points=crop_points, kernel_size=blur)
-            pdf, pdf1, pdf2, image, image1, image2 = ip.get_lines_pdf()
-
-            if(testImageCrop):
-                # Temporarly, when decided the size of image it can be put fixed
-                ip    = ImageProcessing(pts)
-                pdf, pdf1, pdf2, image, image1, image2 = ip.get_lines_pdf()
-                cv.imshow("pdf1", pdf1)
-                k = cv.waitKey(0)
-                cv.imshow("pdf2", pdf2)
-                k = cv.waitKey(0)
-                cv.imshow("image1", image1)
-                k = cv.waitKey(0)
-                cv.imshow("image2", image2)
-                k = cv.waitKey(0)
-
-            pf1 = ParticleFilter(N_Particles, order, N_points, Interpolation_points, image1.shape[0], image1.shape[1], type_approximation=type_approximation, threshold_reset=threshold_reset)
-            pf2 = ParticleFilter(N_Particles, order, N_points, Interpolation_points, image2.shape[0], image2.shape[1], type_approximation=type_approximation, threshold_reset=threshold_reset)
-
-            ip = ImageProcessing(pts, path, crop_points=crop_points, kernel_size=blur)
-
-            pf1.initialization()
-            pf2.initialization()
-
-        pf1.sampling()
-        pf2.sampling()
-
-        pdf, pdf1, pdf2, image, image1, image2 = ip.get_lines_pdf()
-
-        pf1.weighting(pdf1)
-        pf2.weighting(pdf2)
-
-        pf1.resampling()
-        pf2.resampling()
-
-        approximationPF1.append(pf1.approximation)
-        approximationPF2.append(pf2.approximation)
-
-        best_particles, offset_Approximation = [], []
-
-        if(pf1.approximation_to_show):
-            best_particles.append(pf1.approximation)
-            offset_Approximation.append(0)
-
-        if(pf2.approximation_to_show):
-            best_particles.append(pf2.approximation)
-            offset_Approximation.append(int(image.shape[1]/2 ))
-
-        print('pf1 = ' + str(pf1.approximation.points))
-        print('pf2 = ' + str(pf2.approximation.points))
-
-        if( abs(pf1.approximation.points[0][0] - pf1.approximation.points[1][0]) > 200 or abs(pf2.approximation.points[0][0] - pf2.approximation.points[1][0]) > 200 ):
-            crop = 1
-            print('crop rezised')
-            number = number + 1
-
-        if(Images_print):
-            image_color  = cv.cvtColor(pdf, cv.COLOR_GRAY2RGB)  # Image with color
-
-            # Print single filter image (right or left image size)
-            # image_color1 = cv.cvtColor(pdf1, cv.COLOR_GRAY2RGB) # Image with color
-            # image_color2 = cv.cvtColor(pdf2, cv.COLOR_GRAY2RGB) # Image with color
-            # utils.draw_particles(image_color1, [], "Reampling_PDF1", [pf1.approximation])
-            # utils.draw_particles(image_color2, [], "Reampling_PDF2", [pf2.approximation])
-
-            # Print total image
-            res_1 = utils.draw_particles(image, [], "Resampling", best_particles, offset=[0]*len(pf1.particles)+[int(image.shape[1]/2 )]*len(pf2.particles), offsetApproximation=offset_Approximation)
-            res_2 = utils.draw_particles(image_color, pf1.particles + pf2.particles, "Resampling_PDF", best_particles, offset=[0]*len(pf1.particles)+[int(image.shape[1]/2 )]*len(pf2.particles), offsetApproximation=offset_Approximation)
-
-            if(save_images ):
-                cv.imwrite('../outputs/particles_output/img_' + str(step) + '.png', res_2)
-                cv.imwrite('../outputs/result_output/img' + str(step) + '.png', res_1)
-
-    return approximationPF1, approximationPF2, N_STEP
-    """
-
 def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None, order=1, N_points=2, Images_print=True, blur=7, threshold_reset=7, pts=[], data_queue=None, stop_function=None, producer=None): #, consumer = None):
     # Function used for creating and running the particle filter
     print("Starting PARTICLE FILTER")
@@ -506,7 +384,7 @@ def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None
             #res_2 = utils.draw_particles(image_color, pf1.particles + pf2.particles, "Resampling_PDF", best_particles, offset=[0]*len(pf1.particles)+[int(image.shape[1]/2 )]*len(pf2.particles), offsetApproximation=offset_Approximation)
             #res_1 = utils.draw_particles(image, [], "Result", lines, start_coo=[[0, 300], [320, 300]])
             #res_1 = utils.draw_particles(image, [], "Result", best_particles, start_coo=[[0, 300], [320, 300]])
-            
+
             # Get the data from the String obtained by the consumer of the Horizontal Line
             #horizontal_lines = json.loads(consumer.data["HorizontalLinesShow"])
             #for horizontal_line in horizontal_lines:
