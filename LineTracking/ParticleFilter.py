@@ -85,7 +85,6 @@ class ParticleFilter(object):
             self.threshold_reset=5
         else:
             self.threshold_reset=threshold_reset
-
         return
 
     def initialization(self, verbose=False):
@@ -327,16 +326,18 @@ def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None
 
 
         if(pf1.approximation_to_show):
+            to_original= utils.four_point_transform_inverse(np.array(pf1.approximation.spline, dtype='float32'), ip.pts).tolist()
             best_particles.append(pf1.approximation)
             offset_Approximation.append(0)
             lines[0]=pf1.approximation
-            result[0] = lines[0].spline
+            result[0] = to_original
 
         if(pf2.approximation_to_show):
+            to_original= utils.four_point_transform_inverse(np.array(pf2.approximation.spline, dtype='float32'), ip.pts, add_half_image=True).tolist()
             best_particles.append(pf2.approximation)
             offset_Approximation.append(int(image.shape[1]/2 ))
             lines[1]=pf2.approximation
-            result[1] = lines[1].spline
+            result[1] = to_original
 
         ##########  TO AVOID THE MERGE OF 2 LINES
         if(pf1.approximation_to_show & pf2.approximation_to_show):
@@ -365,8 +366,13 @@ def filter_usage_BOSH(N_Particles, Interpolation_points, get_image_function=None
                     lines[0] = None
                     result[0] = None
 
-        #data_queue.put(lines)
-        # convert to string
+        #### ADD OFFSET ON Y
+        for i in range(0, len(result)):
+            if(result[i]!=None):
+                for j in range(0, len(result[i])):
+                    result[i][j][1] = result[i][j][1] + y_up
+
+
 
         lines_json = json.dumps(result)
         producer.pub.publish(lines_json)
