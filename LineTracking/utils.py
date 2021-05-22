@@ -69,7 +69,7 @@ class Utils(object):
         # bottom-right, and bottom-left order
         return np.array([tl, tr, br, bl], dtype="float32")
 
-    def four_point_transform(self, image, pts):
+    def make_matrix_transform_four_point(self, pts):
         # obtain a consistent order of the points and unpack them
         # individually
         rect = self.order_points(pts)
@@ -102,10 +102,32 @@ class Utils(object):
 
         # compute the perspective transform matrix and then apply it
         M = cv.getPerspectiveTransform(rect, dst)
+
+        return M, maxWidth, maxHeight
+
+    def four_point_transform(self, image, pts):
+
+        M, maxWidth, maxHeight = self.make_matrix_transform_four_point(pts)
         warped = cv.warpPerspective(image, M, (maxWidth, maxHeight))
 
         # return the warped image
         return warped
+
+    def four_point_transform_inverse(self, points, pts,  add_half_image=False):
+
+        M, maxWidth, maxHeight = self.make_matrix_transform_four_point(pts)
+        if(add_half_image==True):
+            for i in range(0, len(points)):
+                points[i][0] = points[i][0] + maxWidth/2
+        M_inv = np.linalg.inv(M)
+
+        pointsOut = cv.perspectiveTransform(np.array([points]), M_inv)[0]
+
+        #M_inv = np.linalg.inv(M)
+        #transformed_points = pointsOut = cv2.perspectiveTransform(a, h) cv2.warpPerspective(points, M, table_image_size, cv2.WARP_INVERSE_MAP)
+
+        # return transformed points
+        return pointsOut
 
     def evaluate(self, particle, pdf, verbose=False):
 

@@ -62,18 +62,48 @@ class Processer(Consumer):
             #Evaluating trajectory with
             #if(len(self.blackboard.lane)>0 and self.blackboard.exists("position.x")):
             obj_point_correction=[]
-            if(self.blackboard.exists("/lane")):
-                # It return the center point in the street based on the lines of the lane.
-                x, y, self.street_size_px = get_current_trajectory_point(self.blackboard.lane, self.street_size_px)
-                if(x != None):
-                    # Point objective is the center of the street based on the lane
-                    POV_obj_x, POV_obj_y = car_model.camera_to_car_ref(x,y)
-                    # The real point where the car is going based on the center of the camera picture
-                    POV_real_x, POV_real_y = car_model.camera_to_car_ref(320,y)
-                    obj_point_correction=[POV_obj_x, POV_obj_y]
-                    error = POV_real_x-POV_obj_x #Error in reference frame of the car
-                    print("DRIVEEEEE")
-                    print(error)
+            if(self.blackboard.exists("/position/x")):
+                car_position_array=[self.blackboard.position.x,self.blackboard.position.y,self.blackboard.position.z]
+                if(self.blackboard.exists("/lane")):
+                    # It return the center point in the street based on the lines of the lane.
+                    x, y, self.street_size_px = get_current_trajectory_point(self.blackboard.lane, self.street_size_px)
+                    #print("x :" + str(x))
+                    #print("y :" + str(y))
+                    #print("street_size_px :" + str(self.street_size_px))
+                    if(x != None):
+                        # Point objective is the center of the street based on the lane
+                        POV_obj_x, POV_obj_y = car_model.camera_to_car_ref(x,y)
+                        # The real point where the car is going based on the center of the camera picture
+                        POV_real_x, POV_real_y = car_model.camera_to_car_ref(320,y)
+
+                        #print("obj_car :" + str([POV_obj_x, POV_obj_y]))
+                        #print("real_car :" + str([POV_real_x, POV_real_y]))
+
+                        obj_point_correction = car_model.car_to_world(car_position_array[0], car_position_array[1], car_position_array[2], [POV_obj_x, POV_obj_y])
+                        #obj_point_correction= [POV_obj_x, POV_obj_y]
+                        #error = POV_real_x-POV_obj_x #Error in reference frame of the car
+                        #print("DRIVEEEEE")
+                        #print(error)
+
+                angle_trajectory = self.path_follow.run(car_position_array, self.blackboard.path)
+
+                if(len(obj_point_correction)>0):
+                    #print("car :" + str(car_position_array))
+                    #print("obj :" + str(obj_point_correction))
+                    angle_correction = self.path_follow.get_angle(car_position_array, obj_point_correction)
+
+                    # Final angle is the average between the trajectory angle from the Map
+                    #           and the correction angle from the lane
+                    #print("angle_trajectory : " + str(angle_trajectory) + "  angle_correction : " + str(angle_correction))
+                    angle =  5/6 * angle_trajectory + 1/6 * angle_correction
+                    #angle = angle_trajectory
+                else:
+                    angle = angle_trajectory
+                #TO CHECK IF PATH IS REDUCED OR IT SHOULD BE RETURNED
+                self.car.drive(self.blackboard.speed, angle)
+                return py_trees.common.Status.SUCCESS
+            else:
+                return py_trees.common.Status.FAILURE
             """"actual_trajectory= get_current_trajectory_point(self.blackboard.lane)
                 dist_camera_view_point_center = 0.2/math.sin(0.2617) #ipotenusa, 0.2 is the high of the camera on the street
                 dist_car_view_point_center =  math.cos(0.2617)*dist_camera_view_point
@@ -101,27 +131,6 @@ class Processer(Consumer):
                 car_position_array=[self.blackboard.position.x,self.blackboard.position.y,self.blackboard.position.z]
             """
 
-
-            if(self.blackboard.exists("/position/x")):
-                car_position_array=[self.blackboard.position.x,self.blackboard.position.y,self.blackboard.position.z]
-                angle_trajectory = self.path_follow.run(car_position_array, self.blackboard.path)
-
-                if(len(obj_point_correction)>0):
-                    angle_correction = self.path_follow.get_angle(car_position_array, obj_point_correction)
-
-                    # Final angle is the average between the trajectory angle from the Map
-                    #           and the correction angle from the lane
-                    print("angle_trajectory : " + str(angle_trajectory) + "  angle_correction : " + str(angle_correction))
-                    angle =  (angle_trajectory + angle_correction)/2
-                    angle = angle_trajectory
-                else:
-                    angle = angle_trajectory
-                #TO CHECK IF PATH IS REDUCED OR IT SHOULD BE RETURNED
-                self.car.drive(self.blackboard.speed, angle)
-                return py_trees.common.Status.SUCCESS
-            else:
-                return py_trees.common.Status.FAILURE
-
         def drive_trough_crosswalk(self):
             if(self.blackboard.exists("/position/x")):
                 car_position_array=[self.blackboard.position.x,self.blackboard.position.y,self.blackboard.position.z]
@@ -134,7 +143,7 @@ class Processer(Consumer):
         def gather_data(self):
 
             self.blackboard.steering = 0
-            self.blackboard.speed = 0.2
+            self.blackboard.speed = 0.35
 
             if("sign" in self.data):
                  signs = json.loads(self.data["sign"])
@@ -160,14 +169,12 @@ class Processer(Consumer):
             if("street_lines" in self.data):
                 self.blackboard.lane = json.loads(self.data["street_lines"])
 
-            #print(self.blackboard)
-
             return py_trees.common.Status.SUCCESS
 
 
         fileMap = './src/startup_package/src/SimulatorCode/Localization/Competition_track.graphml'
         Graph = GraphMap(fileMap)
-        path, length = Graph.get_path_coor("66", "88")
+        path, length = Graph.get_path_coor("66", "538")
 
         #self.root = py_trees.composites.Sequence("Sequence - Root")
         #THIS CHOICE IS TO DISCUSS. Parallel is made so it always gather data also if a task is still running --->Think if is correct
@@ -236,7 +243,7 @@ class Processer(Consumer):
         #drive_behaviour.pid_control=self.pid_control
         #self.root.add_child(drive_behaviour)
         low_level_selector = py_trees.composites.Selector("Selector - LowLevelStreet")
-        low_level_selector.add_children([crosswalk_sequence, drive_behaviour])
+        low_level_selector.add_children([drive_behaviour])#################################crosswalk_sequence removed
         self.root.add_children([gather_data_behaviour, low_level_selector])
 
         #NOTE CHECK EITHER_Or to select task directly from selector. Good idiom to write less code
@@ -248,7 +255,7 @@ class Processer(Consumer):
         #INFO
         #DEBUG
         #NOTSET
-        py_trees.logging.level = py_trees.logging.Level.DEBUG
+        py_trees.logging.level = py_trees.logging.Level.ERROR#DEBUG
         self.create_root()
         py_trees.display.render_dot_tree(self.root)
         # Far eseguire il file come se fosse eseguito da terminale
@@ -297,7 +304,7 @@ def get_current_trajectory_point(lines, street_size=None):
         #dist.append([lines[1][i][0]- size/2 for i in range(0, len(lines[1]))])
 
         # distance from left border of the right_line
-        dist.append([lines[1][i][0]+ size/2 for i in range(0, len(lines[1]))])
+        dist.append([lines[1][i][0] for i in range(0, len(lines[1]))])
 
     if(len(dist)==0):
         return None, None, None
@@ -319,8 +326,8 @@ def get_current_trajectory_point(lines, street_size=None):
     else:
         too_near=False
         #dist_avg = [(dist[0][i] + dist[1][i])/2 for i in range(0, len(dist[0])) ]
-        cental_point = [(dist[0][i] + dist[1][i])/2 for i in range(0, len(dist[0])) ]
         street_size = dist[1][index] - dist[0][index]
+        cental_point = [dist[0][i] + street_size/2 for i in range(0, len(dist[0])) ]
         return cental_point[index], y, street_size
 
 
