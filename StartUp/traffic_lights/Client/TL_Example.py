@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 
-# RUN THROUGH after configuration
-# rosrun startup_package TF_Example.py
+# RUN THROUGH after ROS startup_package configuration
+# rosrun startup_package TL_Example.py
 
 #
 #  ******************************************************************************

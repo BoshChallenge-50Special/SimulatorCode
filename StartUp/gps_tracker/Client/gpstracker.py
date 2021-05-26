@@ -1,3 +1,9 @@
+#!/usr/bin/env python2
+
+# RUN THROUGH after ROS startup_package configuration
+# rosrun startup_package gpstracker.py
+
+
 # Copyright (c) 2019, Bosch Engineering Center Cluj and BFMC organizers
 # All rights reserved.
 
@@ -33,6 +39,11 @@ import server_subscriber
 import position_listener
 
 import time
+
+import rospy
+from geometry_msgs.msg import Twist
+
+import math
 
 class GpsTracker(threading.Thread):
     
@@ -111,12 +122,32 @@ class GpsTracker(threading.Thread):
 if __name__ == '__main__':
     gpstracker = GpsTracker(4)
     gpstracker.start()
+
+    # Define Node
+    rospy.init_node("gps_node", anonymous=True)
+
+    #About queue_size http://wiki.ros.org/rospy/Overview/Publishers%20and%20Subscribers
+    pub = rospy.Publisher("/rcCar/GPS", Twist, queue_size=10)
     
     time.sleep(5)
     while True:
         try:
             coora = gpstracker.coor()
-            print(gpstracker.ID(), coora['timestamp'], coora['coor'][0], coora['coor'][0])
+
+            print(gpstracker.ID(), coora['timestamp'], coora['coor'][0], coora['coor'][1])
+
+            twist = Twist()
+
+            twist.linear.x = coora['coor'][0]["real"]
+            twist.linear.y = coora['coor'][0]["imag"]
+
+            cos_yaw = coora["coor"][1]["real"]
+            sin_yaw = coora["coor"][1]["imag"]
+
+            yaw = math.atan2(sin_yaw, cos_yaw)
+
+            twist.angular.z = yaw
+            pub.publish(twist)
             time.sleep(1)
         except KeyboardInterrupt:
             break
