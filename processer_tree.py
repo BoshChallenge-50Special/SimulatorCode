@@ -169,6 +169,11 @@ class Processer(Consumer):
             if("street_lines" in self.data):
                 self.blackboard.lane = json.loads(self.data["street_lines"])
 
+            if(len(self.blackboard.path)>0):
+                self.blackboard.crossroad = Graph.get_crossroad(self.blackboard.path[0]) | blackboard.end_crossroad == self.blackboard.path[0]
+            else:
+                self.blackboard.crossroad = False
+
             return py_trees.common.Status.SUCCESS
 
 
@@ -200,6 +205,7 @@ class Processer(Consumer):
         gather_data_behaviour.blackboard.register_key(key="/position/z", access=py_trees.common.Access.WRITE)
         gather_data_behaviour.blackboard.register_key(key="lane", access=py_trees.common.Access.WRITE)
         gather_data_behaviour.blackboard.register_key(key="path", access=py_trees.common.Access.WRITE)
+        gather_data_behaviour.blackboard.register_key(key="crossroad", access=py_trees.common.Access.WRITE)
         gather_data_behaviour.blackboard.path = path
 
         crosswalk_sequence = py_trees.composites.Sequence("Sequence - Crosswalk")
@@ -228,6 +234,47 @@ class Processer(Consumer):
         )
         crosswalk_sequence.add_children([check_crosswalk_sign, crosswalk_eternal_guard])
 
+        ######################################################################
+
+        def checkIfCrosswalkFinished(blackboard):
+            if(blackboard.crossroad == True):
+                if(blackboard.end_crossroad == None ):
+                    blackboard.end_crossroad=blackboard.path[1].id
+                return True
+            else:
+                blackboard.end_crossroad=-1 ####CHECK IF IT EDIT THE VARIABLE....-> MAYBE THERE SHOULD BE TWO NODE, ONE CHECK AND ONE ASSIGN/REMOVE THE END_CROSSROAD VARIABLE
+            return False
+
+        crosswalk_sequence = py_trees.composites.Sequence("Sequence - Crossroad")
+        check_crosswalk_sign = py_trees.behaviours.CheckBlackboardVariableValue(
+            name="Check Crossoroad node",
+            check=py_trees.common.ComparisonExpression(
+                variable="crossroad",
+                value=True,
+                operator=operator.eq
+            )
+        )
+        #if end_crossroad not set, set it
+        SetBlackboardVariable
+        crosswalk_behaviour = py_trees.meta.create_behaviour_from_function(drive_trough_crosswalk)()
+        crosswalk_behaviour.blackboard = py_trees.blackboard.Client(name="Client drive trough crosswalk")
+        crosswalk_behaviour.blackboard.register_key(key="steering", access=py_trees.common.Access.READ)
+        crosswalk_behaviour.car=self.car
+
+        def checkIfCrosswalkFinished(blackboard):
+            print(blackboard.signal.crosswalk)
+            return blackboard.signal.crosswalk
+
+        crosswalk_eternal_guard = py_trees.decorators.EternalGuard(
+            name="Eternal Guard - Is Crosswalk finished?",
+            condition=checkIfCrosswalkFinished,
+            blackboard_keys = {"/signal/crosswalk"},
+            child=crosswalk_behaviour
+        )
+        crosswalk_sequence.add_children([check_crosswalk_sign, crosswalk_eternal_guard])
+
+        ######################################################################
+
         drive_behaviour = py_trees.meta.create_behaviour_from_function(drive)()
         drive_behaviour.blackboard = py_trees.blackboard.Client(name="Client drive")
         drive_behaviour.blackboard.register_key(key="steering", access=py_trees.common.Access.READ)
@@ -243,7 +290,7 @@ class Processer(Consumer):
         #drive_behaviour.pid_control=self.pid_control
         #self.root.add_child(drive_behaviour)
         low_level_selector = py_trees.composites.Selector("Selector - LowLevelStreet")
-        low_level_selector.add_children([drive_behaviour])#################################crosswalk_sequence removed
+        low_level_selector.add_children([drive_behaviour, crosswalk_sequence])
         self.root.add_children([gather_data_behaviour, low_level_selector])
 
         #NOTE CHECK EITHER_Or to select task directly from selector. Good idiom to write less code

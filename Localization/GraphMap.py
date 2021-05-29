@@ -36,11 +36,16 @@ class GraphMap(object):
 
         return
 
+    # Return true if the point is related to a crossroad
+    def get_crossroad(self, point):
+        # Checks if there are multiple next points reachable starting from that point
+        return len(self.Map[point]["next"]) > 1
+
     def get_location_points(self, x, y, num):
         options = list()
         for node in self.Map:
             distance = math.sqrt( ( ( float(self.Map[node]["x"]) - x ) ** 2 ) + ( ( float(self.Map[node]["y"]) - y ) ** 2 ) )
-            
+
             options.append((node, distance))
 
         options.sort(key=lambda tup: tup[1])  # sorts in place
@@ -53,13 +58,13 @@ class GraphMap(object):
         # Create lists for open nodes and closed nodes
         open = []
         closed = []
-        
+
         # Create a start node and an goal node
         start_node = (start, None, 0)
         goal_node = (end, None, 0)
         # Add the start node
         open.append(start_node)
-        
+
         # Loop until the open list is empty
         while len(open) > 0:
             # Sort the open list to get the node with the lowest cost first
@@ -68,7 +73,7 @@ class GraphMap(object):
             current_node = open.pop(0)
             # Add the current node to the closed list
             closed.append(current_node)
-            
+
             # Check if we have reached the goal, return the path
             if current_node[0] == end:
                 total = current_node[2]
@@ -88,7 +93,7 @@ class GraphMap(object):
 
             # Get neighbours
             neighbors = self.Map[current_node[0]]["next"]
-            
+
             # Loop neighbors
             for key in neighbors:
                 # Create a neighbor node
@@ -98,8 +103,8 @@ class GraphMap(object):
                     continue
                 # Check if neighbor is in open list and if it has a lower f value
                 for node in open:
-                    if (neighbor[0] == node[0] and neighbor[1] == node[1] and neighbor[2] > node[2]):   
-                        continue             
+                    if (neighbor[0] == node[0] and neighbor[1] == node[1] and neighbor[2] > node[2]):
+                        continue
                 open.append(neighbor)
         # Return None, no path is found
         return None
@@ -110,13 +115,13 @@ class GraphMap(object):
         # Create lists for open nodes and closed nodes
         open = []
         closed = []
-        
+
         # Create a start node and an goal node
         start_node = (start, None, 0)
         goal_node = (end, None, 0)
         # Add the start node
         open.append(start_node)
-        
+
         # Loop until the open list is empty
         while len(open) > 0:
             # Sort the open list to get the node with the lowest cost first
@@ -125,7 +130,7 @@ class GraphMap(object):
             current_node = open.pop(0)
             # Add the current node to the closed list
             closed.append(current_node)
-            
+
             # Check if we have reached the goal, return the path
             if current_node[0] == end:
                 total = current_node[2]
@@ -147,7 +152,7 @@ class GraphMap(object):
 
             # Get neighbours
             neighbors = self.Map[current_node[0]]["next"]
-            
+
             # Loop neighbors
             for key in neighbors:
                 # Create a neighbor node
@@ -157,18 +162,18 @@ class GraphMap(object):
                     continue
                 # Check if neighbor is in open list and if it has a lower f value
                 for node in open:
-                    if (neighbor[0] == node[0] and neighbor[1] == node[1] and neighbor[2] > node[2]):   
-                        continue             
+                    if (neighbor[0] == node[0] and neighbor[1] == node[1] and neighbor[2] > node[2]):
+                        continue
                 open.append(neighbor)
         # Return None, no path is found
         return None
-        
+
     def get_distance(self, start, end):
         #print("Distance from " + start + " to " + end)
 
         x_diff = float(self.Map[start]["x"]) - float(self.Map[end]["x"])
         y_diff = float(self.Map[start]["y"]) - float(self.Map[end]["y"])
-        
+
         return math.sqrt((x_diff ** 2) + (y_diff ** 2))
 
 
@@ -180,7 +185,7 @@ if __name__ == '__main__':
     #path = '/home/marco/Documents/BoschChallenge/BFMC_Main/source/templates/Test_track.graphml'
 
     Graph = GraphMap(path)
-    
+
     x = 0
     y = 0
     num = 5
@@ -194,4 +199,3 @@ if __name__ == '__main__':
     path, length = Graph.get_path_coor("561", "540")
     print(path)
     print(length)
-    
