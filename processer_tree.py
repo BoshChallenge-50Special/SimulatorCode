@@ -131,6 +131,39 @@ class Processer(Consumer):
                 car_position_array=[self.blackboard.position.x,self.blackboard.position.y,self.blackboard.position.z]
             """
 
+        def drive_trough_crossroad(self):
+            #Evaluating trajectory with
+            obj_point_correction=[]
+            if(self.blackboard.exists("/position/x")):
+                car_position_array=[self.blackboard.position.x,self.blackboard.position.y,self.blackboard.position.z]
+                if(self.blackboard.exists("/lane")):
+                    # It return the center point in the street based on the lines of the lane.
+                    x, y, self.street_size_px = get_current_trajectory_point(self.blackboard.lane, self.street_size_px)
+                    if(x != None):
+                        # Point objective is the center of the street based on the lane
+                        POV_obj_x, POV_obj_y = car_model.camera_to_car_ref(x,y)
+                        # The real point where the car is going based on the center of the camera picture
+                        POV_real_x, POV_real_y = car_model.camera_to_car_ref(320,y)
+
+                        obj_point_correction = car_model.car_to_world(car_position_array[0], car_position_array[1], car_position_array[2], [POV_obj_x, POV_obj_y])
+
+
+                angle_trajectory = self.path_follow.run(car_position_array, self.blackboard.path)
+
+                if(len(obj_point_correction)>0):
+                    angle_correction = self.path_follow.get_angle(car_position_array, obj_point_correction)
+
+                    # Final angle is the average between the trajectory angle from the Map
+                    angle =  5/6 * angle_trajectory + 1/6 * angle_correction
+                    #angle = angle_trajectory
+                else:
+                    angle = angle_trajectory
+                #TO CHECK IF PATH IS REDUCED OR IT SHOULD BE RETURNED
+                self.car.drive(self.blackboard.speed, angle)
+                return py_trees.common.Status.SUCCESS
+            else:
+                return py_trees.common.Status.FAILURE
+
         def drive_trough_crosswalk(self):
             if(self.blackboard.exists("/position/x")):
                 car_position_array=[self.blackboard.position.x,self.blackboard.position.y,self.blackboard.position.z]
@@ -139,6 +172,21 @@ class Processer(Consumer):
                 #TO CHECK IF PATH IS REDUCED OR IT SHOULD BE RETURNED
                 self.car.drive(0.05, angle)
             return py_trees.common.Status.RUNNING
+
+        def check_crossroad_semaphore(self):
+            print("Semaphore not checked")
+            ###Find with traffic light to check using GrapgMap.py
+            # self.blackboard.traffic_light.start
+            # self.blackboard.traffic_light.west
+            # self.blackboard.traffic_light.east
+            # self.blackboard.traffic_light.south
+
+            #if no_semaphore or sempahore is green
+            return py_trees.common.Status.SUCCESS
+            #else:
+            #return py_trees.common.Status.FAILURE
+        def send_info_server(self):
+            return py_trees.common.Status.SUCCESS
 
         def gather_data(self):
 
@@ -170,7 +218,7 @@ class Processer(Consumer):
                 self.blackboard.lane = json.loads(self.data["street_lines"])
 
             if(len(self.blackboard.path)>0):
-                self.blackboard.crossroad = Graph.get_crossroad(self.blackboard.path[0]) | blackboard.end_crossroad == self.blackboard.path[0]
+                self.blackboard.crossroad = Graph.get_crossroad(self.blackboard.path[0][2])
             else:
                 self.blackboard.crossroad = False
 
@@ -250,42 +298,32 @@ class Processer(Consumer):
 
         ######################################################################
 
-        def checkIfCrosswalkFinished(blackboard):
-            if(blackboard.crossroad == True):
-                if(blackboard.end_crossroad == None ):
-                    blackboard.end_crossroad=blackboard.path[1].id
-                return True
-            else:
-                blackboard.end_crossroad=-1 ####CHECK IF IT EDIT THE VARIABLE....-> MAYBE THERE SHOULD BE TWO NODE, ONE CHECK AND ONE ASSIGN/REMOVE THE END_CROSSROAD VARIABLE
-            return False
-
-        crosswalk_sequence = py_trees.composites.Sequence("Sequence - Crossroad")
-        check_crosswalk_sign = py_trees.behaviours.CheckBlackboardVariableValue(
-            name="Check Crossoroad node",
+        crossroad_sequence = py_trees.composites.Sequence("Sequence - Crossroad")
+        check_crossraod_point = py_trees.behaviours.CheckBlackboardVariableValue(
+            name="Check Crossoroad on maps",
             check=py_trees.common.ComparisonExpression(
                 variable="crossroad",
                 value=True,
                 operator=operator.eq
             )
         )
-        #if end_crossroad not set, set it
-        SetBlackboardVariable
-        crosswalk_behaviour = py_trees.meta.create_behaviour_from_function(drive_trough_crosswalk)()
-        crosswalk_behaviour.blackboard = py_trees.blackboard.Client(name="Client drive trough crosswalk")
-        crosswalk_behaviour.blackboard.register_key(key="steering", access=py_trees.common.Access.READ)
-        crosswalk_behaviour.car=self.car
 
-        def checkIfCrosswalkFinished(blackboard):
-            print(blackboard.signal.crosswalk)
-            return blackboard.signal.crosswalk
+        crossroad_detail_sequence = py_trees.composites.Sequence("Sequence - Crossroad")
 
-        crosswalk_eternal_guard = py_trees.decorators.EternalGuard(
-            name="Eternal Guard - Is Crosswalk finished?",
-            condition=checkIfCrosswalkFinished,
-            blackboard_keys = {"/signal/crosswalk"},
-            child=crosswalk_behaviour
-        )
-        crosswalk_sequence.add_children([check_crosswalk_sign, crosswalk_eternal_guard])
+        check_crossroad_semaphore_behaviour = py_trees.meta.create_behaviour_from_function(check_crossroad_semaphore)()
+        check_crossroad_semaphore_behaviour.blackboard = py_trees.blackboard.Client(name="Client check semaphore")
+        check_crossroad_semaphore_behaviour.blackboard.register_key(key="/traffic_light/start", access=py_trees.common.Access.READ)
+        check_crossroad_semaphore_behaviour.blackboard.register_key(key="/traffic_light/west", access=py_trees.common.Access.READ)
+        check_crossroad_semaphore_behaviour.blackboard.register_key(key="/traffic_light/east", access=py_trees.common.Access.READ)
+        check_crossroad_semaphore_behaviour.blackboard.register_key(key="/traffic_light/south", access=py_trees.common.Access.READ)
+
+        drive_trough_crossroad_behaviour = py_trees.meta.create_behaviour_from_function(drive_trough_crossroad)()
+        drive_trough_crossroad_behaviour.blackboard = py_trees.blackboard.Client(name="Client drive trough crossroad")
+        drive_trough_crossroad_behaviour.car=self.car
+
+
+        crossroad_detail_sequence.add_children([check_crossroad_semaphore_behaviour, drive_trough_crossroad_behaviour])
+        crossroad_sequence.add_children([check_crossraod_point, crossroad_detail_sequence])
 
         ######################################################################
 
@@ -304,8 +342,12 @@ class Processer(Consumer):
         #drive_behaviour.pid_control=self.pid_control
         #self.root.add_child(drive_behaviour)
         low_level_selector = py_trees.composites.Selector("Selector - LowLevelStreet")
-        low_level_selector.add_children([drive_behaviour, crosswalk_sequence])
-        self.root.add_children([gather_data_behaviour, low_level_selector])
+        low_level_selector.add_children([crossroad_sequence, crosswalk_sequence, drive_behaviour])
+
+        send_info_server_behaviour = py_trees.meta.create_behaviour_from_function(send_info_server)()
+        send_info_server_behaviour.blackboard = py_trees.blackboard.Client(name="Client Send info to server")
+
+        self.root.add_children([gather_data_behaviour, low_level_selector, send_info_server_behaviour])
 
         #NOTE CHECK EITHER_Or to select task directly from selector. Good idiom to write less code
 

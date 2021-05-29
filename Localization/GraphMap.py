@@ -39,7 +39,7 @@ class GraphMap(object):
     # Return true if the point is related to a crossroad
     def get_crossroad(self, point):
         # Checks if there are multiple next points reachable starting from that point
-        return len(self.Map[point]["next"]) > 1
+        return len(self.Map[point]["next"]) > 1 | len(self.Map[self.Map[point]["previous"][0]]["next"]) > 1
 
     def get_location_points(self, x, y, num):
         options = list()
@@ -55,6 +55,7 @@ class GraphMap(object):
     # Return true if the point is related to a crossroad
     def get_crossroad(self, point):
         # Checks if there are multiple next points reachable starting from that point
+        print(point)
         return len(self.Map[point]["next"]) > 1
 
     # Returns x, y, and id of the point
