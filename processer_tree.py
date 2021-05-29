@@ -174,6 +174,16 @@ class Processer(Consumer):
             else:
                 self.blackboard.crossroad = False
 
+            if("traffic_light_topic" in self.data):
+                if (self.data["traffic_light_topic"].id == 0):
+                    self.blackboard.traffic_light.start = self.data["traffic_light_topic"].state
+                if (self.data["traffic_light_topic"].id == 1):
+                    self.blackboard.traffic_light.west = self.data["traffic_light_topic"].state
+                if (self.data["traffic_light_topic"].id == 2):
+                    self.blackboard.traffic_light.east = self.data["traffic_light_topic"].state
+                if (self.data["traffic_light_topic"].id == 3):
+                    self.blackboard.traffic_light.south = self.data["traffic_light_topic"].state
+
             return py_trees.common.Status.SUCCESS
 
 
@@ -205,6 +215,10 @@ class Processer(Consumer):
         gather_data_behaviour.blackboard.register_key(key="/position/z", access=py_trees.common.Access.WRITE)
         gather_data_behaviour.blackboard.register_key(key="lane", access=py_trees.common.Access.WRITE)
         gather_data_behaviour.blackboard.register_key(key="path", access=py_trees.common.Access.WRITE)
+        gather_data_behaviour.blackboard.register_key(key="/traffic_light/start", access=py_trees.common.Access.WRITE)
+        gather_data_behaviour.blackboard.register_key(key="/traffic_light/west", access=py_trees.common.Access.WRITE)
+        gather_data_behaviour.blackboard.register_key(key="/traffic_light/east", access=py_trees.common.Access.WRITE)
+        gather_data_behaviour.blackboard.register_key(key="/traffic_light/south", access=py_trees.common.Access.WRITE)
         gather_data_behaviour.blackboard.register_key(key="crossroad", access=py_trees.common.Access.WRITE)
         gather_data_behaviour.blackboard.path = path
 

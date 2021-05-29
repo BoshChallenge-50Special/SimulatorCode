@@ -128,3 +128,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 *.png
+
+# Execution code related
+start_gazebo.sh
+start_car.sh

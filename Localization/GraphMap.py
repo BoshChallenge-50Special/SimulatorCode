@@ -52,63 +52,12 @@ class GraphMap(object):
 
         return options[0:num]
 
-    def get_path(self, start, end):
-        print("Path from " + start + " to " + end)
+    # Return true if the point is related to a crossroad
+    def get_crossroad(self, point):
+        # Checks if there are multiple next points reachable starting from that point
+        return len(self.Map[point]["next"]) > 1
 
-        # Create lists for open nodes and closed nodes
-        open = []
-        closed = []
-
-        # Create a start node and an goal node
-        start_node = (start, None, 0)
-        goal_node = (end, None, 0)
-        # Add the start node
-        open.append(start_node)
-
-        # Loop until the open list is empty
-        while len(open) > 0:
-            # Sort the open list to get the node with the lowest cost first
-            open.sort(key=lambda x:x[2])
-            # Get the node with the lowest cost
-            current_node = open.pop(0)
-            # Add the current node to the closed list
-            closed.append(current_node)
-
-            # Check if we have reached the goal, return the path
-            if current_node[0] == end:
-                total = current_node[2]
-                path = []
-                print(current_node[2])
-                while current_node[0] != start_node[0]:
-                    path.append(current_node[0])
-                    val = float("inf")
-                    for node in closed:
-                        if(node[0] == current_node[1] and node[2] < val):
-                            val = node[2]
-                            current_node = node
-                            closed.remove(node)
-                path.append(start_node[0])
-                # Return reversed path and total distance
-                return path[::-1], total
-
-            # Get neighbours
-            neighbors = self.Map[current_node[0]]["next"]
-
-            # Loop neighbors
-            for key in neighbors:
-                # Create a neighbor node
-                neighbor = (key, current_node[0], current_node[2] + self.get_distance(current_node[0], key) )
-                # Check if the neighbor is in the closed list
-                if(neighbor in closed):
-                    continue
-                # Check if neighbor is in open list and if it has a lower f value
-                for node in open:
-                    if (neighbor[0] == node[0] and neighbor[1] == node[1] and neighbor[2] > node[2]):
-                        continue
-                open.append(neighbor)
-        # Return None, no path is found
-        return None
-
+    # Returns x, y, and id of the point
     def get_path_coor(self, start, end):
         print("Path from " + start + " to " + end)
 
@@ -146,7 +95,7 @@ class GraphMap(object):
                             current_node = node
                             closed.remove(node)
                 #path.append(start_node[0])
-                path.append([float(self.Map[start_node[0]]["x"]), float(self.Map[start_node[0]]["y"])])
+                path.append([float(self.Map[start_node[0]]["x"]), float(self.Map[start_node[0]]["y"]), start_node[0]])
                 # Return reversed path and total distance
                 return path[::-1], total
 

@@ -171,11 +171,11 @@ class Kalman:
             # State Update
             self.X_t = self.X_Pred + K @ Y
             # Covariance Update
-            self.P_t = (np.eye(5) - K @ self.J_H) @ self.P_Pred
+            #self.P_t = (np.eye(5) - K @ self.J_H) @ self.P_Pred
             # Joseph form Covariance Update equation -> Ensure Positive Semi-Definite
             self.P_t = (np.eye(5) - K @ self.J_H) @ self.P_Pred @ (np.eye(5) - K @ self.J_H).T + K @ self.R @ K.T
             # Ensure P is symmetric
-            self.P_t = (self.P_t + self.P_t.T) / 2
+            #self.P_t = (self.P_t + self.P_t.T) / 2
 
 
 
